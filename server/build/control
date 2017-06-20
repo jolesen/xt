@@ -1,0 +1,403 @@
+#! /bin/bash
+
+# ================================
+gProject="xt"
+gRelyLibBaseDir="/usr/lib"
+gRelyLibDir="${gRelyLibBaseDir}/${gProject}-lib"
+gWorkDir=`pwd`
+gBinDir="$gWorkDir/bin"
+gConfig="$gWorkDir/runtime/config/server.list"
+gLock="$gWorkDir/control.lock"
+# ================================
+
+
+function GotoWorkDir()
+{
+    cd $gWorkDir
+}
+
+function _CheckInited()
+{
+    GotoWorkDir
+    
+    # 库目录是否已经存在
+    if [ ! -d "$gRelyLibDir" ]; then
+        echo "Error: [$gRelyLibDir], not exist, try command [./control init] to init."
+        exit
+    fi 
+
+    # 库比较，-n非空，-z空
+    libdiff=`diff -r $gRelyLibDir lib`
+    if [ -n "$libdiff" ]; then
+        echo "Error: the inited lib [$gRelyLibDir] not the newest version, try command [./control init] to update."
+        exit
+    fi
+}
+
+function Init()
+{
+    # 库根目录是否存在
+    if [ ! -d "$gRelyLibBaseDir" ]; then
+        echo "Error: [$gRelyLibBaseDir] not exist."
+        exit
+    fi
+
+    # 库根目录是否有权限
+    if [ ! -x "$gRelyLibBaseDir" ]; then
+        echo "Error: [$gRelyLibBaseDir] no executive authority."
+        exit
+    fi
+
+    # 先删除再拷贝lib目录
+    GotoWorkDir
+    rm -rf $gRelyLibDir
+    cp -rf lib $gRelyLibDir
+    echo "done"
+}
+
+function Make()
+{
+    _CheckInited
+
+    GotoWorkDir
+    modules=(`ls ../src`)
+    if [ $# -ne 0 ]; then
+        exist=0
+        for((i = 0; i < ${#modules[@]}; ++i))
+        do
+            if [ $1 == ${modules[i]} ]; then
+                exist=1
+            fi
+        done
+        if [ $exist -eq 0 ]; then
+            echo "Error: <$1>, no such module"
+            exit
+        fi
+    fi
+
+    GotoWorkDir
+    cd make
+    cmake -DMAKE_TYPE=Debug -DMONITOR=True ./
+    #cmake -DMAKE_TYPE=Release -DMONITOR=True ./
+
+    if [ $# -eq 0 ]; then
+        for((i = 0; i < ${#modules[@]}; ++i))
+        do
+            cd ${modules[i]}
+            make -j8
+            cd ..
+        done
+    else
+        cd $1
+        make -j8
+    fi
+}
+
+function Clean()
+{
+    GotoWorkDir
+    modules=(`ls ../src`)
+
+    # ./bin
+    rm -rf bin
+
+    # ./make
+    cd make
+    rm -rf CMakeFiles cmake_install.cmake Makefile CMakeCache.txt
+    for((i = 0; i < ${#modules[@]}; ++i))
+    do
+        cd ${modules[i]}
+        rm -rf CMakeFiles cmake_install.cmake Makefile
+        cd ..
+    done
+
+    # ./runtime
+    GotoWorkDir
+    cd runtime
+    for rundir in `ls`
+    do
+        if [[ $rundir == *_[0-9]* ]]; then # svr_xx
+            ln=${rundir%_*}
+            rm -f $rundir/$ln
+            rm -f $rundir/*.log
+            rm -f $rundir/*.*
+        fi
+    done
+}
+
+function GenerateCode()
+{
+    GotoWorkDir
+    cd python
+
+    echo "Parsing msg files..."
+    python msg.py
+
+    echo "Parsing xls files..."
+    python xls.py
+}
+
+function _StartByName()
+{
+    dir=$1
+    exe=${dir%_*}
+
+    # 运行文件是否存在
+    bin="$gBinDir/$exe"
+    if [ ! -f "$bin" ]; then
+        echo "Error: starting[$dir], [$bin] not exist."
+        exit
+    fi
+
+    # 是否有执行权限
+    if [ ! -x "$bin" ]; then
+        echo "Error: starting[$dir], [$bin] no executive authority."
+        exit
+    fi
+
+    # 创建软连接
+    link="$dir/$exe"
+    if [ ! -f "$link" ]; then
+        ln -fs "$bin" "$link"
+    fi
+
+    # 运行 id=${dir#*_}
+    cd $dir
+    ./$exe -sid $dir -config $gConfig --$gProject
+    cd ..
+}
+
+function Start()
+{
+    _CheckInited
+    GotoWorkDir
+    cd runtime
+
+    # 未给定参数，则启动所有
+    if [ $# -eq 0 ]; then
+        for rundir in `ls`
+        do
+            if [[ $rundir == *_[0-9]* ]]; then
+                _StartByName $rundir
+            fi
+        done
+    else
+        _StartByName $1
+    fi
+
+    # 启动成功
+    echo "-----------------------"
+    ps xf | grep "\-\-$gProject";
+    echo "-----------------------"
+}
+
+function StartRobot()
+{
+    _CheckInited
+    GotoWorkDir
+    cd bin
+    ./robot --$gProject
+}
+
+function Stop()
+{
+    # 未给定参数，则停止所有, SIGUSR1(10)
+    if [ $# -eq 0 ]; then
+        ps fx | grep "\-\-$gProject" | awk '{ print $1 }' | xargs kill -10
+    else
+        #para=$1
+        #exe=${para%_*}
+        #sid=${para#*_}
+        ps fx | grep "\-\-$gProject" | grep "\-sid $1"| awk '{ print $1 }' | xargs kill -10
+    fi
+
+    ps fx | grep "\-\-$gProject"
+}
+
+function Watch()
+{
+    GotoWorkDir
+    file=runtime/$1/$1.monitor
+
+    if [ ! -f "$file" ]; then
+        echo "Error: no watch file[$file]"
+        exit
+    fi
+
+    rm -f $gLock
+    watch -t -n 1 "cat $file"
+}
+
+function Profile()
+{
+    GotoWorkDir
+    sid=$1
+    exe=${sid%_*}
+    bin="$gBinDir/$exe"
+    if [ ! -f "$bin" ]; then
+        echo "Error: bin file[$bin] not exist."
+        exit
+    fi
+
+    cd runtime/$sid
+    out=gmon.out
+    if [ ! -f "$out" ]; then
+        echo "Error: no file[$out]"
+        exit
+    fi
+
+    rm -f $gLock
+    #gprof -b $bin $out > $sid.profile
+    gprof -b $bin $out | grep -v "std::" | grep -v "gnu_cxx" > $sid.profile
+    vim $sid.profile
+}
+
+function Attach()
+{
+    if [ 1 -gt $# ]; then
+        exit -1
+    fi
+
+    cd bin/$1
+    gdb attach `ps fx | grep $1 | grep "\-\-$gProject" | awk '{print $1}'`
+}
+
+function ShowConfigPorts()
+{
+    GotoWorkDir
+    cd runtime
+    for rundir in `ls`
+    do
+        if [[ $rundir == *_[0-9]* ]]; then
+            port=`cat $rundir/config.txt | grep Host`
+            port=${port/Host/}
+            port=${port/=/}
+            port=`echo "$port" | sed "s/ //g"`
+            echo -e "$rundir $port" | awk '{printf "|%-12s| %-21s|\n", $1, $2}' 
+        fi
+    done
+}
+
+function GetCode()
+{
+    GotoWorkDir
+    rm -f $gLock
+    xt_file="$gProject"$(date +%Y%m%d%H%M%S)".zip"
+
+    Stop
+    Clean
+
+    cd ~
+    zip -r $gProject $gProject/ > /dev/null
+    mv $gProject.zip $xt_file
+    sz $xt_file
+    rm -f $xt_file
+    cd ~/$gProject/server/build
+}
+
+function CreateDatabase()
+{
+    _CheckInited
+    GotoWorkDir
+    Stop
+
+    cd runtime/config/sql
+    #svn up > /dev/null
+
+    echo ""
+    echo ">>>>> Creating..."
+    mysql -uxt -p123456 -e "DROP DATABASE IF EXISTS $gProject; CREATE DATABASE $gProject DEFAULT CHARACTER SET UTF8 COLLATE UTF8_GENERAL_CI;"
+    mysql -uxt -p123456 $gProject < tables.sql
+    mysql --raw -uxt -p123456 -e "INSERT INTO $gProject.global(k, v) VALUE('version', 0);"
+    echo "<<<<< Created!"
+
+    GotoWorkDir
+
+    echo ""
+    echo ">>>>> Updating..."
+    UpdateDatabase
+    echo "<<<<< Updated!"
+    echo ""
+}
+
+function UpdateDatabase()
+{
+    _CheckInited
+    GotoWorkDir 
+    cd runtime/config/sql
+    #svn up > /dev/null
+
+    # FROM FILE
+    verConfig=0
+    for file in `ls`
+    do
+        name=${file%.*}
+        if [[ "$name" =~ "[0-9]" ]]; then
+            if [ "$name" -gt "$verConfig" ]; then
+                verConfig=$name
+            fi
+        fi
+    done
+
+    # FROM DB
+    verDb=`mysql --raw -uxt -p123456 -e "SELECT v FROM $gProject.global WHERE k = 'version'" | sed '1d'`
+    if [ "$verDb" = "" ]; then
+        verDb=0
+        mysql --raw -uxt -p123456 -e "INSERT INTO $gProject.global(k, v) VALUE('version', $verDb);"
+    fi
+
+    # COMPARE
+    if [ "$verDb" -ge "$verConfig" ]; then
+        echo "db_version[$verDb] >= config_version[$verConfig], don't need to update."
+        exit
+    fi
+
+    # EXECUTE PATCH
+    for((i = $verDb + 1; i <= $verConfig; ++i))
+    do
+        if [ -f $i.sql ]; then
+            echo "Updating $i.sql"
+            mysql -uxt -p123456 $gProject < $i.sql
+        fi
+    done
+
+    # UPDATE VERSION
+    mysql --raw -uxt -e "UPDATE $gProject.global SET v = $verConfig WHERE k = 'version';"
+
+    echo "Completed [$verDb -> $verConfig]."
+}
+
+################################################
+if [ -f $gLock ]; then
+    echo "Warning, busy now, please try later."
+    exit 0
+else
+    touch $gLock
+    chmod 600 $gLock
+fi
+trap "rm -f $gLock; exit" 0 1 2 3 9 15
+
+
+if ! which cmake > /dev/null
+then
+    echo "install cmake firstly."
+    exit -1
+fi
+
+case $1 in
+    init)        Init ;;
+    make)        Make $2 ;;
+    db_create)   CreateDatabase ;;
+    db_update)   UpdateDatabase ;;
+    start)       Start $2 ;;
+    start_robot) StartRobot $2 ;;
+    stop)        Stop $2 ;;
+    watch)       Watch $2 ;;
+    profile)     Profile $2 ;;
+    clean)       Clean ;;
+    code)        GenerateCode ;;
+    get_code)    GetCode ;;
+    show_port)   ShowConfigPorts ;;
+    attach)      Attach $2 ;;
+    *)           echo "Error: [$1] unknow command" ;;
+esac

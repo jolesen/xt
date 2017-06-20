@@ -1,0 +1,30 @@
+{
+"Array":
+[
+	{ "id":"1", "value":"1", "name":"yangyuzhien", "cycle":"1" },
+	{ "id":"2", "value":"2", "name":"", "cycle":"" },
+	{ "id":"3", "value":"3", "name":"childrenday", "cycle":"" },
+	{ "id":"4", "value":"4", "name":"timelimit_vip", "cycle":"" },
+	{ "id":"5", "value":"5", "name":"timelimit_fightval", "cycle":"" },
+	{ "id":"6", "value":"6", "name":"festive_task", "cycle":"1" },
+	{ "id":"7", "value":"7", "name":"pay_gold_count_huodong1", "cycle":"0" },
+	{ "id":"8", "value":"8", "name":"pay_gold_count_huodong2", "cycle":"0" },
+	{ "id":"9", "value":"9", "name":"pay_gold_count_huodong3", "cycle":"0" },
+	{ "id":"10", "value":"10", "name":"pay_gold_count_huodong4", "cycle":"0" },
+	{ "id":"11", "value":"11", "name":"pay_gold_count_huodong5", "cycle":"0" },
+	{ "id":"12", "value":"12", "name":"festive_task_exchange", "cycle":"1" },
+	{ "id":"13", "value":"13", "name":"goldlottery", "cycle":"0" },
+	{ "id":"14", "value":"14", "name":"consumeproc", "cycle":"0" },
+	{ "id":"15", "value":"15", "name":"flower_ganen", "cycle":"1" },
+	{ "id":"16", "value":"16", "name":"festive_online_reward", "cycle":"1" },
+	{ "id":"17", "value":"17", "name":"sumeeveryday", "cycle":"1" },
+	{ "id":"18", "value":"18", "name":"festive_gold_tree", "cycle":"0" },
+	{ "id":"19", "value":"19", "name":"festive_furnace", "cycle":"0" },
+	{ "id":"20", "value":"20", "name":"pet_train", "cycle":"1" },
+	{ "id":"21", "value":"21", "name":"double_medal", "cycle":"0" },
+	{ "id":"22", "value":"22", "name":"discount_horse_firm", "cycle":"0" },
+	{ "id":"23", "value":"23", "name":"discount_pet_firm", "cycle":"0" },
+	{ "id":"24", "value":"24", "name":"discount_star_search", "cycle":"0" },
+	{ "id":"25", "value":"25", "name":"discount_levy_city", "cycle":"0" }
+]
+}

@@ -1,0 +1,44 @@
+struct SUserBaseInfo
+{
+    uint id;
+    uint time;
+    uint session;
+    uint day_reset;
+};
+
+// 内部使用
+struct SUserInner
+{
+    uint last_save; // 上一次保存的时间
+    UIntStringMap md5_list; // used in logic
+    UIntBoolMap dirty_list; // used in data
+    UIntList hh_test;
+};
+
+struct SUser
+{
+    SUserBaseInfo base;
+    STimes        times;
+    SVars         vars;
+    SCounts       counts;
+    SDailyResets  daily_resets;
+    SUserInner    inner;
+    SItem         item;
+};
+
+// ----------------------------
+cmsg QUserModule(uint module);
+cmsg RUserModule(uint module, SBytes data);
+
+cmsg RUserErrorCode(uint code, UIntList flags);
+
+cmsg QUserLogin(uint uid, uint session);
+cmsg RUserLogin(uint flag, uint uid, uint session);
+
+cmsg QUserLogout(std::map<uint, SDailyResets> test_map_i, uint ivalue, UIntList vvalue, std::map<std::string, SDailyResets> test_map_s);
+cmsg RUserLogout(uint flag, StringList vtest);
+
+cmsg RMsgTest(UIntUIntMap test);
+
+cmsg QServerTime();
+cmsg RServerTime(uint time);

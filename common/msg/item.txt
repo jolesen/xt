@@ -1,0 +1,10 @@
+struct SItemCell
+{
+    uint id;
+    uint count;
+};
+
+struct SItem
+{
+    std::vector<SItemCell> list;
+};

@@ -1,0 +1,25 @@
+struct SService
+{
+    std::string sid;
+    std::string ip;
+    uint port;
+};
+
+smsg QSysRegistService(SService service);
+smsg RSysRegistService(bool flag);
+
+smsg QSysAuthUser(uint uid, uint session);
+smsg RSysAuthUser(bool authed, uint uid, uint session);
+
+smsg QSysLoadUser(uint uid, uint session);
+smsg RSysLoadUser(uint flag, uint uid, uint session, SUser user);
+
+smsg QSysSaveUser(uint uid, std::map<uint, SBytes> modules);
+
+smsg QSysBroadcast(UIntList guids, SBytes msg);
+
+smsg QSysUserLogout(uint uid, uint reason);
+smsg RSysUserLogout(uint uid, uint reason);
+
+smsg QSysSayHello(UIntList list);
+smsg RSysSayHello();

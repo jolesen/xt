@@ -1,0 +1,31 @@
+struct SVars
+{
+    UIntList list;
+};
+cmsg QValueVarList();
+cmsg RValueVarList();
+cmsg RValueVarModified(S2UInt var);
+
+struct STimes
+{
+    UIntList list;
+};
+cmsg QValueTimeList();
+cmsg RValueTimeList();
+cmsg RValueTimeModified(S2UInt time);
+
+struct SDailyResets
+{
+    UIntList list;
+};
+cmsg QValueDailyResetList();
+cmsg RValueDailyResetList();
+cmsg RValueDailyResetModified(S2UInt daily_reset);
+
+struct SCounts
+{
+    UIntList list;
+};
+cmsg QValueCountList();
+cmsg RValueCountList();
+cmsg RValueCountModified(S2UInt count);
