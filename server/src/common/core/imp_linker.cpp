@@ -16,7 +16,7 @@ CLinker::~CLinker()
 
 void CLinker::Link(const std::string &sid, const SHost &host)
 {
-    IF_NOTFIND(m_links, sid, iter)
+    IF_NFIND(m_links, sid, iter)
     {
         CClient *client = theClientPool.Get();
         if(!client)

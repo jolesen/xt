@@ -90,9 +90,9 @@ typedef std::map<std::string, S3ULong>      StringS3ULongMap;
 #define FORMAP(M, ITER)   for(typeof((M).begin()) ITER = (M).begin(); ITER != (M).end(); ++ITER)
 
 // map find
-#define IF_FIND(M, K, ITER)      typeof((M).begin()) ITER = (M).find(K); if(ITER != (M).end())
-#define IF_NOTFIND(M, K, ITER)   typeof((M).begin()) ITER = (M).find(K); if(ITER == (M).end())
-#define IF_NFIND(M, K)           typeof((M).begin()) TEMP_VAR = (M).find(K); if(TEMP_VAR == (M).end())
+#define IF_FIND(M, K, ITER)    typeof((M).begin()) ITER = (M).find(K); if(ITER != (M).end())
+#define IF_NFIND(M, K, ITER)   typeof((M).begin()) ITER = (M).find(K); if(ITER == (M).end())
+#define IF_NFINDx(M, K)        typeof((M).begin()) TEMP_VAR = (M).find(K); if(TEMP_VAR == (M).end())
 
 // EWeekDay
 enum EWeekDay
@@ -146,7 +146,8 @@ class CSingleton
 public:
     static T& Instance()
     {
-        // 这种方式可能更简洁，但对于大对象可能会超过静态存储区的大小
+        // 这种方式可能更简洁，但对于大对象可能会超过静态存储区的大小??
+        // 静态存储区有大小限制吗？
         // static T t;
         // return t;
 

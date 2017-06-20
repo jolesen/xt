@@ -18,7 +18,7 @@ bool CEvent::Register(const std::string &strName, const std::string &strFile, SE
 
 void CEvent::Execute(const std::string &strName, SEventBase *event)
 {
-    IF_NOTFIND(m_handlers, strName, iterMap)
+    IF_NFIND(m_handlers, strName, iterMap)
     {
         return;
     }

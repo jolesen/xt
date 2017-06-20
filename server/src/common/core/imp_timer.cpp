@@ -185,7 +185,7 @@ void CTimer::OnTimeout(evutil_socket_t fd, short event, void *args)
 
 void CTimer::Delete(uint id)
 {
-    IF_NOTFIND(m_events, id, iter)
+    IF_NFIND(m_events, id, iter)
     {
         LOG_ERROR("Can't find event, id=%u", id);
         return;
