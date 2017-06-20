@@ -9,7 +9,7 @@
 MSG_FUNC(QUserLogin)
 {
     LoginingMap &map = theUser.GetLoginings();
-    IF_NFIND(map, msg.uid, iter)
+    IF_NFINDx(map, msg.uid)
     {
         map[msg.uid] = msg.header.fd;
 
