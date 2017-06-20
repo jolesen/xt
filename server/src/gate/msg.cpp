@@ -9,7 +9,7 @@
 MSG_FUNC(QUserLogin)
 {
     LoginingMap &map = theUser.GetLoginings();
-    IF_NOTFIND(map, msg.uid, iter)
+    IF_NFIND(map, msg.uid, iter)
     {
         map[msg.uid] = msg.header.fd;
 
@@ -33,7 +33,7 @@ MSG_FUNC(QUserLogin)
 MSG_SYSTEM(RUserLogin)
 {
     LoginingMap &map = theUser.GetLoginings();
-    IF_NOTFIND(map, msg.uid, iter)
+    IF_NFIND(map, msg.uid, iter)
     {
         LOG_ERROR("no fd by uid =%u", msg.uid);
         return;

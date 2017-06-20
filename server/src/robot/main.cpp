@@ -15,7 +15,7 @@
 //#define forlist(L, V) for(typeof((L).begin()) TEMP_VAR = (L).begin(), typeof((L).begin()) V; TEMP_VAR != (L).end(), V = *TEMP_VAR; ++TEMP_VAR)
 
 //#define IF_FIND(M, K, ITER)      typeof((M).begin()) ITER = (M).find(K); if(ITER != (M).end())
-//#define IF_NOTFIND(M, K, ITER)   typeof((M).begin()) ITER = (M).find(K); if(ITER == (M).end())
+//#define IF_NFIND(M, K, ITER)   typeof((M).begin()) ITER = (M).find(K); if(ITER == (M).end())
 
 
 

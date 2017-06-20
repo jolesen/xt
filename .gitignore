@@ -15,4 +15,5 @@ server/build/runtime/*_*
 *~
 *.pyc
 *.swp
+*.lock
 tags

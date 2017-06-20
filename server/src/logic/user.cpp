@@ -69,7 +69,7 @@ void Logout(uint uid, uint reason)
 
 void OnLogouted(uint uid, uint reason)
 {
-    IF_NOTFIND(theData.users, uid, iter)
+    IF_NFIND(theData.users, uid, iter)
     {
         LOG_ERROR("no user, uid=%u", uid);
         return;

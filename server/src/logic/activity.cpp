@@ -32,7 +32,7 @@ void HandleAction(SUser &user, uint action)
 
 bool RegisterAction(uint id, uint action, FunActivityAction fun_action)
 {
-    IF_NOTFIND(theData.actions, id, iter)
+    IF_NFIND(theData.actions, id, iter)
     {
         theData.actions[id][action] = fun_action;
     }

@@ -124,7 +124,7 @@ void CSaver::DecodeModule(uint uid, uint module, const SBytes &data)
         return;
     }
 
-    IF_NOTFIND(theModule.decoders, module, iter)
+    IF_NFIND(theModule.decoders, module, iter)
     {
         LOG_ERROR("no decoder for module=%u", module);
         return;
@@ -146,7 +146,7 @@ void CSaver::DecodeModule(uint uid, uint module, const SBytes &data)
 
 void CSaver::Save(const SUser &user, uint module)
 {
-    IF_NOTFIND(theModule.savers, module, iter)
+    IF_NFIND(theModule.savers, module, iter)
     {
         LOG_ERROR("no saver for module=%u", module);
         return;
