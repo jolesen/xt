@@ -16,6 +16,29 @@ function GotoWorkDir()
     cd $gWorkDir
 }
 
+function InstallMongoDriver()
+{
+    GotoWorkDir
+
+    cd lib
+    dir="install"
+    if [ -d "$dir" ]; then
+        rm -rf $dir
+    fi
+    mkdir $dir
+    cd    $dir
+
+    version="r3.0.1"
+    driver="mongo-cxx-driver-$version"
+    wget "https://github.com/mongodb/mongo-cxx-driver/archive/$version.tar.gz" -O "$driver.tar.gz"
+    tar -zxf "$driver.tar.gz"
+    rm -f "$driver.tar.gz"
+    cd $driver/build
+    # install
+    cmake ..
+
+}
+
 function _CheckInited()
 {
     GotoWorkDir
@@ -77,6 +100,7 @@ function Make()
 
     GotoWorkDir
     cd make
+    #GCC="-DCMAKE_CXX_COMPILER:FILEPATH=/usr/local/bin/gcc -DCMAKE_C_COMPILER:FILEPATH=/usr/local/bin/gcc"
     cmake -DMAKE_TYPE=Debug -DMONITOR=True ./
     #cmake -DMAKE_TYPE=Release -DMONITOR=True ./
 
@@ -386,6 +410,7 @@ fi
 
 case $1 in
     init)        Init ;;
+    install_lib) InstallMongoDriver;;
     make)        Make $2 ;;
     db_create)   CreateDatabase ;;
     db_update)   UpdateDatabase ;;
