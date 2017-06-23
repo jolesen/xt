@@ -53,7 +53,7 @@ public:
 
 private:
     static void OnTimeout(evutil_socket_t fd, short event, void *args);
-    STimerEvent* CreateTick(ETick type, const S2UInt &interval, uint loops, const S3UInt &at, FunTimeout cb);
+    uint CreateTick(ETick type, const S2UInt &interval, uint loops, const S3UInt &at, FunTimeout cb);
 
 private:
     friend CTimer& CSingleton<CTimer>::Instance();

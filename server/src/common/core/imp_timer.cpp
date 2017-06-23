@@ -21,25 +21,25 @@ CTimer::~CTimer()
 uint CTimer::AddSecond(uint interval, uint loops, FunTimeout cb)
 {
     CHECK_INTERVAL;
-    return CreateTick(ETickSecond, S2UInt(SECOND * interval, SECOND * interval), loops, S3UInt(), cb)->info.id;
+    return CreateTick(ETickSecond, S2UInt(SECOND * interval, SECOND * interval), loops, S3UInt(), cb);
 }
 
 uint CTimer::AddMinute(uint interval, uint loops, FunTimeout cb)
 {
     CHECK_INTERVAL;
-    return CreateTick(ETickMinute, S2UInt(MINUTE * interval, MINUTE * interval), loops, S3UInt(), cb)->info.id;
+    return CreateTick(ETickMinute, S2UInt(MINUTE * interval, MINUTE * interval), loops, S3UInt(), cb);
 }
 
 uint CTimer::AddHour(uint interval, uint loops, FunTimeout cb)
 {
     CHECK_INTERVAL;
-    return CreateTick(ETickHour, S2UInt(HOUR * interval, HOUR * interval), loops, S3UInt(), cb)->info.id;
+    return CreateTick(ETickHour, S2UInt(HOUR * interval, HOUR * interval), loops, S3UInt(), cb);
 }
 
 uint CTimer::AddDay(uint interval, uint loops, FunTimeout cb)
 {
     CHECK_INTERVAL;
-    return CreateTick(ETickDay, S2UInt(DAY * interval, DAY * interval), loops, S3UInt(), cb)->info.id;
+    return CreateTick(ETickDay, S2UInt(DAY * interval, DAY * interval), loops, S3UInt(), cb);
 }
 
 uint CTimer::AddMinuteAt(uint interval, uint loops, const S3UInt &at, FunTimeout cb)
@@ -62,7 +62,7 @@ uint CTimer::AddMinuteAt(uint interval, uint loops, const S3UInt &at, FunTimeout
         s.id = (MINUTE - now_second) + ((interval - 1) * MINUTE) + at_second;
     }
 
-    return CreateTick(ETickMinuteAt, s, loops, at, cb)->info.id;
+    return CreateTick(ETickMinuteAt, s, loops, at, cb);
 }
 
 uint CTimer::AddHourAt(uint interval, uint loops, const S3UInt &at, FunTimeout cb)
@@ -86,7 +86,7 @@ uint CTimer::AddHourAt(uint interval, uint loops, const S3UInt &at, FunTimeout c
         s.id = (HOUR - now_second) + ((interval - 1) * HOUR) + at_second;
     }
 
-    return CreateTick(ETickHourAt, s, loops, at, cb)->info.id;
+    return CreateTick(ETickHourAt, s, loops, at, cb);
 }
 
 uint CTimer::AddDayAt(uint interval, uint loops, const S3UInt &at, FunTimeout cb)
@@ -111,7 +111,7 @@ uint CTimer::AddDayAt(uint interval, uint loops, const S3UInt &at, FunTimeout cb
         s.id = (DAY - now_second) + ((interval - 1) * DAY) + at_second;
     }
 
-    return CreateTick(ETickDayAt, s, loops, at, cb)->info.id;
+    return CreateTick(ETickDayAt, s, loops, at, cb);
 }
 
 uint CTimer::AddWeekDayAt(uint interval, uint loops, EWeekDay day, const S3UInt &at, FunTimeout cb)
@@ -140,7 +140,7 @@ uint CTimer::AddWeekDayAt(uint interval, uint loops, EWeekDay day, const S3UInt 
         s.id = (WEEK - now_second) + ((interval - 1) * WEEK) + at_second;
     }
 
-    return CreateTick(ETickWeekDayAt, s, loops, at, cb)->info.id;
+    return CreateTick(ETickWeekDayAt, s, loops, at, cb);
 }
     
 void CTimer::OnTimeout(evutil_socket_t fd, short event, void *args)
@@ -200,7 +200,7 @@ void CTimer::Delete(uint id)
     MONITOR(OnTimerAddOrDelete(false));
 }
 
-STimerEvent* CTimer::CreateTick(ETick type, const S2UInt &interval, uint loops, const S3UInt &at, FunTimeout cb)
+uint CTimer::CreateTick(ETick type, const S2UInt &interval, uint loops, const S3UInt &at, FunTimeout cb)
 {
     STimerEvent *evt = new STimerEvent;
     if(at.type > 0) // is tick at
@@ -233,7 +233,7 @@ STimerEvent* CTimer::CreateTick(ETick type, const S2UInt &interval, uint loops, 
             evt->info.id, evt->info.type, evt->info.loops, evt->info.interval.id,
             evt->info.interval.value, evt->info.at.type, evt->info.at.id, evt->info.at.value);
 
-    return evt;
+    return evt->info.id;
 }
 #undef CHECK_INTERVAL
 #undef CHECK_WEEKDAY
