@@ -1,7 +1,7 @@
 #ifndef _COMMON_CORE_MYSQL_H_
 #define _COMMON_CORE_MYSQL_H_
 
-#include <mysql/mysql.h>
+#include <mysql.h>
 #include "core.h"
 
 // SMysqlConfig

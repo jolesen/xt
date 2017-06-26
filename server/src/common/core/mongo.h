@@ -1,7 +1,7 @@
 #ifndef _COMMON_CORE_MONGO_H_
 #define _COMMON_CORE_MONGO_H_
 
-#include <mongo/mongoc.h>
+#include <mongoc.h>
 #include "core.h"
 
 // CMongo
