@@ -1,6 +1,2 @@
-INCLUDE_DIRECTORIES(${LIB} ${MONGO} ${BSON} ${SRC})
-LINK_DIRECTORIES(${LIB})
-LINK_LIBRARIES(common mongo bson)
-
 FILE(GLOB CPP "${SRC}/test/*.cpp")
 ADD_EXECUTABLE(test ${CPP})

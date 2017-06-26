@@ -8,6 +8,7 @@ gWorkDir=`pwd`
 gBinDir="$gWorkDir/bin"
 gConfig="$gWorkDir/runtime/config/server.list"
 gLock="$gWorkDir/control.lock"
+gPrefix="/usr/local"
 # ================================
 
 
@@ -16,72 +17,64 @@ function GotoWorkDir()
     cd $gWorkDir
 }
 
-function InstallMongoDriver()
+function InstallLib()
 {
     GotoWorkDir
+    cd install
 
-    cd lib
-    dir="install"
-    if [ -d "$dir" ]; then
-        rm -rf $dir
-    fi
-    mkdir $dir
-    cd    $dir
+    # --- libtool ---
+    libtool=libtool-2.4.6
+    #wget ftp://ftp.gnu.org/gnu/libtool/$libtool.tar.gz
+    rm -rf $libtool
+    tar -zxf $libtool.tar.gz
+    cd $libtool
+    ./configure --prefix=$gPrefix/libtool
+    make
+    #make check
+    make install
+    cd ..
+    rm -rf $libtool
 
-    version="r3.0.1"
-    driver="mongo-cxx-driver-$version"
-    wget "https://github.com/mongodb/mongo-cxx-driver/archive/$version.tar.gz" -O "$driver.tar.gz"
-    tar -zxf "$driver.tar.gz"
-    rm -f "$driver.tar.gz"
-    cd $driver/build
-    # install
-    cmake ..
+    # --- libevent ---
+    libevent=libevent-2.1.8-stable
+    rm -rf $libevent
+    tar -zxf $libevent.tar.gz
+    cd $libevent
+    ./configure --prefix=$gPrefix/libevent
+    make
+    make install
+    cd ..
+    rm -rf $libevent
 
-}
+    #--- mysql-devel ---
+    yum -y install ncurses-devel
+    mysql=mysql-5.6.22
+    rm -rf $mysql
+    #wget http://dev.mysql.com/get/Downloads/MySQL-5.6/$mysql.tar.gz
+    tar -zxf $mysql.tar.gz
+    cd $mysql
+    ./BUILD/autorun.sh
+    ./configure --without-server --enable-thread-safe-client --prefix=$gPrefix/mysql
+    make
+    make install
+    cd ..
+    rm -rf $mysql
 
-function _CheckInited()
-{
-    GotoWorkDir
-    
-    # 库目录是否已经存在
-    if [ ! -d "$gRelyLibDir" ]; then
-        echo "Error: [$gRelyLibDir], not exist, try command [./control init] to init."
-        exit
-    fi 
-
-    # 库比较，-n非空，-z空
-    libdiff=`diff -r $gRelyLibDir lib`
-    if [ -n "$libdiff" ]; then
-        echo "Error: the inited lib [$gRelyLibDir] not the newest version, try command [./control init] to update."
-        exit
-    fi
-}
-
-function Init()
-{
-    # 库根目录是否存在
-    if [ ! -d "$gRelyLibBaseDir" ]; then
-        echo "Error: [$gRelyLibBaseDir] not exist."
-        exit
-    fi
-
-    # 库根目录是否有权限
-    if [ ! -x "$gRelyLibBaseDir" ]; then
-        echo "Error: [$gRelyLibBaseDir] no executive authority."
-        exit
-    fi
-
-    # 先删除再拷贝lib目录
-    GotoWorkDir
-    rm -rf $gRelyLibDir
-    cp -rf lib $gRelyLibDir
-    echo "done"
+    # --- mongo ---
+    #wget https://github.com/mongodb/mongo-c-driver/releases/download/1.6.3/mongo-c-driver-1.6.3.tar.gz
+    mongo=mongo-c-driver-1.6.3
+    rm -rf $mongo
+    tar -zxf $mongo.tar.gz
+    cd $mongo
+    ./configure --prefix=$gPrefix/mongo
+    make
+    make install
+    cd ..
+    rm -rf $mongo
 }
 
 function Make()
 {
-    _CheckInited
-
     GotoWorkDir
     modules=(`ls ../src`)
     if [ $# -ne 0 ]; then
@@ -193,7 +186,6 @@ function _StartByName()
 
 function Start()
 {
-    _CheckInited
     GotoWorkDir
     cd runtime
 
@@ -217,7 +209,6 @@ function Start()
 
 function StartRobot()
 {
-    _CheckInited
     GotoWorkDir
     cd bin
     ./robot --$gProject
@@ -321,7 +312,6 @@ function GetCode()
 
 function CreateDatabase()
 {
-    _CheckInited
     GotoWorkDir
     Stop
 
@@ -346,7 +336,6 @@ function CreateDatabase()
 
 function UpdateDatabase()
 {
-    _CheckInited
     GotoWorkDir 
     cd runtime/config/sql
     #svn up > /dev/null
@@ -409,8 +398,7 @@ then
 fi
 
 case $1 in
-    init)        Init ;;
-    install_lib) InstallMongoDriver;;
+    install)     InstallLib;;
     make)        Make $2 ;;
     db_create)   CreateDatabase ;;
     db_update)   UpdateDatabase ;;
