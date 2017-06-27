@@ -6,10 +6,8 @@
 // SVars
 struct SVars
 {
-public:
 	UIntList list;
 
-public:
 	void Encode(CCoder &coder) const;
 	void Decode(CCoder &coder);
 };
@@ -56,10 +54,8 @@ protected:
 // STimes
 struct STimes
 {
-public:
 	UIntList list;
 
-public:
 	void Encode(CCoder &coder) const;
 	void Decode(CCoder &coder);
 };
@@ -106,10 +102,8 @@ protected:
 // SDailyResets
 struct SDailyResets
 {
-public:
 	UIntList list;
 
-public:
 	void Encode(CCoder &coder) const;
 	void Decode(CCoder &coder);
 };
@@ -156,10 +150,8 @@ protected:
 // SCounts
 struct SCounts
 {
-public:
 	UIntList list;
 
-public:
 	void Encode(CCoder &coder) const;
 	void Decode(CCoder &coder);
 };

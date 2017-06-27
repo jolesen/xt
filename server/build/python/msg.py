@@ -311,7 +311,8 @@ def WriteCode(objFile):
         else:
             h.write("struct " + objClass.name + "\n");
         h.write("{\n");
-        h.write("public:\n");
+        if(objClass.type != ""):
+            h.write("public:\n");
         if(objClass.type != ""):
             msgType = "kMsgTypeClient";
             if(objClass.type == DECLARE_SMSG):
@@ -330,7 +331,7 @@ def WriteCode(objFile):
             h.write("\tvoid EncodeBody(CCoder &coder) const" + strTemp + "\n");
             h.write("\tvoid DecodeBody(CCoder &coder)" + strTemp + "\n");
         else:
-            h.write("\npublic:\n");
+            h.write("\n");
             h.write("\tvoid Encode(CCoder &coder) const;\n");
             h.write("\tvoid Decode(CCoder &coder);\n");
         h.write("};\n");
@@ -443,6 +444,7 @@ if __name__ == "__main__":
     sys.setdefaultencoding('utf8');
 
     files = glob.glob("../../../common/msg/*.txt");
+    files.sort();
     for file in files:
         ParseFile(file);
     UpdateRelations();

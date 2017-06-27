@@ -19,6 +19,11 @@ function InstallLib()
     GotoWorkDir
     cd install
 
+    # --- basic ---
+    yum -y install wget
+    yum -y install python-setuptools
+    easy_install xlrd
+
     # --- libtool ---
     #wget ftp://ftp.gnu.org/gnu/libtool/libtool-2.4.6.tar.gz
     libtool=libtool-2.4.6

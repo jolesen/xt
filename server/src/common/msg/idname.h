@@ -17,6 +17,18 @@ private:
 	~CMsgIdName(){ }
 	CMsgIdName()
 	{
+		m_idName[15088026] = "QSysRegistService";                           m_nameId["QSysRegistService"] = 15088026;
+		m_idName[17205450] = "RSysRegistService";                           m_nameId["RSysRegistService"] = 17205450;
+		m_idName[17494275] = "QSysAuthUser";                                m_nameId["QSysAuthUser"] = 17494275;
+		m_idName[20431463] = "RSysAuthUser";                                m_nameId["RSysAuthUser"] = 20431463;
+		m_idName[17300663] = "QSysLoadUser";                                m_nameId["QSysLoadUser"] = 17300663;
+		m_idName[16312969] = "RSysLoadUser";                                m_nameId["RSysLoadUser"] = 16312969;
+		m_idName[15782802] = "QSysSaveUser";                                m_nameId["QSysSaveUser"] = 15782802;
+		m_idName[19782076] = "QSysBroadcast";                               m_nameId["QSysBroadcast"] = 19782076;
+		m_idName[16918333] = "QSysUserLogout";                              m_nameId["QSysUserLogout"] = 16918333;
+		m_idName[17019185] = "RSysUserLogout";                              m_nameId["RSysUserLogout"] = 17019185;
+		m_idName[18847537] = "QSysSayHello";                                m_nameId["QSysSayHello"] = 18847537;
+		m_idName[16306049] = "RSysSayHello";                                m_nameId["RSysSayHello"] = 16306049;
 		m_idName[15795049] = "QTestTime";                                   m_nameId["QTestTime"] = 15795049;
 		m_idName[15533661] = "RTestTime";                                   m_nameId["RTestTime"] = 15533661;
 		m_idName[19037643] = "QUserModule";                                 m_nameId["QUserModule"] = 19037643;
@@ -41,18 +53,6 @@ private:
 		m_idName[15223480] = "QValueCountList";                             m_nameId["QValueCountList"] = 15223480;
 		m_idName[19225703] = "RValueCountList";                             m_nameId["RValueCountList"] = 19225703;
 		m_idName[15457256] = "RValueCountModified";                         m_nameId["RValueCountModified"] = 15457256;
-		m_idName[15088026] = "QSysRegistService";                           m_nameId["QSysRegistService"] = 15088026;
-		m_idName[17205450] = "RSysRegistService";                           m_nameId["RSysRegistService"] = 17205450;
-		m_idName[17494275] = "QSysAuthUser";                                m_nameId["QSysAuthUser"] = 17494275;
-		m_idName[20431463] = "RSysAuthUser";                                m_nameId["RSysAuthUser"] = 20431463;
-		m_idName[17300663] = "QSysLoadUser";                                m_nameId["QSysLoadUser"] = 17300663;
-		m_idName[16312969] = "RSysLoadUser";                                m_nameId["RSysLoadUser"] = 16312969;
-		m_idName[15782802] = "QSysSaveUser";                                m_nameId["QSysSaveUser"] = 15782802;
-		m_idName[19782076] = "QSysBroadcast";                               m_nameId["QSysBroadcast"] = 19782076;
-		m_idName[16918333] = "QSysUserLogout";                              m_nameId["QSysUserLogout"] = 16918333;
-		m_idName[17019185] = "RSysUserLogout";                              m_nameId["RSysUserLogout"] = 17019185;
-		m_idName[18847537] = "QSysSayHello";                                m_nameId["QSysSayHello"] = 18847537;
-		m_idName[16306049] = "RSysSayHello";                                m_nameId["RSysSayHello"] = 16306049;
 	}
 };
 #define theMsgIdName CSingleton<CMsgIdName>::Instance()

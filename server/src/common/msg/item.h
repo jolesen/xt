@@ -6,11 +6,9 @@
 // SItemCell
 struct SItemCell
 {
-public:
 	uint id;
 	uint count;
 
-public:
 	void Encode(CCoder &coder) const;
 	void Decode(CCoder &coder);
 };
@@ -18,10 +16,8 @@ public:
 // SItem
 struct SItem
 {
-public:
 	std::vector<SItemCell> list;
 
-public:
 	void Encode(CCoder &coder) const;
 	void Decode(CCoder &coder);
 };

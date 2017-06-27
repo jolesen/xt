@@ -7,13 +7,11 @@
 // SUserBaseInfo
 struct SUserBaseInfo
 {
-public:
 	uint id;
 	uint time;
 	uint session;
 	uint day_reset;
 
-public:
 	void Encode(CCoder &coder) const;
 	void Decode(CCoder &coder);
 };
@@ -21,13 +19,11 @@ public:
 // SUserInner
 struct SUserInner
 {
-public:
 	uint last_save;
 	UIntStringMap md5_list;
 	UIntBoolMap dirty_list;
 	UIntList hh_test;
 
-public:
 	void Encode(CCoder &coder) const;
 	void Decode(CCoder &coder);
 };
@@ -35,7 +31,6 @@ public:
 // SUser
 struct SUser
 {
-public:
 	SUserBaseInfo base;
 	STimes times;
 	SVars vars;
@@ -44,7 +39,6 @@ public:
 	SUserInner inner;
 	SItem item;
 
-public:
 	void Encode(CCoder &coder) const;
 	void Decode(CCoder &coder);
 };

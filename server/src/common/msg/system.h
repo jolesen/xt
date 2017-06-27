@@ -6,12 +6,10 @@
 // SService
 struct SService
 {
-public:
 	std::string sid;
 	std::string ip;
 	uint port;
 
-public:
 	void Encode(CCoder &coder) const;
 	void Decode(CCoder &coder);
 };
