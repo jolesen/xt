@@ -2,8 +2,6 @@
 
 # ================================
 gProject="xt"
-gRelyLibBaseDir="/usr/lib"
-gRelyLibDir="${gRelyLibBaseDir}/${gProject}-lib"
 gWorkDir=`pwd`
 gBinDir="$gWorkDir/bin"
 gConfig="$gWorkDir/runtime/config/server.list"
