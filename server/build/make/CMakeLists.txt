@@ -7,7 +7,8 @@ SET(LIBRARY_OUTPUT_PATH    ${CMAKE_SOURCE_DIR}/../bin)
 
 INCLUDE_DIRECTORIES(${SRC} /usr/local/libevent/include /usr/local/mysql/include /usr/local/mongo/include/libbson-1.0 /usr/local/mongo/include/libmongoc-1.0)
 LINK_DIRECTORIES(/usr/local/libevent/lib /usr/local/mysql/lib /usr/local/mongo/lib)
-LINK_LIBRARIES(event mysqlclient mongoc-1.0 bson-1.0)
+LINK_LIBRARIES(event)
+#LINK_LIBRARIES(event mysqlclient mongoc-1.0 bson-1.0)
 
 MESSAGE("\n")
 MESSAGE("---------------------------------")
