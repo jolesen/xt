@@ -303,7 +303,9 @@ function GetCode()
     Clean
 
     cd ~
+    mv xt/.git ./xtgit
     zip -r $gProject $gProject/ > /dev/null
+    mv ./xtgit xt/.git
     mv $gProject.zip $xt_file
     sz $xt_file
     rm -f $xt_file
