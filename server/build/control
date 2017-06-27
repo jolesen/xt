@@ -38,9 +38,9 @@ function InstallLib()
     mkdir hiredis
     mkdir hiredis/include
     mkdir hiredis/lib
-    mv /usr/local/include/hiredis/* /usr/local/hiredis/include
-    rm -rf /usr/local/include/hiredis
-    mv /usr/local/lib/libhiredis* /usr/local/hiredis/lib
+    mv include/hiredis/* hiredis/include
+    rm -rf include/hiredis
+    mv lib/libhiredis* hiredis/lib
     GotoWorkDir
     cd install
 
