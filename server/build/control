@@ -20,9 +20,29 @@ function InstallLib()
     cd install
 
     # --- basic ---
+    yum -y install git
     yum -y install wget
     yum -y install python-setuptools
     easy_install xlrd
+
+    # --- hiredis ---
+    rm -rf hiredis
+    git clone https://github.com/redis/hiredis.git
+    cd hiredis
+    make
+    make install # prefix=/usr/local
+    cd ..
+    rm -rf hiredis
+    cd /usr/local
+    rm -rf hiredis
+    mkdir hiredis
+    mkdir hiredis/include
+    mkdir hiredis/lib
+    mv /usr/local/include/hiredis/* /usr/local/hiredis/include
+    rm -rf /usr/local/include/hiredis
+    mv /usr/local/lib/libhiredis* /usr/local/hiredis/lib
+    GotoWorkDir
+    cd install
 
     # --- libtool ---
     #wget ftp://ftp.gnu.org/gnu/libtool/libtool-2.4.6.tar.gz
