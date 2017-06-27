@@ -8,7 +8,6 @@ gWorkDir=`pwd`
 gBinDir="$gWorkDir/bin"
 gConfig="$gWorkDir/runtime/config/server.list"
 gLock="$gWorkDir/control.lock"
-gPrefix="/usr/local"
 # ================================
 
 
@@ -23,12 +22,12 @@ function InstallLib()
     cd install
 
     # --- libtool ---
+    #wget ftp://ftp.gnu.org/gnu/libtool/libtool-2.4.6.tar.gz
     libtool=libtool-2.4.6
-    #wget ftp://ftp.gnu.org/gnu/libtool/$libtool.tar.gz
     rm -rf $libtool
     tar -zxf $libtool.tar.gz
     cd $libtool
-    ./configure --prefix=$gPrefix/libtool
+    ./configure --prefix=/usr/local/libtool
     make
     #make check
     make install
@@ -36,11 +35,12 @@ function InstallLib()
     rm -rf $libtool
 
     # --- libevent ---
+    #wget https://github.com/libevent/libevent/releases/download/release-2.1.8-stable/libevent-2.1.8-stable.tar.gz
     libevent=libevent-2.1.8-stable
     rm -rf $libevent
     tar -zxf $libevent.tar.gz
     cd $libevent
-    ./configure --prefix=$gPrefix/libevent
+    ./configure --prefix=/usr/local/libevent
     make
     make install
     cd ..
@@ -48,13 +48,13 @@ function InstallLib()
 
     #--- mysql-devel ---
     yum -y install ncurses-devel
+    #wget http://dev.mysql.com/get/Downloads/MySQL-5.6/mysql-5.6.22.tar.gz
     mysql=mysql-5.6.22
     rm -rf $mysql
-    #wget http://dev.mysql.com/get/Downloads/MySQL-5.6/$mysql.tar.gz
     tar -zxf $mysql.tar.gz
     cd $mysql
     ./BUILD/autorun.sh
-    ./configure --without-server --enable-thread-safe-client --prefix=$gPrefix/mysql
+    ./configure --without-server --enable-thread-safe-client --prefix=/usr/local/mysql
     make
     make install
     cd ..
@@ -66,7 +66,7 @@ function InstallLib()
     rm -rf $mongo
     tar -zxf $mongo.tar.gz
     cd $mongo
-    ./configure --prefix=$gPrefix/mongo
+    ./configure --prefix=/usr/local/mongo
     make
     make install
     cd ..
