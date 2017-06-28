@@ -14,6 +14,29 @@ function GotoWorkDir()
     cd $gWorkDir
 }
 
+function InstallServers()
+{
+    GotoWorkDir
+    cd install
+
+    # --- redis ---
+    # tcl
+    rm -rf tcl8.6.1-src
+    wget http://downloads.sourceforge.net/tcl/tcl8.6.1-src.tar.gz
+    tar -zxf tcl8.6.1-src.tar.gz
+    cd tcl8.6.1-src/unix
+    ./configure
+    make
+    make install
+    cd ..
+    rm -rf tcl8.6.1-src
+    wget http://download.redis.io/releases/redis-2.8.17.tar.gz
+    tar -zxf redis-2.8.17.tar.gz
+    cd redis-2.8.17
+    make
+    make install
+}
+
 function InstallLib()
 {
     GotoWorkDir
