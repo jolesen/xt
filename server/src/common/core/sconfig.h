@@ -13,7 +13,7 @@ public:
 
     std::string      type;
     std::string      sid;
-    FunMsgHandler    funMsgHandler;
+    FunMsgHandler    funHandleMsg;
     FunMsgIdGetter   funGetMsgId;
     FunMsgNameGetter funGetMsgName;
     SHost            host;

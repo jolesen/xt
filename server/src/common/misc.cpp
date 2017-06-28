@@ -125,7 +125,7 @@ uint CMisc::Main(uint argc, const char **argv, FunServerLoadData fun_load, FunSe
         theServerConfig.backlog       = theConfig.backlog;
         theServerConfig.clientLimit   = theConfig.clientLimit;
         theServerConfig.monitorTick   = theConfig.monitorTick;
-        theServerConfig.funMsgHandler = (theConfig.type == kServiceGate) ? CMisc::HandleGateMsg : CMisc::HandleDefaultMsg;
+        theServerConfig.funHandleMsg  = (theConfig.type == kServiceGate) ? CMisc::HandleGateMsg : CMisc::HandleDefaultMsg;
         theServerConfig.funGetMsgId   = _GetMsgId;
         theServerConfig.funGetMsgName = _GetMsgName;
         uint ret = theServer.Create();

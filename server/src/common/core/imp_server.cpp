@@ -168,7 +168,7 @@ void CServer::OnRead(bufferevent *bev, void *args)
             break;
         }
 
-        theServerConfig.funMsgHandler(*client, buff, readSize);
+        theServerConfig.funHandleMsg(*client, buff, readSize);
     }
 }
 
