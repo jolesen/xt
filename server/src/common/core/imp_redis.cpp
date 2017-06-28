@@ -13,7 +13,7 @@ CRedis::~CRedis()
 
 bool CRedis::Ping()
 {
-    const SHost host = theServerConfig.redis_host;
+    const SHost &host = theServerConfig.redis_host;
     redisContext* context = redisConnect(host.ip.c_str(), host.port);
     if(!context)
     {
