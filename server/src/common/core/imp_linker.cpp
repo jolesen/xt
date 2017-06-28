@@ -70,7 +70,7 @@ void CLinker::OnLinkRead(bufferevent *bev, void *args)
             break;
         }
 
-        theServerConfig.msgHandler(*client, buff, readSize);
+        theServerConfig.funMsgHandler(*client, buff, readSize);
     }
 }
 

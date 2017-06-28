@@ -151,7 +151,7 @@ void _WriteMsgInfo(FILE *file, bool isRead)
             countMax.value = iter->second;
         }
     }
-    std::string countMaxName = theServerConfig.msgNameGetter(countMax.id);
+    std::string countMaxName = theServerConfig.funGetMsgName(countMax.id);
 
     // msg size
     uint sizeMax   = 0;
@@ -164,7 +164,7 @@ void _WriteMsgInfo(FILE *file, bool isRead)
             sizeMsgId = iter->first;
         }
     }
-    std::string sizeMaxName = theServerConfig.msgNameGetter(sizeMsgId);
+    std::string sizeMaxName = theServerConfig.funGetMsgName(sizeMsgId);
 
     // msg total bytes
     ulong total = 0;
@@ -179,7 +179,7 @@ void _WriteMsgInfo(FILE *file, bool isRead)
             totalMsgId  = iter->first;
         }
     }
-    std::string totalMaxName = theServerConfig.msgNameGetter(totalMsgId);
+    std::string totalMaxName = theServerConfig.funGetMsgName(totalMsgId);
 
     std::string strFlag = isRead ? "READ" : "WRITE";
     fprintf(file, "MSG %-5s COUNT[%u, %s: %u], MAXSIZE[%s: %uB], TOTAL[%juB, %s: %juB]\n", strFlag.c_str(),

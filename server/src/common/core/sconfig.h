@@ -13,9 +13,9 @@ public:
 
     std::string      type;
     std::string      sid;
-    FunMsgHandler    msgHandler;
-    FunMsgIdGetter   msgIdGetter;
-    FunMsgNameGetter msgNameGetter;
+    FunMsgHandler    funMsgHandler;
+    FunMsgIdGetter   funGetMsgId;
+    FunMsgNameGetter funGetMsgName;
     SHost            host;
     SHost            httpHost;
     SHost            mongoHost;
