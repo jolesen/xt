@@ -30,13 +30,13 @@ public:
 public:
     void Start();
     void AddLinkState(const std::string &sid, uint state, uint reason);
-    bool IsDirty() { return m_dirty; }
-    void SetTidyUp() { m_dirty = false; }
+    bool IsDirty() { return mDirty; }
+    void SetTidyUp() { mDirty = false; }
 
     void OnReadMsg(uint id, uint size);
     void OnWriteMsg(uint id, uint size);
     void OnTimerTicked();
-    void OnTimerAddOrDelete(bool is_add);
+    void OnTimerAddOrDelete(bool isAdd);
     void OnOpenFd(uint fd);
     void OnHttpRequest(const std::string &uri);
     void OnClientCreated();
@@ -45,14 +45,14 @@ public:
 public:
     typedef std::map<std::string, S3UIntList> LinkStateMap; // type - 时间，id - 状态，value - 原因
 
-    LinkStateMap GetLinkState() { return m_state; }
-    SMsgInfo GetMsgRead() { return m_msg_read; }
-    SMsgInfo GetMsgWrite() { return m_msg_write; }
-    S2UInt GetTimerInfo() { return m_timer; }
-    uint GetMaxOpenFd() { return m_max_fd; }
-    uint GetHttpRequestCount() { return m_http_count; }
-    uint GetClientCreatedCount() { return m_client_created; }
-    uint GetClientPoolSize() { return m_client_pool; }
+    LinkStateMap GetLinkState() { return mState; }
+    SMsgInfo GetMsgRead() { return mMsgRead; }
+    SMsgInfo GetMsgWrite() { return mMsgWrite; }
+    S2UInt GetTimerInfo() { return mTimer; }
+    uint GetMaxOpenFd() { return mMaxFd; }
+    uint GetHttpRequestCount() { return mHttpCount; }
+    uint GetClientCreatedCount() { return mClientCreated; }
+    uint GetClientPoolSize() { return mClientPool; }
 
 private:
     friend CMonitor& CSingleton<CMonitor>::Instance();
@@ -60,16 +60,16 @@ private:
     ~CMonitor();
 
 private:
-    CMonitorThread m_thread;
-    LinkStateMap   m_state;
-    SMsgInfo       m_msg_read;
-    SMsgInfo       m_msg_write;
-    S2UInt         m_timer; // id - count, value - ticked;
-    uint           m_max_fd;
-    uint           m_http_count;
-    uint           m_client_created;
-    uint           m_client_pool;
-    bool           m_dirty;
+    CMonitorThread mThread;
+    LinkStateMap   mState;
+    SMsgInfo       mMsgRead;
+    SMsgInfo       mMsgWrite;
+    S2UInt         mTimer; // id - count, value - ticked;
+    uint           mMaxFd;
+    uint           mHttpCount;
+    uint           mClientCreated;
+    uint           mClientPool;
+    bool           mDirty;
 };
 #define theMonitor CSingleton<CMonitor>::Instance()
 

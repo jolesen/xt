@@ -6,12 +6,12 @@ void CUsers::Add(uint uid, uint session)
     user.id    = uid;
     user.value = session;
 
-    m_users[uid] = user;
+    mUsers[uid] = user;
 }
 
 bool CUsers::Auth(uint uid, uint session)
 {
-    IF_FIND(m_users, uid, iter)
+    IF_FIND(mUsers, uid, iter)
     {
         if(iter->second.value == session)
         {

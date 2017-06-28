@@ -6,7 +6,7 @@
 // SEventBase
 struct SEventBase
 {
-    bool is_delete;
+    bool isDelete;
 };
 
 // CEvent
@@ -32,7 +32,7 @@ private:
     ~CEvent();
 
 private:
-    std::map<std::string, std::vector<SEventInfo> > m_handlers;
+    std::map<std::string, std::vector<SEventInfo> > mHandlers;
 };
 #define theEvent CSingleton<CEvent>::Instance()
 

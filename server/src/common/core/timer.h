@@ -37,7 +37,7 @@ struct STimerEvent
 class CTimer
 {
 public:
-    void Init(event_base* base) { m_base = base; }
+    void Init(event_base* base) { mBase = base; }
     void Delete(uint id);
 
     // loops is 0 if infinite, return timer's id
@@ -60,9 +60,9 @@ private:
     CTimer();
     ~CTimer();
 
-    event_base *m_base;
-    uint        m_seq;
-    std::map<uint, STimerEvent*> m_events;
+    event_base *mBase;
+    uint        mSeq;
+    std::map<uint, STimerEvent*> mEvents;
 };
 #define theTimer CSingleton<CTimer>::Instance()
 

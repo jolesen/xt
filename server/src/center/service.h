@@ -14,11 +14,11 @@ private:
 public:
     typedef std::map<std::string, SService> StringServiceMap;
 
-    const StringServiceMap& GetServices() { return m_service; }
-    void AddService(const SService &service) { m_service[service.sid] = service; }
+    const StringServiceMap& GetServices() { return mService; }
+    void AddService(const SService &service) { mService[service.sid] = service; }
 
 private:
-    StringServiceMap m_service;
+    StringServiceMap mService;
 };
 #define theServiceManager CSingleton<CServiceManager>::Instance()
 

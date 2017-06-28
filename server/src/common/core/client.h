@@ -24,20 +24,20 @@ public:
 
     void SetPassive(const SHost &host, bufferevent *bev); // accepted
     void SetActive(const SHost &host, const std::string &sid); // connect to
-    uint Connect(event_base *base, FunConnected fun_connected);
-    uint Read(char *buff, uint buff_size, uint &read_size);
+    uint Connect(event_base *base, FunConnected funConnected);
+    uint Read(char *buff, uint buffSize, uint &readSize);
     uint Write(const char *buff, uint size);
     uint Write(const CMsgBase *msg);
     void Close();
 
-    uint GetId() const { return m_id; }
-    uint GetState() const { return m_state; }
-    uint GetType() const { return m_type; }
-    uint GetFd() const { return m_bev ? bufferevent_getfd(m_bev) : 0; }
-    const SHost& GetHost() const { return m_host; }
-    const std::string& GetServerId() const { return m_sid; }
-    void SetId(uint value) { m_id = value; }
-    void SetState(uint state) { m_state = state; }
+    uint GetId() const { return mId; }
+    uint GetState() const { return mState; }
+    uint GetType() const { return mType; }
+    uint GetFd() const { return mBev ? bufferevent_getfd(mBev) : 0; }
+    const SHost& GetHost() const { return mHost; }
+    const std::string& GetServerId() const { return mSid; }
+    void SetId(uint value) { mId = value; }
+    void SetState(uint state) { mState = state; }
 
 private:
     friend class CClientPool;
@@ -48,12 +48,12 @@ private:
     void Init(const SHost &host, bufferevent *bev, const std::string &sid);
 
 private:
-    bufferevent* m_bev;
-    std::string  m_sid;
-    SHost        m_host;
-    uint         m_id;
-    uint         m_state;
-    uint         m_type;
+    bufferevent* mBev;
+    std::string  mSid;
+    SHost        mHost;
+    uint         mId;
+    uint         mState;
+    uint         mType;
 };
 typedef std::unordered_map<uint, CClient*> FdClientMap; // key - fd
 typedef std::unordered_map<uint, CClient*> IdClientMap; // key - id
@@ -65,7 +65,7 @@ class CClientPool
 public:
     CClient* Get();
     void Recycle(CClient *client);
-    uint GetPoolSize() { return m_list.size(); }
+    uint GetPoolSize() { return mList.size(); }
 
 private:
     friend CClientPool& CSingleton<CClientPool>::Instance();
@@ -74,7 +74,7 @@ private:
     void BatchCreate();
 
 private:
-    std::queue<CClient*> m_list;
+    std::queue<CClient*> mList;
 };
 #define theClientPool CSingleton<CClientPool>::Instance()
 

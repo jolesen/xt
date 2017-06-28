@@ -20,7 +20,7 @@ struct SDailyResets
 };
 cmsg QValueDailyResetList();
 cmsg RValueDailyResetList();
-cmsg RValueDailyResetModified(S2UInt daily_reset);
+cmsg RValueDailyResetModified(S2UInt dailyReset);
 
 struct SCounts
 {

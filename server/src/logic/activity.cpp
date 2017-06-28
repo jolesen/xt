@@ -19,26 +19,26 @@ void HandleAction(SUser &user, uint action)
             continue;
         }
 
-        FORMAP(iter->second, iter_action)
+        FORMAP(iter->second, iterAction)
         {
-            if(iter_action->first == action)
+            if(iterAction->first == action)
             {
-                iter_action->second(user, *cfg);
-                //LOG_DEBUG("cfg_id=%u, action=%u", iter->first, iter_action->first);
+                iterAction->second(user, *cfg);
+                //LOG_DEBUG("cfg_id=%u, action=%u", iter->first, iterAction->first);
             }
         }
     }
 }
 
-bool RegisterAction(uint id, uint action, FunActivityAction fun_action)
+bool RegisterAction(uint id, uint action, FunActivityAction funAction)
 {
     IF_NFIND(theData.actions, id, iter)
     {
-        theData.actions[id][action] = fun_action;
+        theData.actions[id][action] = funAction;
     }
     else
     {
-        (iter->second)[action] = fun_action;
+        (iter->second)[action] = funAction;
     }
 
     return true;

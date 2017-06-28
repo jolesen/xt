@@ -7,7 +7,7 @@
 
 void TestMongo()
 {
-    theServerConfig.mongo_host = SHost("127.0.0.1", 27017);
+    theServerConfig.mongoHost = SHost("127.0.0.1", 27017);
     theMongo.Ping();
     StringList list;
     theMongo.Query(list, "mydb", "user");
@@ -19,7 +19,7 @@ void TestMongo()
 
 void TestRedis()
 {
-    theServerConfig.redis_host = SHost("127.0.0.1", 6379);
+    theServerConfig.redisHost = SHost("127.0.0.1", 6379);
     if(theRedis.Ping())
     {
         LOG_INFO("ping redis server ok");

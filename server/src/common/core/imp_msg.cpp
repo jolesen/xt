@@ -16,8 +16,8 @@ void CMsgBase::Encode(CCoder &coder) const
     coder << header.id;
     if(header.type == kMsgTypeSystem)
     {
-        coder << header.src_sid;
-        coder << header.dst_sid;
+        coder << header.srcSid;
+        coder << header.dstSid;
     }
 
     // body
@@ -34,8 +34,8 @@ void CMsgBase::Decode(CCoder &coder)
     coder >> header.id;
     if(header.type == kMsgTypeSystem)
     {
-        coder >> header.src_sid;
-        coder >> header.dst_sid;
+        coder >> header.srcSid;
+        coder >> header.dstSid;
     }
 
     // body
@@ -55,8 +55,8 @@ bool CMsgs::Register(CMsgBase* msg, FunMsg executor, const std::string &name)
 {
     if(msg)
     {
-        m_funs[msg->header.id]  = executor;
-        m_msgs[msg->header.id]  = msg;
+        mFuns[msg->header.id]  = executor;
+        mMsgs[msg->header.id]  = msg;
     }
 
     return true;
@@ -64,7 +64,7 @@ bool CMsgs::Register(CMsgBase* msg, FunMsg executor, const std::string &name)
 
 CMsgBase* CMsgs::Create(uint id)
 {
-    IF_FIND(m_msgs, id, iter)
+    IF_FIND(mMsgs, id, iter)
     {
         return iter->second;
     }
@@ -76,7 +76,7 @@ void CMsgs::Execute(const CMsgBase *msg)
 {
     if(msg)
     {
-        IF_FIND(m_funs, msg->header.id, iter)
+        IF_FIND(mFuns, msg->header.id, iter)
         {
             (iter->second)(msg);
         }

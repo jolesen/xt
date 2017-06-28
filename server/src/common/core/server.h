@@ -15,11 +15,11 @@ public:
     CClient* GetClientByFd(uint fd);
     CClient* GetClientById(uint id);
 
-    event_base* GetEventBase() { return m_base; }
-    uint GetListenFd() { return evconnlistener_get_fd(m_listener); }
-    uint GetClientCount() { return m_fdClient.size(); }
-    FdClientMap& GetFdClient() { return m_fdClient; }
-    uint GetStartTime() { return m_start_time; }
+    event_base* GetEventBase() { return mBase; }
+    uint GetListenFd() { return evconnlistener_get_fd(mListener); }
+    uint GetClientCount() { return mFdClient.size(); }
+    FdClientMap& GetFdClient() { return mFdClient; }
+    uint GetStartTime() { return mStartTime; }
     uint GetFdErrorCode(short events);
 
 private:
@@ -33,12 +33,12 @@ private:
     static void OnRead(bufferevent *bev, void *args);
 
 private:
-    FdClientMap     m_fdClient;
-    IdClientMap     m_idClient;
-    event_base*     m_base;
-    evconnlistener* m_listener;
-    CHttpServer     m_http;
-    uint            m_start_time;
+    FdClientMap     mFdClient;
+    IdClientMap     mIdClient;
+    event_base*     mBase;
+    evconnlistener* mListener;
+    CHttpServer     mHttp;
+    uint            mStartTime;
 };
 #define theServer CSingleton<CServer>::Instance()
 

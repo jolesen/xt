@@ -6,30 +6,30 @@ void SUserBaseInfo::Encode(CCoder &coder) const
 	coder << id;
 	coder << time;
 	coder << session;
-	coder << day_reset;
+	coder << dayReset;
 }
 void SUserBaseInfo::Decode(CCoder &coder)
 {
 	coder >> id;
 	coder >> time;
 	coder >> session;
-	coder >> day_reset;
+	coder >> dayReset;
 }
 
 //SUserInner
 void SUserInner::Encode(CCoder &coder) const
 {
-	coder << last_save;
-	coder << md5_list;
-	coder << dirty_list;
-	coder << hh_test;
+	coder << lastSave;
+	coder << md5List;
+	coder << dirtyList;
+	coder << hhTest;
 }
 void SUserInner::Decode(CCoder &coder)
 {
-	coder >> last_save;
-	coder >> md5_list;
-	coder >> dirty_list;
-	coder >> hh_test;
+	coder >> lastSave;
+	coder >> md5List;
+	coder >> dirtyList;
+	coder >> hhTest;
 }
 
 //SUser
@@ -39,7 +39,7 @@ void SUser::Encode(CCoder &coder) const
 	times.Encode(coder);
 	vars.Encode(coder);
 	counts.Encode(coder);
-	daily_resets.Encode(coder);
+	dailyResets.Encode(coder);
 	inner.Encode(coder);
 	item.Encode(coder);
 }
@@ -49,7 +49,7 @@ void SUser::Decode(CCoder &coder)
 	times.Decode(coder);
 	vars.Decode(coder);
 	counts.Decode(coder);
-	daily_resets.Decode(coder);
+	dailyResets.Decode(coder);
 	inner.Decode(coder);
 	item.Decode(coder);
 }
@@ -117,9 +117,9 @@ void RUserLogin::DecodeBody(CCoder &coder)
 //QUserLogout
 void QUserLogout::EncodeBody(CCoder &coder) const
 {
-	//test_map_i
-	coder << (uint)test_map_i.size();
-	for(std::map<uint, SDailyResets>::const_iterator iter = test_map_i.begin(); iter != test_map_i.end(); ++iter)
+	//testMapI
+	coder << (uint)testMapI.size();
+	for(std::map<uint, SDailyResets>::const_iterator iter = testMapI.begin(); iter != testMapI.end(); ++iter)
 	{
 		coder << iter->first;
 		iter->second.Encode(coder);
@@ -127,9 +127,9 @@ void QUserLogout::EncodeBody(CCoder &coder) const
 	}
 	coder << ivalue;
 	coder << vvalue;
-	//test_map_s
-	coder << (uint)test_map_s.size();
-	for(std::map<std::string, SDailyResets>::const_iterator iter = test_map_s.begin(); iter != test_map_s.end(); ++iter)
+	//testMapS
+	coder << (uint)testMapS.size();
+	for(std::map<std::string, SDailyResets>::const_iterator iter = testMapS.begin(); iter != testMapS.end(); ++iter)
 	{
 		coder << iter->first;
 		iter->second.Encode(coder);
@@ -138,8 +138,8 @@ void QUserLogout::EncodeBody(CCoder &coder) const
 }
 void QUserLogout::DecodeBody(CCoder &coder)
 {
-	//test_map_i
-	test_map_i.clear();
+	//testMapI
+	testMapI.clear();
 	uint len_0 = 0;
 	coder >> len_0;
 	FOR(len_0, i)
@@ -149,12 +149,12 @@ void QUserLogout::DecodeBody(CCoder &coder)
 		coder >> key;
 		value.Decode(coder);
 		if(coder.HasError()) { break; }
-		test_map_i[key] = value;
+		testMapI[key] = value;
 	}
 	coder >> ivalue;
 	coder >> vvalue;
-	//test_map_s
-	test_map_s.clear();
+	//testMapS
+	testMapS.clear();
 	uint len_3 = 0;
 	coder >> len_3;
 	FOR(len_3, i)
@@ -164,7 +164,7 @@ void QUserLogout::DecodeBody(CCoder &coder)
 		coder >> key;
 		value.Decode(coder);
 		if(coder.HasError()) { break; }
-		test_map_s[key] = value;
+		testMapS[key] = value;
 	}
 }
 

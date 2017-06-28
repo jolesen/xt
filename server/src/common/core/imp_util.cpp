@@ -89,19 +89,19 @@ StringList CUtil::SplitString(const std::string &strBase, const std::string &str
         return result;
     }
 
-    uint from_index      = 0;
-    size_t spliter_index = 0;
-    while((spliter_index = strBase.find(strSpliter, from_index)) != std::string::npos)
+    uint fromIndex      = 0;
+    size_t spliterIndex = 0;
+    while((spliterIndex = strBase.find(strSpliter, fromIndex)) != std::string::npos)
     {
-        result.push_back(strBase.substr(from_index, spliter_index));
+        result.push_back(strBase.substr(fromIndex, spliterIndex));
 
-        from_index = spliter_index + 1;
+        fromIndex = spliterIndex + 1;
     }
 
     // last one
-    if(from_index <= (uint)(strBase.size() - 1))
+    if(fromIndex <= (uint)(strBase.size() - 1))
     {
-        result.push_back(strBase.substr(from_index, strBase.size() - 1));
+        result.push_back(strBase.substr(fromIndex, strBase.size() - 1));
     }
 
     return result;
@@ -225,14 +225,14 @@ uint CUtil::RandIndex(UIntList probs, uint size)
     return 0;
 }
 
-bool CUtil::RandMany(UIntList &result_list, uint min, uint max, uint count, bool is_diff)
+bool CUtil::RandMany(UIntList &listResult, uint min, uint max, uint count, bool isDiff)
 {
     if(max < min)
     {
         return false;
     }
 
-    if(is_diff)
+    if(isDiff)
     {
         if(min + count > max)
         {
@@ -248,7 +248,7 @@ bool CUtil::RandMany(UIntList &result_list, uint min, uint max, uint count, bool
 
         FOR(count, i)
         {
-            result_list.push_back(list[i]);
+            listResult.push_back(list[i]);
         }
     }
     else
@@ -256,7 +256,7 @@ bool CUtil::RandMany(UIntList &result_list, uint min, uint max, uint count, bool
         FOR(count, i)
         {
             uint rand = Rand(min, max);
-            result_list.push_back(rand);
+            listResult.push_back(rand);
         }
     }
 

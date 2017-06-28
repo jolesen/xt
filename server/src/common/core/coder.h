@@ -11,9 +11,9 @@ public:
     ~CCoder();
 
 public:
-    char* GetBuffer() { return m_begin; }
-    uint  GetCodedSize() { return (m_offset - m_begin); }
-    bool  HasError() { return m_error; }
+    char* GetBuffer() { return mBegin; }
+    uint  GetCodedSize() { return (mOffset - mBegin); }
+    bool  HasError() { return mError; }
 
     #define CODE(T)  void operator <<(const T &value); void operator >>(T &value)
     CODE(bool);
@@ -56,10 +56,10 @@ public:
     #undef CODE
 
 private:
-    char* m_begin;
-    char* m_offset;
-    uint  m_size;
-    bool  m_error;
+    char* mBegin;
+    char* mOffset;
+    uint  mSize;
+    bool  mError;
 };
 
 #endif

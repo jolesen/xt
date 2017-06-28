@@ -25,7 +25,7 @@ public:
     static uint Rand(uint min, uint max);
     static uint Rand(uint value) { return Rand(0, value); }
     static uint RandIndex(UIntList probs, uint size);
-    static bool RandMany(UIntList& result_list, uint min, uint max, uint count, bool is_diff);
+    static bool RandMany(UIntList& listResult, uint min, uint max, uint count, bool isDiff);
 
 private:
     CUtil();

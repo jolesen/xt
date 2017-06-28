@@ -3,7 +3,7 @@
 // CThread
 CThread::CThread()
 {
-    m_started = false;
+    mStarted = false;
 }
 
 CThread::~CThread()
@@ -27,24 +27,24 @@ void* _RunThread(void *thread)
 
 void CThread::Start()
 {
-    if(!m_started)
+    if(!mStarted)
     {
-        pthread_attr_init(&m_attr);
-        pthread_attr_setscope(&m_attr, PTHREAD_SCOPE_SYSTEM);
-        pthread_attr_setdetachstate(&m_attr, PTHREAD_CREATE_JOINABLE);
+        pthread_attr_init(&mAttr);
+        pthread_attr_setscope(&mAttr, PTHREAD_SCOPE_SYSTEM);
+        pthread_attr_setdetachstate(&mAttr, PTHREAD_CREATE_JOINABLE);
 
-        pthread_create(&m_thread, &m_attr, _RunThread, (void*)this);
+        pthread_create(&mThread, &mAttr, _RunThread, (void*)this);
 
-        m_started = true;
+        mStarted = true;
     }
 }
 
 void CThread::Stop()
 {
-    if(m_started)
+    if(mStarted)
     {
-        pthread_join(m_thread, NULL);
+        pthread_join(mThread, NULL);
     }
 
-    m_started = false;
+    mStarted = false;
 }

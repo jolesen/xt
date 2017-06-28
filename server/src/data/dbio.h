@@ -23,11 +23,11 @@ private:
     typedef std::map<uint, SUser*> LoadingMap;
     typedef std::vector<SUser*>    LoadedList;
 
-    LoadingMap m_loadings;
-    LoadedList m_loadeds;
-    CMutex     m_mutex_loading;
-    CMutex     m_mutex_loaded;
-    CMysql     m_mysql;
+    LoadingMap mLoadings;
+    LoadedList mLoadeds;
+    CMutex     mMutexLoading;
+    CMutex     mMutexLoaded;
+    CMysql     mMysql;
 };
 
 // CSaver
@@ -48,9 +48,9 @@ private:
 private:
     typedef std::map<uint, bool> DirtyUserMap;
 
-    CMysql       m_mysql;
-    CMutex       m_mutex;
-    DirtyUserMap m_dirties;
+    CMysql       mMysql;
+    CMutex       mMutex;
+    DirtyUserMap mDirties;
 };
 
 // CDBIniter

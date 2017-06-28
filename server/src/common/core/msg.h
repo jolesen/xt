@@ -13,8 +13,8 @@ struct SMsgHeader
     uint id;
 
     // 内部消息
-    std::string src_sid;
-    std::string dst_sid;
+    std::string srcSid;
+    std::string dstSid;
 
     // 辅助参数，不参与编码
     uint type; // 消息类型
@@ -60,8 +60,8 @@ private:
     ~CMsgs();
 
 private:
-    std::unordered_map<uint, CMsgBase*> m_msgs;
-    std::unordered_map<uint, FunMsg>    m_funs;
+    std::unordered_map<uint, CMsgBase*> mMsgs;
+    std::unordered_map<uint, FunMsg>    mFuns;
 };
 #define theMsgs CSingleton<CMsgs>::Instance()
 

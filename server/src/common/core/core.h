@@ -152,11 +152,11 @@ public:
         // static T t;
         // return t;
 
-        if(!m_instance)
+        if(!mInstance)
         {
-            m_instance = new T();
+            mInstance = new T();
         }
-        return *m_instance;
+        return *mInstance;
     }
 
 private:
@@ -167,9 +167,9 @@ private:
     CSingleton<T>& operator= (const CSingleton<T> &);
 
 private:
-    static T *m_instance;
+    static T *mInstance;
 };
 template<class T>
-T* CSingleton<T>::m_instance = NULL;
+T* CSingleton<T>::mInstance = NULL;
 
 #endif

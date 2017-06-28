@@ -3,16 +3,16 @@ struct SUserBaseInfo
     uint id;
     uint time;
     uint session;
-    uint day_reset;
+    uint dayReset;
 };
 
 // 内部使用
 struct SUserInner
 {
-    uint last_save; // 上一次保存的时间
-    UIntStringMap md5_list; // used in logic
-    UIntBoolMap dirty_list; // used in data
-    UIntList hh_test;
+    uint lastSave; // 上一次保存的时间
+    UIntStringMap md5List; // used in logic
+    UIntBoolMap dirtyList; // used in data
+    UIntList hhTest;
 };
 
 struct SUser
@@ -21,7 +21,7 @@ struct SUser
     STimes        times;
     SVars         vars;
     SCounts       counts;
-    SDailyResets  daily_resets;
+    SDailyResets  dailyResets;
     SUserInner    inner;
     SItem         item;
 };
@@ -35,7 +35,7 @@ cmsg RUserErrorCode(uint code, UIntList flags);
 cmsg QUserLogin(uint uid, uint session);
 cmsg RUserLogin(uint flag, uint uid, uint session);
 
-cmsg QUserLogout(std::map<uint, SDailyResets> test_map_i, uint ivalue, UIntList vvalue, std::map<std::string, SDailyResets> test_map_s);
+cmsg QUserLogout(std::map<uint, SDailyResets> testMapI, uint ivalue, UIntList vvalue, std::map<std::string, SDailyResets> testMapS);
 cmsg RUserLogout(uint flag, StringList vtest);
 
 cmsg RMsgTest(UIntUIntMap test);

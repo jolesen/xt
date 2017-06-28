@@ -4,18 +4,18 @@
 #include "common/misc.h"
 #include "cacher.h"
 
-CCacher* CCacher::m_instance = NULL;
+CCacher* CCacher::mInstance = NULL;
 
 bool CCacher::Init()
 {
-    m_instance = this;
+    mInstance = this;
 
-    if(!m_loader.Init())
+    if(!mLoader.Init())
     {
         return false;
     }
 
-    if(!m_saver.Init())
+    if(!mSaver.Init())
     {
         return false;
     }
@@ -25,13 +25,13 @@ bool CCacher::Init()
 
 void CCacher::Start()
 {
-    m_loader.Start();
-    m_saver.Start();
+    mLoader.Start();
+    mSaver.Start();
 }
 
 SUser* CCacher::Find(uint uid)
 {
-    IF_FIND(m_users, uid, iter)
+    IF_FIND(mUsers, uid, iter)
     {
         return iter->second;
     }
@@ -45,21 +45,21 @@ void CCacher::Load(uint uid, uint session)
     user->base.id      = uid;
     user->base.session = session;
 
-    m_loader.Load(user);
+    mLoader.Load(user);
 }
 
 void CCacher::Save(uint uid, const std::map<uint, SBytes> &modules)
 {
     FORMAP(modules, iter)
     {
-        m_saver.DecodeModule(uid, iter->first, iter->second);
+        mSaver.DecodeModule(uid, iter->first, iter->second);
     }
 }
 
 void CCacher::CheckLoaded()
 {
     std::vector<SUser*> list;
-    m_loader.GetLoadedList(list);
+    mLoader.GetLoadedList(list);
 
     if(list.size() == 0)
     {
@@ -74,7 +74,7 @@ void CCacher::CheckLoaded()
         if(flag == 0)
         {
             user->base.time = CTime::Now();
-            m_users[user->base.id] = user;
+            mUsers[user->base.id] = user;
         }
         else
         {
@@ -97,10 +97,10 @@ void CCacher::CheckLoaded()
 
 void CCacher::Remove(uint uid)
 {
-    IF_FIND(m_users, uid, iter)
+    IF_FIND(mUsers, uid, iter)
     {
         SUser *user = iter->second;
-        m_users.erase(iter);
+        mUsers.erase(iter);
 
         delete user;
     }

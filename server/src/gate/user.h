@@ -13,10 +13,10 @@ public:
     ~CUser(){ }
 
 public:
-    LoginingMap& GetLoginings() { return m_loginings; }
+    LoginingMap& GetLoginings() { return mLoginings; }
 
 private:
-    LoginingMap m_loginings;
+    LoginingMap mLoginings;
 };
 #define theUser CSingleton<CUser>::Instance()
 

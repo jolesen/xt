@@ -42,14 +42,14 @@ public:
 
 private:
     void FreeResult();
-    bool IsConnected() { return m_connected; }
+    bool IsConnected() { return mConnected; }
 
 private:
-    MYSQL*         m_mysql;
-    MYSQL_RES*     m_result;
-    MYSQL_ROW      m_row;
-    unsigned long* m_fields;
-    bool           m_connected;
+    MYSQL*         mMysql;
+    MYSQL_RES*     mResult;
+    MYSQL_ROW      mRow;
+    unsigned long* mFields;
+    bool           mConnected;
 };
 
 #endif

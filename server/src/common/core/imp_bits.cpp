@@ -10,35 +10,35 @@ CBits::~CBits()
 
 void CBits::Set(uint index, bool value)
 {
-    uint arr_index = index / UINT_BITS;
-    uint bit_index = index % UINT_BITS;
+    uint arrIndex = index / UINT_BITS;
+    uint bitIndex = index % UINT_BITS;
 
-    if(arr_index >= m_values.size()) // 扩容
+    if(arrIndex >= mValues.size()) // 扩容
     {
-        FOR(arr_index - m_values.size() + 1, i)
+        FOR(arrIndex - mValues.size() + 1, i)
         {
-            m_values.push_back(0);
+            mValues.push_back(0);
         }
     }
 
     if(value)
     {
-        m_values[arr_index] |= (1 << bit_index);
+        mValues[arrIndex] |= (1 << bitIndex);
     }
     else
     {
-        m_values[arr_index] &= ~(1 << bit_index);
+        mValues[arrIndex] &= ~(1 << bitIndex);
     }
 }
 
 bool CBits::Get(uint index)
 {
-    uint arr_index = index / UINT_BITS;
-    if(arr_index >= m_values.size())
+    uint arrIndex = index / UINT_BITS;
+    if(arrIndex >= mValues.size())
     {
         return false;
     }
 
-    uint bit_index = index % UINT_BITS;
-    return m_values[arr_index] & (1 << bit_index);
+    uint bitIndex = index % UINT_BITS;
+    return mValues[arrIndex] & (1 << bitIndex);
 }

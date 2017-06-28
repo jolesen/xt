@@ -41,7 +41,7 @@ void CMisc::BroadcastUsers(CMsgBase *msg, uint type, const UIntList *users)
     {
         req.guids.push_back(list[i]);
 
-        if(req.guids.size() >= theConfig.broadcast_max)
+        if(req.guids.size() >= theConfig.broadcastMax)
         {
             //SEND_GATE(req);
             req.guids.clear();
@@ -116,18 +116,18 @@ uint CMisc::Main(uint argc, const char **argv, FunServerLoadData fun_load, FunSe
         }
 
         // 创建服务器
-        theServerConfig.type            = theConfig.type;
-        theServerConfig.sid             = theConfig.sid;
-        theServerConfig.host            = theConfig.host;
-        theServerConfig.http_host       = theConfig.http_host;
-        theServerConfig.mongo_host      = theConfig.mongo_host;
-        theServerConfig.redis_host      = theConfig.redis_host;
-        theServerConfig.backlog         = theConfig.backlog;
-        theServerConfig.client_limit    = theConfig.client_limit;
-        theServerConfig.monitor_tick    = theConfig.monitor_tick;
-        theServerConfig.msg_handler     = (theConfig.type == kServiceGate) ? CMisc::HandleGateMsg : CMisc::HandleDefaultMsg;
-        theServerConfig.msg_id_getter   = _GetMsgId;
-        theServerConfig.msg_name_getter = _GetMsgName;
+        theServerConfig.type          = theConfig.type;
+        theServerConfig.sid           = theConfig.sid;
+        theServerConfig.host          = theConfig.host;
+        theServerConfig.httpHost      = theConfig.httpHost;
+        theServerConfig.mongoHost     = theConfig.mongoHost;
+        theServerConfig.redisHost     = theConfig.redisHost;
+        theServerConfig.backlog       = theConfig.backlog;
+        theServerConfig.clientLimit   = theConfig.clientLimit;
+        theServerConfig.monitorTick   = theConfig.monitorTick;
+        theServerConfig.msgHandler    = (theConfig.type == kServiceGate) ? CMisc::HandleGateMsg : CMisc::HandleDefaultMsg;
+        theServerConfig.msgIdGetter   = _GetMsgId;
+        theServerConfig.msgNameGetter = _GetMsgName;
         uint ret = theServer.Create();
         if(ret)
         {

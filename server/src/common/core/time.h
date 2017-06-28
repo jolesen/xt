@@ -44,7 +44,7 @@ public:
     static bool IsToday(uint t) { return IsSameDay(t, Now()); }
 
     // getter
-    static uint GetSubDay(uint time_a, uint time_b);
+    static uint GetSubDay(uint timeA, uint timeB);
     static uint GetMonthMaxDay(uint year, uint month);
     static uint GetZeroTime(uint time);
     static uint GetYearMaxDay(uint year) { return IS_LEAP_YEAR(year) ? 366 : 365; }

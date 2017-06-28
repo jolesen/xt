@@ -49,10 +49,10 @@ bool CTester::TestModify(const STimerInfo &info)
 }
 
 // ----------------------------------------------
-uint ts_begin    = 0;
-uint ts_show     = 0;
-uint ls_packets  = 0;
-ulong total_count = 0;
+uint tsBegin    = 0;
+uint tsShow     = 0;
+uint lsPackets  = 0;
+ulong totalCount = 0;
 MSG_USER(QTestTime)
 {
     uint key;
@@ -88,21 +88,21 @@ MSG_USER(QTestTime)
     EVENT(SEventLogin, user);
 
     // SHOW
-    ++total_count;
+    ++totalCount;
     uint now = CTime::Now();
-    if(ts_begin == 0)
+    if(tsBegin == 0)
     {
-        ts_begin = now;
+        tsBegin = now;
     }
 
-    if(now - ts_show > 0)
+    if(now - tsShow > 0)
     {
-        if(now - ts_begin > 0)
+        if(now - tsBegin > 0)
         {
-            LOG_INFO("DUR=%u, PK=%llu, LSP=%u, APPS=%u", (now - ts_begin), total_count, total_count - ls_packets, total_count / (now - ts_begin));
+            LOG_INFO("DUR=%u, PK=%llu, LSP=%u, APPS=%u", (now - tsBegin), totalCount, totalCount - lsPackets, totalCount / (now - tsBegin));
 
-            ts_show    = now;
-            ls_packets = total_count;
+            tsShow    = now;
+            lsPackets = totalCount;
         }
     }
 }

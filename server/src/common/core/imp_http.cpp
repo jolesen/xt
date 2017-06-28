@@ -16,35 +16,35 @@ CHttpServer::~CHttpServer()
 
 void CHttpServer::Free()
 {
-    if(m_http)
+    if(mHttp)
     {
-        evhttp_free(m_http);
+        evhttp_free(mHttp);
     }
 }
 
 uint CHttpServer::Create(event_base* base)
 {
-    const SHost  &host = theServerConfig.http_host;
+    const SHost  &host = theServerConfig.httpHost;
     if((host.ip == "") || !host.port)
     {
         return 0;
     }
 
-    m_http = evhttp_new(base);
-    if(!m_http)
+    mHttp = evhttp_new(base);
+    if(!mHttp)
     {
         return ERR_CORE_SERVER_HTTP_HTTP_NEW;
     }
 
     // bind
-    uint ret = evhttp_bind_socket(m_http, host.ip.c_str(), host.port);
+    uint ret = evhttp_bind_socket(mHttp, host.ip.c_str(), host.port);
     if(ret)
     {
         return ERR_CORE_SERVER_HTTP_BIND_SOCKET;
     }
 
     // callback
-    evhttp_set_gencb(m_http, CHttpServer::OnHttpRequest, NULL);
+    evhttp_set_gencb(mHttp, CHttpServer::OnHttpRequest, NULL);
 
     return 0;
 }

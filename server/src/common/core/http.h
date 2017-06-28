@@ -18,7 +18,7 @@ private:
     static void OnHttpRequest(evhttp_request* request, void* args);
 
 private:
-    evhttp* m_http;
+    evhttp* mHttp;
 };
 
 #endif

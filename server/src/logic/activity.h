@@ -17,7 +17,7 @@ namespace activity
 
     // public
     void HandleAction(SUser &user, uint action);
-    bool RegisterAction(uint id, uint action, FunActivityAction fun_action);
+    bool RegisterAction(uint id, uint action, FunActivityAction funAction);
 }
 
 // ACTIVITY_FUNC(ID - acitvity id, A - action)

@@ -14,14 +14,14 @@ bool Query(CMysql &mysql, uint max, uint uid, UIntList &list, const char* table)
 
     std::ostringstream stream;
     stream << "SELECT ";
-    char str_temp[64] = { 0 };
+    char strTemp[64] = { 0 };
     FOR(max, i)
     {
-        snprintf(str_temp, sizeof(str_temp), (i != max - 1) ? "`v%u`," : "`v%u`", i);
-        stream << str_temp;
+        snprintf(strTemp, sizeof(strTemp), (i != max - 1) ? "`v%u`," : "`v%u`", i);
+        stream << strTemp;
     }
-    snprintf(str_temp, sizeof(str_temp), " FROM `%s` WHERE `uid` = %u;", table, uid);
-    stream << str_temp;
+    snprintf(strTemp, sizeof(strTemp), " FROM `%s` WHERE `uid` = %u;", table, uid);
+    stream << strTemp;
 
     // QUERY
     QUERY(stream.str().c_str())
@@ -49,34 +49,34 @@ void Save(StringList &sqls, uint uid, const UIntList &list, const char* table)
     if(list.size() > 0)
     {
         std::ostringstream stream;
-        std::ostringstream stream_param;
-        std::ostringstream stream_value;
-        char str_temp[64] = { 0 };
+        std::ostringstream streamParam;
+        std::ostringstream streamValue;
+        char strTemp[64] = { 0 };
 
-        snprintf(str_temp, sizeof(str_temp), "INSERT INTO `%s`(`uid`, ", table);
-        stream << str_temp;
+        snprintf(strTemp, sizeof(strTemp), "INSERT INTO `%s`(`uid`, ", table);
+        stream << strTemp;
 
         FORLIST(list, i)
         {
             if(i != list.size() - 1)
             {
-                snprintf(str_temp, sizeof(str_temp), "`v%u`,", i);
-                stream_param << str_temp;
+                snprintf(strTemp, sizeof(strTemp), "`v%u`,", i);
+                streamParam << strTemp;
 
-                snprintf(str_temp, sizeof(str_temp), "%u,", list[i]);
-                stream_value << str_temp;
+                snprintf(strTemp, sizeof(strTemp), "%u,", list[i]);
+                streamValue << strTemp;
             }
             else
             {
-                snprintf(str_temp, sizeof(str_temp), "`v%u`) VALUE(%u,", i, uid);
-                stream_param << str_temp;
+                snprintf(strTemp, sizeof(strTemp), "`v%u`) VALUE(%u,", i, uid);
+                streamParam << strTemp;
 
-                snprintf(str_temp, sizeof(str_temp), "%u);", list[i]);
-                stream_value << str_temp;
+                snprintf(strTemp, sizeof(strTemp), "%u);", list[i]);
+                streamValue << strTemp;
             }
         }
 
-        stream << stream_param.str().c_str() << stream_value.str().c_str();
+        stream << streamParam.str().c_str() << streamValue.str().c_str();
 
         APPEND(stream.str().c_str());
     }
@@ -97,12 +97,12 @@ SAVE_FUNC(kModuleVar, vars)
 // kModuleDailyReset
 LOAD_FUNC(kModuleDailyReset)
 {
-    return Query(mysql, kValueDailyResetMax, user.base.id, user.daily_resets.list, "ints_daily");
+    return Query(mysql, kValueDailyResetMax, user.base.id, user.dailyResets.list, "ints_daily");
 }
 
-SAVE_FUNC(kModuleDailyReset, daily_resets)
+SAVE_FUNC(kModuleDailyReset, dailyResets)
 {
-    Save(sqls, user.base.id, user.daily_resets.list, "ints_daily");
+    Save(sqls, user.base.id, user.dailyResets.list, "ints_daily");
 }
 
 // kModuleTime

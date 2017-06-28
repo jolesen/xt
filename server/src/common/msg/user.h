@@ -10,7 +10,7 @@ struct SUserBaseInfo
 	uint id;
 	uint time;
 	uint session;
-	uint day_reset;
+	uint dayReset;
 
 	void Encode(CCoder &coder) const;
 	void Decode(CCoder &coder);
@@ -19,10 +19,10 @@ struct SUserBaseInfo
 // SUserInner
 struct SUserInner
 {
-	uint last_save;
-	UIntStringMap md5_list;
-	UIntBoolMap dirty_list;
-	UIntList hh_test;
+	uint lastSave;
+	UIntStringMap md5List;
+	UIntBoolMap dirtyList;
+	UIntList hhTest;
 
 	void Encode(CCoder &coder) const;
 	void Decode(CCoder &coder);
@@ -35,7 +35,7 @@ struct SUser
 	STimes times;
 	SVars vars;
 	SCounts counts;
-	SDailyResets daily_resets;
+	SDailyResets dailyResets;
 	SUserInner inner;
 	SItem item;
 
@@ -131,10 +131,10 @@ public:
 	~QUserLogout(){ }
 
 public:
-	std::map<uint, SDailyResets> test_map_i;
+	std::map<uint, SDailyResets> testMapI;
 	uint ivalue;
 	UIntList vvalue;
-	std::map<std::string, SDailyResets> test_map_s;
+	std::map<std::string, SDailyResets> testMapS;
 
 protected:
 	void EncodeBody(CCoder &coder) const;

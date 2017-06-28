@@ -140,7 +140,7 @@ public:
 	~RValueDailyResetModified(){ }
 
 public:
-	S2UInt daily_reset;
+	S2UInt dailyReset;
 
 protected:
 	void EncodeBody(CCoder &coder) const;

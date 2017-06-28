@@ -12,11 +12,11 @@ public:
     void Set(uint index, bool value);
     bool Get(uint index);
 
-    const UIntList& GetValues() { return m_values; }
-    void SetValues(const UIntList &values) { m_values = values; }
+    const UIntList& GetValues() { return mValues; }
+    void SetValues(const UIntList &values) { mValues = values; }
 
 private:
-    UIntList m_values;
+    UIntList mValues;
 };
 
 #endif

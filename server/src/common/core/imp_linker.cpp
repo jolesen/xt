@@ -16,7 +16,7 @@ CLinker::~CLinker()
 
 void CLinker::Link(const std::string &sid, const SHost &host)
 {
-    IF_NFINDx(m_links, sid)
+    IF_NFINDx(mLinks, sid)
     {
         CClient *client = theClientPool.Get();
         if(!client)
@@ -26,7 +26,7 @@ void CLinker::Link(const std::string &sid, const SHost &host)
         }
 
         client->SetActive(host, sid);
-        m_links[sid] = client;
+        mLinks[sid] = client;
 
         MONITOR(AddLinkState(sid, kClientStateClosed, 0));
         LOG_INFO("create link to sid:%s, %s:%u", sid.c_str(), host.ip.c_str(), host.port);
@@ -55,22 +55,22 @@ void CLinker::OnLinkRead(bufferevent *bev, void *args)
     }
 
     char buff[MSG_MAX];
-    uint read_size = 0;
+    uint readSize = 0;
     for(; ;)
     {
-        uint ret = client->Read(buff, MSG_MAX, read_size);
+        uint ret = client->Read(buff, MSG_MAX, readSize);
         if(ret)
         {
             _CloseLink(*client, ret);
             break;
         }
 
-        if(!read_size)
+        if(!readSize)
         {
             break;
         }
 
-        theServerConfig.msg_handler(*client, buff, read_size);
+        theServerConfig.msgHandler(*client, buff, readSize);
     }
 }
 
@@ -116,7 +116,7 @@ void CLinker::OnLinkConnected(bufferevent *bev, short events, void *args)
 
 void CLinker::CheckLink()
 {
-    FORMAP(m_links, iter)
+    FORMAP(mLinks, iter)
     {
         CClient &client = *(iter->second);
         if(client.GetState() == kClientStateClosed)
@@ -132,7 +132,7 @@ void CLinker::CheckLink()
 
 CClient* CLinker::GetLink(const std::string &sid)
 {
-    IF_FIND(m_links, sid, iter)
+    IF_FIND(mLinks, sid, iter)
     {
         return iter->second;
     }
@@ -142,7 +142,7 @@ CClient* CLinker::GetLink(const std::string &sid)
 
 CClient* CLinker::GetLinkByFd(uint fd)
 {
-    FORMAP(m_links, iter)
+    FORMAP(mLinks, iter)
     {
         if(iter->second->GetFd() == fd)
         {

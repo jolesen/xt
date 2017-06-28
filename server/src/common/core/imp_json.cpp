@@ -31,7 +31,7 @@ bool CJson::Read(const std::string &file)
 
 bool CJson::ReadString(const StringList &list)
 {
-    m_lines.clear();
+    mLines.clear();
     FORLIST(list, i)
     {
         const std::string line = list[i];
@@ -74,7 +74,7 @@ bool CJson::ReadString(const StringList &list)
             std::string value = list_value[++j];
             jl.pairs[key] = value;
         }
-        m_lines.push_back(jl);
+        mLines.push_back(jl);
     }
 
     return true;

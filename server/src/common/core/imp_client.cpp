@@ -27,21 +27,21 @@ void CClient::SetActive(const SHost &host, const std::string &sid)
 
 void CClient::Init(const SHost &host, bufferevent *bev, const std::string &sid)
 {
-    m_host  = host;
-    m_id    = 0;
-    m_sid   = sid;
-    m_bev   = bev;
-    m_state = bev ? kClientStateConnected : kClientStateClosed;
-    m_type  = bev ? kClientTypePassive    : kClientTypeActive;
+    mHost  = host;
+    mId    = 0;
+    mSid   = sid;
+    mBev   = bev;
+    mState = bev ? kClientStateConnected : kClientStateClosed;
+    mType  = bev ? kClientTypePassive    : kClientTypeActive;
 }
 
-uint CClient::Connect(event_base *base, FunConnected fun_connect)
+uint CClient::Connect(event_base *base, FunConnected funConnect)
 {
-    if(m_type != kClientTypeActive)
+    if(mType != kClientTypeActive)
     {
         return ERR_CORE_CLINET_CONNECT_TYPE;
     }
-    if(m_bev)
+    if(mBev)
     {
         return ERR_CORE_CLINET_CONNECT_WITH_BUFFER;
     }
@@ -50,36 +50,36 @@ uint CClient::Connect(event_base *base, FunConnected fun_connect)
     sockaddr_in addr;
     memset((void*)&addr, 0, sizeof(sockaddr_in));
     addr.sin_family      = AF_INET;
-    addr.sin_addr.s_addr = CUtil::GetIpInt(m_host.ip);
-    addr.sin_port        = htons(m_host.port);
+    addr.sin_addr.s_addr = CUtil::GetIpInt(mHost.ip);
+    addr.sin_port        = htons(mHost.port);
 
     // connect
-    m_state = kClientStateConnecting;
-    m_bev   = bufferevent_socket_new(base, -1, BEV_OPT_CLOSE_ON_FREE);
-    bufferevent_setcb(m_bev, NULL, NULL, fun_connect, NULL);
-    bufferevent_socket_connect(m_bev, (sockaddr*)&addr, sizeof(addr));
+    mState = kClientStateConnecting;
+    mBev   = bufferevent_socket_new(base, -1, BEV_OPT_CLOSE_ON_FREE);
+    bufferevent_setcb(mBev, NULL, NULL, funConnect, NULL);
+    bufferevent_socket_connect(mBev, (sockaddr*)&addr, sizeof(addr));
 
     MONITOR(OnOpenFd(GetFd()));
 
     return 0;
 }
 
-uint CClient::Read(char *buff, uint buff_size, uint &read_size)
+uint CClient::Read(char *buff, uint buffSize, uint &readSize)
 {
-    read_size = 0; // important
+    readSize = 0; // important
 
     if(!buff)
     {
         return ERR_CORE_CLINET_READ_PARAM;
     }
-    if(!m_bev)
+    if(!mBev)
     {
         return ERR_CORE_CLINET_READ_NO_BUFF;
     }
 
     // copy
-    evbuffer *input = bufferevent_get_input(m_bev);
-    int copy = evbuffer_copyout(input, buff, buff_size);
+    evbuffer *input = bufferevent_get_input(mBev);
+    int copy = evbuffer_copyout(input, buff, buffSize);
     if(copy < 0) // copy error
     {
         return ERR_CORE_CLINET_READ_BUFF_COPY;
@@ -94,31 +94,31 @@ uint CClient::Read(char *buff, uint buff_size, uint &read_size)
     }
 
     // real msg size
-    uint real_size = SMsgHeader::ParseSize(buff);
-    if(real_size == 0)
+    uint realSize = SMsgHeader::ParseSize(buff);
+    if(realSize == 0)
     {
         return ERR_CORE_CLINET_READ_MSG_SIZE_ZERO;
     }
-    if(real_size > MSG_MAX)
+    if(realSize > MSG_MAX)
     {
         return ERR_CORE_CLINET_READ_MSG_SIZE_OVERFLOW;
     }
-    if(real_size > (uint)copy)
+    if(realSize > (uint)copy)
     {
         return 0;
     }
 
     // remove from buffer
-    if(evbuffer_drain(input, real_size))
+    if(evbuffer_drain(input, realSize))
     {
         return ERR_CORE_CLINET_READ_BUFF_DRAIN;
     }
 
     // monitor
     uint id = SMsgHeader::ParseId(buff);
-    MONITOR(OnReadMsg(id, real_size));
+    MONITOR(OnReadMsg(id, realSize));
 
-    read_size = real_size;
+    readSize = realSize;
     return 0;
 }
 
@@ -134,7 +134,7 @@ uint CClient::Write(const char *buff, uint size)
         return ERR_CORE_CLINET_WRITE_MSG_SIZE_OVERFLOW;
     }
 
-    if(bufferevent_write(m_bev, buff, size))
+    if(bufferevent_write(mBev, buff, size))
     {
         return ERR_CORE_CLINET_WRITE_FAILED;
     }
@@ -166,11 +166,11 @@ uint CClient::Write(const CMsgBase *msg)
 
 void CClient::Close()
 {
-    m_state = kClientStateClosed;
-    if(m_bev)
+    mState = kClientStateClosed;
+    if(mBev)
     {
-        bufferevent_free(m_bev); // fd和buffer都会被释放
-        m_bev = NULL;
+        bufferevent_free(mBev); // fd和buffer都会被释放
+        mBev = NULL;
     }
 }
 
@@ -186,22 +186,22 @@ CClientPool::~CClientPool()
 
 CClient* CClientPool::Get()
 {
-    if(!m_list.size())
+    if(!mList.size())
     {
         BatchCreate();
     }
 
-    CClient *client = m_list.front();
-    m_list.pop();
-    MONITOR(OnClientPoolChanged(m_list.size()));
+    CClient *client = mList.front();
+    mList.pop();
+    MONITOR(OnClientPoolChanged(mList.size()));
 
     return client;
 }
 
 void CClientPool::Recycle(CClient *client)
 {
-    m_list.push(client);
-    MONITOR(OnClientPoolChanged(m_list.size()));
+    mList.push(client);
+    MONITOR(OnClientPoolChanged(mList.size()));
 }
 
 const uint BATCH_COUNT = 20;
@@ -210,9 +210,9 @@ void CClientPool::BatchCreate()
     FOR(BATCH_COUNT, i)
     {
         CClient *client = new CClient();
-        m_list.push(client);
+        mList.push(client);
         MONITOR(OnClientCreated());
     }
 
-    MONITOR(OnClientPoolChanged(m_list.size()));
+    MONITOR(OnClientPoolChanged(mList.size()));
 }

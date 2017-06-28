@@ -9,7 +9,7 @@
 
 CServer::CServer()
 {
-    m_listener = NULL;
+    mListener = NULL;
 }
 
 CServer::~CServer()
@@ -26,23 +26,23 @@ uint CServer::Create()
     addr.sin_port        = htons(theServerConfig.host.port);
 
     // event base
-    m_base = event_base_new();
-    if(!m_base)
+    mBase = event_base_new();
+    if(!mBase)
     {
         return ERR_CORE_SERVER_CREATE_NEW_BASE;
     }
 
     // listener
     uint opt = LEV_OPT_REUSEABLE | LEV_OPT_CLOSE_ON_FREE;
-    m_listener = evconnlistener_new_bind(m_base, CServer::OnAccept, NULL, opt, theServerConfig.backlog, (sockaddr*)&addr, sizeof(addr));
-    if(!m_listener)
+    mListener = evconnlistener_new_bind(mBase, CServer::OnAccept, NULL, opt, theServerConfig.backlog, (sockaddr*)&addr, sizeof(addr));
+    if(!mListener)
     {
         return ERR_CORE_SERVER_CREATE_NEW_LISTENER;
     }
-    evconnlistener_set_error_cb(m_listener, CServer::OnListenError);
+    evconnlistener_set_error_cb(mListener, CServer::OnListenError);
 
     // http server
-    uint ret = m_http.Create(m_base);
+    uint ret = mHttp.Create(mBase);
     if(ret)
     {
         return ret;
@@ -60,18 +60,18 @@ uint CServer::Start()
         return ERR_CORE_SERVER_START_DAEMON;
     }
 
-    m_start_time = CTime::Now();
+    mStartTime = CTime::Now();
 
     // monitor
     MONITOR(Start());
 
     // event loop
-    event_base_dispatch(m_base);
+    event_base_dispatch(mBase);
 
     // free
-    evconnlistener_free(m_listener);
-    m_http.Free();
-    event_base_free(m_base);
+    evconnlistener_free(mListener);
+    mHttp.Free();
+    event_base_free(mBase);
 
     return 0;
 }
@@ -82,7 +82,7 @@ void CServer::OnAccept(evconnlistener *listener, evutil_socket_t fd, sockaddr *a
     uint error = 0;
     do
     {
-        if(theServer.GetClientCount() >= theServerConfig.client_limit)
+        if(theServer.GetClientCount() >= theServerConfig.clientLimit)
         {
             error = ERR_CORE_SERVER_ACCEPT_CLIENT_MAX;
             break;
@@ -117,8 +117,8 @@ void CServer::OnAccept(evconnlistener *listener, evutil_socket_t fd, sockaddr *a
     }
 
     // create client, don't care write event
-    sockaddr_in *addr_in = (sockaddr_in*)addr;
-    SHost host(CUtil::GetIpString(addr_in->sin_addr.s_addr), ntohs(addr_in->sin_port));
+    sockaddr_in *addrIn = (sockaddr_in*)addr;
+    SHost host(CUtil::GetIpString(addrIn->sin_addr.s_addr), ntohs(addrIn->sin_port));
     bufferevent_enable(bev, EV_PERSIST | EV_READ | EV_ET);
     bufferevent_setcb(bev, CServer::OnRead, NULL, CServer::OnFdError, NULL);
     CClient *client = theClientPool.Get();
@@ -153,22 +153,22 @@ void CServer::OnRead(bufferevent *bev, void *args)
     }
 
     char buff[MSG_MAX];
-    uint read_size = 0;
+    uint readSize = 0;
     for(; ;)
     {
-        uint ret = client->Read(buff, MSG_MAX, read_size);
+        uint ret = client->Read(buff, MSG_MAX, readSize);
         if(ret)
         {
             theServer.CloseClient(fd, ret);
             break;
         }
 
-        if(!read_size)
+        if(!readSize)
         {
             break;
         }
 
-        theServerConfig.msg_handler(*client, buff, read_size);
+        theServerConfig.msgHandler(*client, buff, readSize);
     }
 }
 
@@ -195,16 +195,16 @@ void CServer::CloseClient(uint fd, uint reason)
         return;
     }
 
-    uint real_fd = client->GetFd();
-    if(real_fd != fd)
+    uint realFd = client->GetFd();
+    if(realFd != fd)
     {
-        LOG_ERROR("close client error, real_fd=%u != given_fd=%u", real_fd, fd);
+        LOG_ERROR("close client error, realFd=%u != given_fd=%u", realFd, fd);
         return;
     }
 
     EVENT(SEventClientClosed, *client);
-    m_fdClient.erase(fd);
-    m_idClient.erase(client->GetId());
+    mFdClient.erase(fd);
+    mIdClient.erase(client->GetId());
     client->Close();
     theClientPool.Recycle(client);
     LOG_DEBUG("Close fd=%u, reason=%u", fd, reason);
@@ -212,7 +212,7 @@ void CServer::CloseClient(uint fd, uint reason)
 
 CClient* CServer::GetClientByFd(uint fd)
 {
-    IF_FIND(m_fdClient, fd, iter)
+    IF_FIND(mFdClient, fd, iter)
     {
         return iter->second;
     }
@@ -222,7 +222,7 @@ CClient* CServer::GetClientByFd(uint fd)
 
 CClient* CServer::GetClientById(uint id)
 {
-    IF_FIND(m_idClient, id, iter)
+    IF_FIND(mIdClient, id, iter)
     {
         return iter->second;
     }

@@ -17,11 +17,11 @@ public:
     virtual void Run() = 0;
 
 protected:
-    pthread_attr_t m_attr;
-    pthread_t      m_thread;
+    pthread_attr_t mAttr;
+    pthread_t      mThread;
 
 private:
-    bool m_started;
+    bool mStarted;
 };
 
 #endif

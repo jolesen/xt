@@ -12,7 +12,7 @@ CMongo::~CMongo()
 
 bool CMongo::Ping()
 {
-    const SHost &h = theServerConfig.mongo_host;
+    const SHost &h = theServerConfig.mongoHost;
     char host[64] = { 0 };
     snprintf(host, sizeof(host), "mongodb://%s:%u", h.ip.c_str(), h.port);
     mongoc_init();
@@ -54,7 +54,7 @@ uint CMongo::Query(StringList &listRet, const std::string &db, const std::string
 {
     listRet.clear();
 
-    const SHost &h = theServerConfig.mongo_host;
+    const SHost &h = theServerConfig.mongoHost;
     char host[64] = { 0 };
     snprintf(host, sizeof(host), "mongodb://%s:%u", h.ip.c_str(), h.port);
     mongoc_init();

@@ -123,12 +123,12 @@ bool CTime::IsLeapYear(uint time)
     return IS_LEAP_YEAR(t.year);
 }
 
-uint CTime::GetSubDay(uint time_a, uint time_b)
+uint CTime::GetSubDay(uint timeA, uint timeB)
 {
-    if(time_b >= time_a)
+    if(timeB >= timeA)
     {
-        uint zero_a = GetZeroTime(time_a);
-        uint zero_b = GetZeroTime(time_b);
+        uint zero_a = GetZeroTime(timeA);
+        uint zero_b = GetZeroTime(timeB);
         return (zero_b - zero_a) / DAY;
     }
 

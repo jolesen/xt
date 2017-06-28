@@ -17,7 +17,7 @@ public:
 private:
     typedef std::map<uint, S2UInt> AuthUserMap;
 
-    AuthUserMap m_users;
+    AuthUserMap mUsers;
 };
 #define theUsers CSingleton<CUsers>::Instance()
 

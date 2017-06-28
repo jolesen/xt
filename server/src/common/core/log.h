@@ -8,7 +8,7 @@ class CLog
 {
 public:
     void Log(const char* src, const char* func, uint line, const char* fmt, ...);
-    void SetFileName(const std::string &name) { m_filename = name; }
+    void SetFileName(const std::string &name) { mFilename = name; }
 
 private:
     friend CLog& CSingleton<CLog>::Instance();
@@ -16,8 +16,8 @@ private:
     ~CLog();
 
 private:
-    CMutex m_mutex;
-    std::string m_filename;
+    CMutex mMutex;
+    std::string mFilename;
 };
 #define theLog CSingleton<CLog>::Instance()
 

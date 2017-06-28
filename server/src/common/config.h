@@ -23,13 +23,13 @@ public:
     std::string config;
     std::map<std::string, SHost> centers;
     SHost host;
-    SHost http_host;
-    SHost mongo_host;
-    SHost redis_host;
-    uint  client_limit;
+    SHost httpHost;
+    SHost mongoHost;
+    SHost redisHost;
+    uint  clientLimit;
     uint  backlog;
-    uint  broadcast_max;
-    uint  monitor_tick;
+    uint  broadcastMax;
+    uint  monitorTick;
 };
 #define theConfig CSingleton<CConfig>::Instance()
 

@@ -9,28 +9,28 @@ void CLoader::Load(SUser *user)
 {
     if(user)
     {
-        m_mutex_loading.Lock();
+        mMutexLoading.Lock();
         {
-            m_loadings[user->base.id] = user;
+            mLoadings[user->base.id] = user;
         }
-        m_mutex_loading.Unlock();
+        mMutexLoading.Unlock();
     }
 }
 
 void CLoader::GetLoadedList(std::vector<SUser*> &list)
 {
-    m_mutex_loaded.Lock();
+    mMutexLoaded.Lock();
     {
-        if(m_loadeds.size() > 0)
+        if(mLoadeds.size() > 0)
         {
-            FORLIST(m_loadeds, i)
+            FORLIST(mLoadeds, i)
             {
-                list.push_back(m_loadeds[i]);
+                list.push_back(mLoadeds[i]);
             }
-            m_loadeds.clear();
+            mLoadeds.clear();
         }
     }
-    m_mutex_loaded.Unlock();
+    mMutexLoaded.Unlock();
 }
 
 void CLoader::Run()
@@ -39,16 +39,16 @@ void CLoader::Run()
     {
         SUser *user = NULL;
 
-        m_mutex_loading.Lock();
+        mMutexLoading.Lock();
         {
-            LoadingMap::iterator iter_first = m_loadings.begin();
-            if(iter_first != m_loadings.end())
+            LoadingMap::iterator iterFirst = mLoadings.begin();
+            if(iterFirst != mLoadings.end())
             {
-                user = iter_first->second;
-                m_loadings.erase(iter_first);
+                user = iterFirst->second;
+                mLoadings.erase(iterFirst);
             }
         }
-        m_mutex_loading.Unlock();
+        mMutexLoading.Unlock();
 
         if(user)
         {
@@ -56,18 +56,18 @@ void CLoader::Run()
 
             FORMAP(theModule.loaders, iter)
             {
-                if(!(iter->second)(*user, m_mysql))
+                if(!(iter->second)(*user, mMysql))
                 {
                     user->base.time = kErrorLoginDataLoadFailed; // temp used as marker
                     break;
                 }
             }
 
-            m_mutex_loaded.Lock();
+            mMutexLoaded.Lock();
             {
-                m_loadeds.push_back(user);
+                mLoadeds.push_back(user);
             }
-            m_mutex_loaded.Unlock();
+            mMutexLoaded.Unlock();
         }
 
         CUtil::SleepMillisecond(20);
@@ -76,7 +76,7 @@ void CLoader::Run()
 
 bool CLoader::Init()
 {
-    //return CDBIniter::InitMysql(m_mysql);
+    //return CDBIniter::InitMysql(mMysql);
     return false;
 }
 
@@ -86,12 +86,12 @@ void CSaver::Run()
     for(; ;)
     {
         DirtyUserMap dirties;
-        m_mutex.Lock();
+        mMutex.Lock();
         {
-            dirties = m_dirties;
-            m_dirties.clear();
+            dirties = mDirties;
+            mDirties.clear();
         }
-        m_mutex.Unlock();
+        mMutex.Unlock();
 
         FORMAP(dirties, iter)
         {
@@ -100,12 +100,12 @@ void CSaver::Run()
             {
                 LOG_DEBUG("---- SAVE USER UID=%u ----", user->base.id);
 
-                FORMAP(user->inner.dirty_list, iter_module)
+                FORMAP(user->inner.dirtyList, iterModule)
                 {
-                    if(iter_module->second)
+                    if(iterModule->second)
                     {
-                        Save(*user, iter_module->first);
-                        iter_module->second = false;
+                        Save(*user, iterModule->first);
+                        iterModule->second = false;
                     }
                 }
             }
@@ -134,14 +134,14 @@ void CSaver::DecodeModule(uint uid, uint module, const SBytes &data)
     CCoder coder(buff, data.size);
 
     iter->second(*user, coder);
-    user->inner.dirty_list[module] = true;
+    user->inner.dirtyList[module] = true;
 
     // set dirty list
-    m_mutex.Lock();
+    mMutex.Lock();
     {
-        m_dirties[uid] = true;
+        mDirties[uid] = true;
     }
-    m_mutex.Unlock();
+    mMutex.Unlock();
 }
 
 void CSaver::Save(const SUser &user, uint module)
@@ -156,33 +156,33 @@ void CSaver::Save(const SUser &user, uint module)
     (iter->second)(user, sqls);
 
     // begin
-    m_mysql.Execute("START TRANSACTION;");
-    if(m_mysql.GetErrorCode() != 0)
+    mMysql.Execute("START TRANSACTION;");
+    if(mMysql.GetErrorCode() != 0)
     {
-        LOG_ERROR("SQL start transaction occuried errors, error=[%u], des=[%s]", m_mysql.GetErrorCode(), m_mysql.GetErrorMsg());
+        LOG_ERROR("SQL start transaction occuried errors, error=[%u], des=[%s]", mMysql.GetErrorCode(), mMysql.GetErrorMsg());
         return;
     }
 
     // execute
     FORLIST(sqls, i)
     {
-        const char* str_sql = sqls[i].c_str();
-        m_mysql.Execute(str_sql);
-        if(m_mysql.GetErrorCode() != 0)
+        const char* strSql = sqls[i].c_str();
+        mMysql.Execute(strSql);
+        if(mMysql.GetErrorCode() != 0)
         {
-            LOG_ERROR("SQL execute occuried errors, sql=[%s], error=[%u], des=[%s]", str_sql, m_mysql.GetErrorCode(), m_mysql.GetErrorMsg());
-            m_mysql.Execute("ROOLBACK;");
+            LOG_ERROR("SQL execute occuried errors, sql=[%s], error=[%u], des=[%s]", strSql, mMysql.GetErrorCode(), mMysql.GetErrorMsg());
+            mMysql.Execute("ROOLBACK;");
             return;
         }
 
-        LOG_DEBUG("SQL = [%s]", str_sql);
+        LOG_DEBUG("SQL = [%s]", strSql);
     }
 
     // commit
-    m_mysql.Execute("COMMIT;");
-    if(m_mysql.GetErrorCode() != 0)
+    mMysql.Execute("COMMIT;");
+    if(mMysql.GetErrorCode() != 0)
     {
-        LOG_ERROR("SQL commit occuried errors, error=[%u], des=[%s]", m_mysql.GetErrorCode(), m_mysql.GetErrorMsg());
+        LOG_ERROR("SQL commit occuried errors, error=[%u], des=[%s]", mMysql.GetErrorCode(), mMysql.GetErrorMsg());
         return;
     }
 }

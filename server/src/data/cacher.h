@@ -22,11 +22,11 @@ public:
     SUser* Find(uint uid);
 
 private:
-    CLoader m_loader;
-    CSaver  m_saver;
-    UserMap m_users;
+    CLoader mLoader;
+    CSaver  mSaver;
+    UserMap mUsers;
 
-    static CCacher* m_instance;
+    static CCacher* mInstance;
 };
 #define theCacher CSingleton<CCacher>::Instance()
 

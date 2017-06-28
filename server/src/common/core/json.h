@@ -19,10 +19,10 @@ public:
 public:
     bool Read(const std::string &file);
     bool ReadString(const StringList &list);
-    std::vector<CJsonLine>& GetLines() { return m_lines; }
+    std::vector<CJsonLine>& GetLines() { return mLines; }
 
 private:
-    std::vector<CJsonLine> m_lines;
+    std::vector<CJsonLine> mLines;
 };
 
 #endif

@@ -18,7 +18,7 @@ namespace module
     // public
     bool Init();
     void InitMd5(SUser &user);
-    bool Register(uint module, FunEncodeModule fun_coder);
+    bool Register(uint module, FunEncodeModule funCoder);
     void RespondModule(const SUser &user, uint module);
 }
 

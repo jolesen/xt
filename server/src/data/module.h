@@ -17,21 +17,21 @@ struct SModule
     std::map<uint, FunModuleSaver>   savers;
 
     // -----------------------
-    bool Register(uint module, FunModuleLoader loader, FunModuleDecoder fun_coder, FunModuleSaver saver)
+    bool Register(uint module, FunModuleLoader funLoader, FunModuleDecoder funCoder, FunModuleSaver funSaver)
     {
-        if(loader)
+        if(funLoader)
         {
-            loaders[module] = loader;
+            loaders[module] = funLoader;
         }
 
-        if(fun_coder)
+        if(funCoder)
         {
-            decoders[module] = fun_coder;
+            decoders[module] = funCoder;
         }
 
-        if(saver)
+        if(funSaver)
         {
-            savers[module] = saver;
+            savers[module] = funSaver;
         }
 
         return 0;
@@ -48,13 +48,13 @@ struct SModule
 
 // QUERY (fmt - sql, ... - params)
 #define QUERY(fmt, ...)\
-    char str_sql[KB / 2] = { 0 };\
-    snprintf(str_sql, sizeof(str_sql), fmt, ##__VA_ARGS__);\
-    uint rows = mysql.Query(str_sql);\
-    LOG_DEBUG("SQL = [%s]", str_sql);\
+    char strSql[KB / 2] = { 0 };\
+    snprintf(strSql, sizeof(strSql), fmt, ##__VA_ARGS__);\
+    uint rows = mysql.Query(strSql);\
+    LOG_DEBUG("SQL = [%s]", strSql);\
     if((rows == 0) && (mysql.GetErrorCode() != 0))\
     {\
-        LOG_ERROR("SQL query occuried errors, sql=[%s], error=[%u], des=[%s]", str_sql, mysql.GetErrorCode(), mysql.GetErrorMsg());\
+        LOG_ERROR("SQL query occuried errors, sql=[%s], error=[%u], des=[%s]", strSql, mysql.GetErrorCode(), mysql.GetErrorMsg());\
         return false;\
     }\
     uint col = 0;\
@@ -71,11 +71,11 @@ struct SModule
 
 // PREPARE
 #define PREPARE\
-    char str_append[KB] = { 0 }
+    char strAppend[KB] = { 0 }
 
 // APPEND (fmt - sql, ... - params)
 #define APPEND(fmt, ...)\
-    snprintf(str_append, sizeof(str_append), fmt, ##__VA_ARGS__);\
-    sqls.push_back(str_append)
+    snprintf(strAppend, sizeof(strAppend), fmt, ##__VA_ARGS__);\
+    sqls.push_back(strAppend)
 
 #endif

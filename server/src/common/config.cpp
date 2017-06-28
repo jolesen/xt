@@ -50,15 +50,15 @@ std::string _ParseField(const std::string &strLine)
         }
         else if(key == kConfigHttpHost)
         {
-            flag = _ParseHost(theConfig.http_host, value);
+            flag = _ParseHost(theConfig.httpHost, value);
         }
         else if(key == kConfigMongoHost)
         {
-            flag = _ParseHost(theConfig.mongo_host, value);
+            flag = _ParseHost(theConfig.mongoHost, value);
         }
         else if(key == kConfigRedisHost)
         {
-            flag = _ParseHost(theConfig.redis_host, value);
+            flag = _ParseHost(theConfig.redisHost, value);
         }
         else if(key == kConfigCenter)
         {
@@ -79,7 +79,7 @@ std::string _ParseField(const std::string &strLine)
         }
         else if(key == kConfigClientLimit)
         {
-            theConfig.client_limit = CUtil::ToInt(value);
+            theConfig.clientLimit = CUtil::ToInt(value);
         }
         else if(key == kConfigBacklog)
         {
@@ -87,11 +87,11 @@ std::string _ParseField(const std::string &strLine)
         }
         else if(key == kConfigBroadcastMax)
         {
-            theConfig.broadcast_max = CUtil::ToInt(value);
+            theConfig.broadcastMax = CUtil::ToInt(value);
         }
         else if(key == kConfigMonitorTick)
         {
-            theConfig.monitor_tick = CUtil::ToInt(value);
+            theConfig.monitorTick = CUtil::ToInt(value);
         }
         else if(key == kConfigResource)
         {
@@ -216,14 +216,14 @@ void CConfig::Show()
     LOG_INFO("Type         : %s", type.c_str());
     LOG_INFO("SID          : %s", sid.c_str());
     LOG_INFO("Host         : %s:%u", host.ip.c_str(), host.port);
-    LOG_INFO("HttpHost     : %s:%u", http_host.ip.c_str(), http_host.port);
-    LOG_INFO("MongoHost    : %s:%u", mongo_host.ip.c_str(), mongo_host.port);
-    LOG_INFO("RedisHost    : %s:%u", redis_host.ip.c_str(), redis_host.port);
+    LOG_INFO("HttpHost     : %s:%u", httpHost.ip.c_str(), httpHost.port);
+    LOG_INFO("MongoHost    : %s:%u", mongoHost.ip.c_str(), mongoHost.port);
+    LOG_INFO("RedisHost    : %s:%u", redisHost.ip.c_str(), redisHost.port);
     LOG_INFO("Resource     : %s", resource.c_str());
-    LOG_INFO("ClientLimit  : %u", client_limit);
+    LOG_INFO("ClientLimit  : %u", clientLimit);
     LOG_INFO("Backlog      : %u", backlog);
-    LOG_INFO("BroadcastMax : %u", broadcast_max);
-    LOG_INFO("MonitorTick  : %u", monitor_tick);
+    LOG_INFO("BroadcastMax : %u", broadcastMax);
+    LOG_INFO("MonitorTick  : %u", monitorTick);
     FORMAP(centers, iter)
     {
         LOG_INFO("Center       : %s, %s:%u", iter->first.c_str(), iter->second.ip.c_str(), iter->second.port);

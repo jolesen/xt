@@ -6,28 +6,28 @@
 #include "time.h"
 
 // 是否开启
-#define CHECK_OPEN()   if(!theServerConfig.monitor_tick) { return; }
+#define CHECK_OPEN()   if(!theServerConfig.monitorTick) { return; }
 
 // CMonitor
 CMonitor::CMonitor()
 {
-    m_max_fd         = 0;
-    m_http_count     = 0;
-    m_client_created = 0;
-    m_client_pool    = 0;
-    m_dirty          = false;
+    mMaxFd         = 0;
+    mHttpCount     = 0;
+    mClientCreated = 0;
+    mClientPool    = 0;
+    mDirty         = false;
 }
 
 CMonitor::~CMonitor()
 {
-    m_thread.Stop();
+    mThread.Stop();
 }
 
 void CMonitor::AddLinkState(const std::string &sid, uint state, uint reason)
 {
     CHECK_OPEN();
 
-    S3UIntList &list = m_state[sid];
+    S3UIntList &list = mState[sid];
     if(list.size())
     {
         S3UInt &last = list[list.size() - 1];
@@ -41,16 +41,16 @@ void CMonitor::AddLinkState(const std::string &sid, uint state, uint reason)
     st.type  = CTime::Now();
     st.id    = state;
     st.value = reason;
-    m_state[sid].push_back(st);
+    mState[sid].push_back(st);
 
-    m_dirty = true;
+    mDirty = true;
 }
 
 void CMonitor::Start()
 {
     CHECK_OPEN();
 
-    m_thread.Start();
+    mThread.Start();
 }
 
 void _OnMsg(CMonitor::SMsgInfo &info, uint id, uint size)
@@ -64,42 +64,42 @@ void CMonitor::OnReadMsg(uint id, uint size)
 {
     CHECK_OPEN();
 
-    _OnMsg(m_msg_read, id, size);
-    m_dirty = true;
+    _OnMsg(mMsgRead, id, size);
+    mDirty = true;
 }
 
 void CMonitor::OnWriteMsg(uint id, uint size)
 {
     CHECK_OPEN();
 
-    _OnMsg(m_msg_write, id, size);
-    m_dirty = true;
+    _OnMsg(mMsgWrite, id, size);
+    mDirty = true;
 }
 
 void CMonitor::OnTimerTicked()
 {
     CHECK_OPEN();
 
-    ++m_timer.value;
-    m_dirty = true;
+    ++mTimer.value;
+    mDirty = true;
 }
 
-void CMonitor::OnTimerAddOrDelete(bool is_add)
+void CMonitor::OnTimerAddOrDelete(bool isAdd)
 {
     CHECK_OPEN();
 
-    m_timer.id = is_add ? (m_timer.id + 1) : (m_timer.id - 1);
-    m_dirty = true;
+    mTimer.id = isAdd ? (mTimer.id + 1) : (mTimer.id - 1);
+    mDirty = true;
 }
 
 void CMonitor::OnOpenFd(uint fd)
 {
     CHECK_OPEN();
 
-    if(fd > m_max_fd)
+    if(fd > mMaxFd)
     {
-        m_max_fd = fd;
-        m_dirty = true;
+        mMaxFd = fd;
+        mDirty = true;
     }
 }
 
@@ -107,24 +107,24 @@ void CMonitor::OnHttpRequest(const std::string &uri)
 {
     CHECK_OPEN();
 
-    ++m_http_count;
-    m_dirty = true;
+    ++mHttpCount;
+    mDirty = true;
 }
 
 void CMonitor::OnClientCreated()
 {
     CHECK_OPEN();
 
-    ++m_client_created;
-    m_dirty = true;
+    ++mClientCreated;
+    mDirty = true;
 }
 
 void CMonitor::OnClientPoolChanged(uint size)
 {
     CHECK_OPEN();
 
-    m_client_pool = size;
-    m_dirty = true;
+    mClientPool = size;
+    mDirty = true;
 }
 
 // CMonitorThread
@@ -136,54 +136,54 @@ CMonitorThread::~CMonitorThread()
 {
 }
 
-void _WriteMsgInfo(FILE *file, bool is_read)
+void _WriteMsgInfo(FILE *file, bool isRead)
 {
     // msg count
-    CMonitor::SMsgInfo info = is_read ? theMonitor.GetMsgRead() : theMonitor.GetMsgWrite();
-    uint count_total = 0;
-    S2UInt count_max;
+    CMonitor::SMsgInfo info = isRead ? theMonitor.GetMsgRead() : theMonitor.GetMsgWrite();
+    uint countTotal = 0;
+    S2UInt countMax;
     FORMAP(info.count, iter)
     {
-        count_total += iter->second;
-        if(iter->second > count_max.value)
+        countTotal += iter->second;
+        if(iter->second > countMax.value)
         {
-            count_max.id    = iter->first;
-            count_max.value = iter->second;
+            countMax.id    = iter->first;
+            countMax.value = iter->second;
         }
     }
-    std::string count_max_name = theServerConfig.msg_name_getter(count_max.id);
+    std::string countMaxName = theServerConfig.msgNameGetter(countMax.id);
 
     // msg size
-    uint size_max   = 0;
-    uint size_msgId = 0;
+    uint sizeMax   = 0;
+    uint sizeMsgId = 0;
     FORMAP(info.max, iter)
     {
-        if(iter->second > size_max)
+        if(iter->second > sizeMax)
         {
-            size_max   = iter->second;
-            size_msgId = iter->first;
+            sizeMax   = iter->second;
+            sizeMsgId = iter->first;
         }
     }
-    std::string size_max_name = theServerConfig.msg_name_getter(size_msgId);
+    std::string sizeMaxName = theServerConfig.msgNameGetter(sizeMsgId);
 
     // msg total bytes
     ulong total = 0;
-    ulong total_msg_max = 0;
-    uint total_msg_id = 0;
+    ulong totalMsgMax = 0;
+    uint totalMsgId = 0;
     FORMAP(info.total, iter)
     {
         total += iter->second;
-        if(iter->second > total_msg_max)
+        if(iter->second > totalMsgMax)
         {
-            total_msg_max = iter->second;
-            total_msg_id  = iter->first;
+            totalMsgMax = iter->second;
+            totalMsgId  = iter->first;
         }
     }
-    std::string total_max_name = theServerConfig.msg_name_getter(total_msg_id);
+    std::string totalMaxName = theServerConfig.msgNameGetter(totalMsgId);
 
-    std::string strFlag = is_read ? "READ" : "WRITE";
+    std::string strFlag = isRead ? "READ" : "WRITE";
     fprintf(file, "MSG %-5s COUNT[%u, %s: %u], MAXSIZE[%s: %uB], TOTAL[%juB, %s: %juB]\n", strFlag.c_str(),
-            count_total, count_max_name.c_str(), count_max.value, size_max_name.c_str(), size_max, total, total_max_name.c_str(), total_msg_max);
+            countTotal, countMaxName.c_str(), countMax.value, sizeMaxName.c_str(), sizeMax, total, totalMaxName.c_str(), totalMsgMax);
 }
 
 void _WriteDetail(FILE *file)
@@ -196,7 +196,7 @@ void _WriteDetail(FILE *file)
     fprintf(file, "CLIENT ACCEPT/LINK: %u/%u\n", theServer.GetClientCount(), theLinker.GetLinkCount());
     fprintf(file, "CLIENT POOL SIZE/CREATED: %u/%u\n", theMonitor.GetClientPoolSize(), theMonitor.GetClientCreatedCount());
     fprintf(file, "TIMER COUNT/TICKED: %u/%u\n", timer.id, timer.value);
-    if(theServerConfig.http_host.port)
+    if(theServerConfig.httpHost.port)
     {
         fprintf(file, "HTTP REQUEST COUNT: %d\n", theMonitor.GetHttpRequestCount());
     }
@@ -251,6 +251,6 @@ void CMonitorThread::Run()
         while(false);
 
         // sleep
-        CUtil::SleepSecond(theServerConfig.monitor_tick);
+        CUtil::SleepSecond(theServerConfig.monitorTick);
     }
 }

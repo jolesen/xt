@@ -12,13 +12,13 @@ CEvent::~CEvent()
 bool CEvent::Register(const std::string &strName, const std::string &strFile, SEventInfo::FunEvent handler)
 {
     SEventInfo info(strFile, handler);
-    m_handlers[strName].push_back(info);
+    mHandlers[strName].push_back(info);
     return true;
 }
 
 void CEvent::Execute(const std::string &strName, SEventBase *event)
 {
-    IF_NFIND(m_handlers, strName, iterMap)
+    IF_NFIND(mHandlers, strName, iterMap)
     {
         return;
     }
@@ -26,9 +26,9 @@ void CEvent::Execute(const std::string &strName, SEventBase *event)
     std::vector<SEventInfo> &list = iterMap->second;
     for(std::vector<SEventInfo>::iterator iter = list.begin(); iter != list.end(); )
     {
-        event->is_delete = false;
+        event->isDelete = false;
         (iter->handler)(event);
-        if(event->is_delete)
+        if(event->isDelete)
         {
             LOG_INFO("Remove event(%s)'s one callback [%s]", iterMap->first.c_str(), iter->path.c_str());
             iter = list.erase(iter);

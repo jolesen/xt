@@ -53,11 +53,11 @@ void SDailyResets::Decode(CCoder &coder)
 //RValueDailyResetModified
 void RValueDailyResetModified::EncodeBody(CCoder &coder) const
 {
-	coder << daily_reset;
+	coder << dailyReset;
 }
 void RValueDailyResetModified::DecodeBody(CCoder &coder)
 {
-	coder >> daily_reset;
+	coder >> dailyReset;
 }
 
 //SCounts

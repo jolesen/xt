@@ -10,16 +10,16 @@ public:
     CMutex()  { Create();  }
     ~CMutex() { Destory(); }
 
-    bool Lock()    { return (pthread_mutex_lock(&m_mutex)    == 0); }
-    bool TryLock() { return (pthread_mutex_trylock(&m_mutex) == 0); }
-    bool Unlock()  { return (pthread_mutex_unlock(&m_mutex)  == 0); }
-    bool Destory() { return (pthread_mutex_destroy(&m_mutex) == 0); }
+    bool Lock()    { return (pthread_mutex_lock(&mMutex)    == 0); }
+    bool TryLock() { return (pthread_mutex_trylock(&mMutex) == 0); }
+    bool Unlock()  { return (pthread_mutex_unlock(&mMutex)  == 0); }
+    bool Destory() { return (pthread_mutex_destroy(&mMutex) == 0); }
 
 private:
-    void Create()  { pthread_mutex_init(&m_mutex, NULL); }
+    void Create()  { pthread_mutex_init(&mMutex, NULL); }
 
 private:
-    pthread_mutex_t m_mutex;
+    pthread_mutex_t mMutex;
 };
 
 // CMutexSafe
@@ -28,24 +28,24 @@ class CMutexSafe
 public:
     CMutexSafe(CMutex *mutex)
     {
-        m_mutex = mutex;
-        if(m_mutex)
+        mMutex = mutex;
+        if(mMutex)
         {
-            m_mutex->Lock();
+            mMutex->Lock();
         }
     }
 
     ~CMutexSafe()
     {
-        if(m_mutex)
+        if(mMutex)
         {
-            m_mutex->Unlock();
+            mMutex->Unlock();
         }
-        m_mutex = NULL;
+        mMutex = NULL;
     }
 
 private:
-    CMutex* m_mutex;
+    CMutex* mMutex;
 };
 
 #endif

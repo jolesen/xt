@@ -4,10 +4,10 @@
 
 CCoder::CCoder(char* buff, uint size)
 {
-    m_begin  = buff;
-    m_offset = buff;
-    m_size   = size;
-    m_error  = false;
+    mBegin  = buff;
+    mOffset = buff;
+    mSize   = size;
+    mError  = false;
 }
 
 CCoder::~CCoder()
@@ -15,12 +15,12 @@ CCoder::~CCoder()
 }
 
 // 简单类型编解码操作，不再调用<<或>>操作符函数，提高效率
-#define ENCODE_SIMPLE(T, V)  *((T*)m_offset) = V; m_offset += sizeof(T)
-#define DECODE_SIMPLE(T, V)  V = *((T*)m_offset); m_offset += sizeof(T)
+#define ENCODE_SIMPLE(T, V)  *((T*)mOffset) = V; mOffset += sizeof(T)
+#define DECODE_SIMPLE(T, V)  V = *((T*)mOffset); mOffset += sizeof(T)
 
-#define CHECK_ERROR(SIZE)  \
-    if(m_error){ return; } \
-    if(m_offset + (SIZE) > m_begin + m_size){ m_error = true; return; }
+#define CHECK_ERROR(SIZE) \
+    if(mError){ return; } \
+    if(mOffset + (SIZE) > mBegin + mSize){ mError = true; return; }
 
 // std::string
 void CCoder::operator<<(const std::string &str)
@@ -32,8 +32,8 @@ void CCoder::operator<<(const std::string &str)
     if(size > 0)
     {
         CHECK_ERROR(size);
-        strncpy(m_offset, str.c_str(), size);
-        m_offset += size;
+        strncpy(mOffset, str.c_str(), size);
+        mOffset += size;
     }
 }
 void CCoder::operator>>(std::string &str)
@@ -45,8 +45,8 @@ void CCoder::operator>>(std::string &str)
     if(size > 0)
     {
         CHECK_ERROR(size);
-        str.assign(m_offset, size);
-        m_offset += size;
+        str.assign(mOffset, size);
+        mOffset += size;
     }
 }
 
@@ -95,8 +95,8 @@ void CCoder::operator<<(const SBytes &sb)
     if(sb.size > 0)
     {
         CHECK_ERROR(sb.size);
-        memcpy(m_offset, sb.bytes, sb.size);
-        m_offset += sb.size;
+        memcpy(mOffset, sb.bytes, sb.size);
+        mOffset += sb.size;
     }
 }
 void CCoder::operator>>(SBytes &sb)
@@ -107,8 +107,8 @@ void CCoder::operator>>(SBytes &sb)
     if(sb.size > 0)
     {
         CHECK_ERROR(sb.size);
-        memcpy(sb.bytes, m_offset, sb.size);
-        m_offset += sb.size;
+        memcpy(sb.bytes, mOffset, sb.size);
+        mOffset += sb.size;
     }
 }
 
@@ -165,7 +165,7 @@ void CCoder::operator>>(SBytes &sb)
         FORLIST(list, i)                    \
         {                                   \
             *this << list[i];               \
-            if(m_error) { break; }          \
+            if(mError) { break; }           \
         }                                   \
     }                                       \
     void CCoder::operator >>(T &list)       \
@@ -178,7 +178,7 @@ void CCoder::operator>>(SBytes &sb)
         {                                   \
             ST value;                       \
             *this >> value;                 \
-            if(m_error) { break; }          \
+            if(mError) { break; }           \
             list.push_back(value);          \
         }                                   \
     }
@@ -194,7 +194,7 @@ void CCoder::operator>>(SBytes &sb)
         {                                  \
             *this << iter->first;          \
             *this << iter->second;         \
-            if(m_error) { break; }         \
+            if(mError) { break; }          \
         }                                  \
     }                                      \
     void CCoder::operator >>(T &map)       \
@@ -209,7 +209,7 @@ void CCoder::operator>>(SBytes &sb)
             VT value;                      \
             *this >> key;                  \
             *this >> value;                \
-            if(m_error) { break; }         \
+            if(mError) { break; }          \
             map[key] = value;              \
         }                                  \
     }

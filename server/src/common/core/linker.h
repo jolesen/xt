@@ -11,7 +11,7 @@ public:
     CClient* GetLink(const std::string &sid);
     void CheckLink();
     void Link(const std::string &sid, const SHost &host);
-    uint GetLinkCount() { return m_links.size(); }
+    uint GetLinkCount() { return mLinks.size(); }
 
 public:
     static void OnLinkRead(bufferevent *bev, void *args);
@@ -25,7 +25,7 @@ private:
     CClient* GetLinkByFd(uint fd);
 
 private:
-    std::map<std::string, CClient*> m_links;
+    std::map<std::string, CClient*> mLinks;
 };
 #define theLinker CSingleton<CLinker>::Instance()
 

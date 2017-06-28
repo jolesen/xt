@@ -11,7 +11,7 @@
 
 CTimer::CTimer()
 {
-    m_seq = 0;
+    mSeq = 0;
 }
 
 CTimer::~CTimer()
@@ -49,17 +49,17 @@ uint CTimer::AddMinuteAt(uint interval, uint loops, const S3UInt &at, FunTimeout
 
     STime now = CTime::Parse(CTime::Now());
 
-    uint now_second = now.second;
-    uint at_second  = at.type;
+    uint nowSecond = now.second;
+    uint atSecond  = at.type;
 
     S2UInt s(0, (MINUTE * interval));
-    if(at_second >= now_second)
+    if(atSecond >= nowSecond)
     {
-        s.id = at_second - now_second;
+        s.id = atSecond - nowSecond;
     }
     else
     {
-        s.id = (MINUTE - now_second) + ((interval - 1) * MINUTE) + at_second;
+        s.id = (MINUTE - nowSecond) + ((interval - 1) * MINUTE) + atSecond;
     }
 
     return CreateTick(ETickMinuteAt, s, loops, at, cb);
@@ -73,17 +73,17 @@ uint CTimer::AddHourAt(uint interval, uint loops, const S3UInt &at, FunTimeout c
 
     STime now = CTime::Parse(CTime::Now());
 
-    uint now_second = (now.minute * MINUTE) + now.second;
-    uint at_second  = (at.type    * MINUTE) + at.id;
+    uint nowSecond = (now.minute * MINUTE) + now.second;
+    uint atSecond  = (at.type    * MINUTE) + at.id;
 
     S2UInt s(0, (HOUR * interval));
-    if(at_second >= now_second)
+    if(atSecond >= nowSecond)
     {
-        s.id = (at_second - now_second);
+        s.id = (atSecond - nowSecond);
     }
     else
     {
-        s.id = (HOUR - now_second) + ((interval - 1) * HOUR) + at_second;
+        s.id = (HOUR - nowSecond) + ((interval - 1) * HOUR) + atSecond;
     }
 
     return CreateTick(ETickHourAt, s, loops, at, cb);
@@ -98,17 +98,17 @@ uint CTimer::AddDayAt(uint interval, uint loops, const S3UInt &at, FunTimeout cb
 
     STime now = CTime::Parse(CTime::Now());
 
-    uint now_second = (now.hour * HOUR) + (now.minute * MINUTE) + now.second;
-    uint at_second  = (at.type  * HOUR) + (at.id      * MINUTE) + at.value;
+    uint nowSecond = (now.hour * HOUR) + (now.minute * MINUTE) + now.second;
+    uint atSecond  = (at.type  * HOUR) + (at.id      * MINUTE) + at.value;
 
     S2UInt s(0, (DAY * interval));
-    if(at_second >= now_second)
+    if(atSecond >= nowSecond)
     {
-        s.id = (at_second - now_second);
+        s.id = (atSecond - nowSecond);
     }
     else
     {
-        s.id = (DAY - now_second) + ((interval - 1) * DAY) + at_second;
+        s.id = (DAY - nowSecond) + ((interval - 1) * DAY) + atSecond;
     }
 
     return CreateTick(ETickDayAt, s, loops, at, cb);
@@ -124,20 +124,20 @@ uint CTimer::AddWeekDayAt(uint interval, uint loops, EWeekDay day, const S3UInt 
 
     STime now = CTime::Parse(CTime::Now());
 
-    uint now_wday = now.wday;
-    uint at_wday  = (uint)day;
+    uint nowWday = now.wday;
+    uint atWday  = (uint)day;
 
-    uint now_second = (now_wday * DAY) + (now.hour * HOUR) + (now.minute * MINUTE) + now.second;
-    uint at_second  = (at_wday  * DAY) + (at.type  * HOUR) + (at.id      * MINUTE) + at.value;
+    uint nowSecond = (nowWday * DAY) + (now.hour * HOUR) + (now.minute * MINUTE) + now.second;
+    uint atSecond  = (atWday  * DAY) + (at.type  * HOUR) + (at.id      * MINUTE) + at.value;
 
     S2UInt s(0, (WEEK * interval));
-    if(at_second >= now_second)
+    if(atSecond >= nowSecond)
     {
-        s.id = (at_second - now_second);
+        s.id = (atSecond - nowSecond);
     }
     else
     {
-        s.id = (WEEK - now_second) + ((interval - 1) * WEEK) + at_second;
+        s.id = (WEEK - nowSecond) + ((interval - 1) * WEEK) + atSecond;
     }
 
     return CreateTick(ETickWeekDayAt, s, loops, at, cb);
@@ -177,7 +177,7 @@ void CTimer::OnTimeout(evutil_socket_t fd, short event, void *args)
         normal.tv_usec = 0;
 
         evtimer_del(evt->lbevent);
-        event_assign(evt->lbevent, theTimer.m_base, -1, EV_PERSIST, CTimer::OnTimeout, evt);
+        event_assign(evt->lbevent, theTimer.mBase, -1, EV_PERSIST, CTimer::OnTimeout, evt);
         evtimer_add(evt->lbevent, &normal);
         LOG_DEBUG("Convert timer=%u to be persist.", evt->info.id);
     }
@@ -185,7 +185,7 @@ void CTimer::OnTimeout(evutil_socket_t fd, short event, void *args)
 
 void CTimer::Delete(uint id)
 {
-    IF_NFIND(m_events, id, iter)
+    IF_NFIND(mEvents, id, iter)
     {
         LOG_ERROR("Can't find event, id=%u", id);
         return;
@@ -193,7 +193,7 @@ void CTimer::Delete(uint id)
 
     STimerEvent *evt = iter->second;
     evtimer_del(evt->lbevent);
-    m_events.erase(evt->info.id);
+    mEvents.erase(evt->info.id);
     delete evt;
     LOG_DEBUG("Delete timer:%u", id);
 
@@ -205,15 +205,15 @@ uint CTimer::CreateTick(ETick type, const S2UInt &interval, uint loops, const S3
     STimerEvent *evt = new STimerEvent;
     if(at.type > 0) // is tick at
     {
-        evt->lbevent = evtimer_new(m_base, CTimer::OnTimeout, evt);
+        evt->lbevent = evtimer_new(mBase, CTimer::OnTimeout, evt);
     }
     else
     {
-        evt->lbevent = event_new(m_base, -1, EV_PERSIST, CTimer::OnTimeout, evt);
+        evt->lbevent = event_new(mBase, -1, EV_PERSIST, CTimer::OnTimeout, evt);
     }
     evt->callback = cb;
 
-    evt->info.id       = (++m_seq);
+    evt->info.id       = (++mSeq);
     evt->info.type     = type;
     evt->info.loops    = loops;
     evt->info.interval = interval;
@@ -226,7 +226,7 @@ uint CTimer::CreateTick(ETick type, const S2UInt &interval, uint loops, const S3
     first.tv_sec  = interval.id;
     first.tv_usec = 0;
     evtimer_add(evt->lbevent, &first);
-    m_events[evt->info.id] = evt;
+    mEvents[evt->info.id] = evt;
 
     MONITOR(OnTimerAddOrDelete(true));
     LOG_INFO("AddTimer{ id=%u, type=%u, loops=%u, first=%u, normal=%u, at[%u:%u:%u] }",
