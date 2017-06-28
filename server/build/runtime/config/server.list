@@ -8,6 +8,7 @@
 // BroadcastMax: 一次广播玩家最大数量
 // MonitorTick:  监视器刷新时间间隔(秒), 为0标识不开启监视器
 // MongoHost:    Mongo数据库地址
+// RedisHost:    Redis地址
 
 # common
 Resource = /root/xt/server/build/runtime/config/data/
@@ -28,10 +29,12 @@ Host = 127.0.0.1:5000
 # data_1
 Host = 127.0.0.1:5001
 MongoHost = 127.0.0.1:27017
+RedisHost = 127.0.0.1:6397
 
 # data_2
 Host = 127.0.0.1:5002
 MongoHost = 127.0.0.1:27017
+RedisHost = 127.0.0.1:6397
 
 # gate_1
 Host = 127.0.0.1:5003

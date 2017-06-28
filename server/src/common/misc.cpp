@@ -120,6 +120,8 @@ uint CMisc::Main(uint argc, const char **argv, FunServerLoadData fun_load, FunSe
         theServerConfig.sid             = theConfig.sid;
         theServerConfig.host            = theConfig.host;
         theServerConfig.http_host       = theConfig.http_host;
+        theServerConfig.mongo_host      = theConfig.mongo_host;
+        theServerConfig.redis_host      = theConfig.redis_host;
         theServerConfig.backlog         = theConfig.backlog;
         theServerConfig.client_limit    = theConfig.client_limit;
         theServerConfig.monitor_tick    = theConfig.monitor_tick;

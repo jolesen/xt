@@ -5,10 +5,19 @@ SET(SRC ${CMAKE_SOURCE_DIR}/../../src)
 SET(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/../bin)
 SET(LIBRARY_OUTPUT_PATH    ${CMAKE_SOURCE_DIR}/../bin)
 
-INCLUDE_DIRECTORIES(${SRC} /usr/local/libevent/include /usr/local/mysql/include /usr/local/mongo/include/libbson-1.0 /usr/local/mongo/include/libmongoc-1.0)
-LINK_DIRECTORIES(/usr/local/libevent/lib /usr/local/mysql/lib /usr/local/mongo/lib)
+INCLUDE_DIRECTORIES(${SRC})
+INCLUDE_DIRECTORIES(/usr/local/libevent/include)
+INCLUDE_DIRECTORIES(/usr/local/mysql/include)
+INCLUDE_DIRECTORIES(/usr/local/mongo/include/libbson-1.0)
+INCLUDE_DIRECTORIES(/usr/local/mongo/include/libmongoc-1.0)
+INCLUDE_DIRECTORIES(/usr/local/hiredis/include/)
+
+LINK_DIRECTORIES(/usr/local/libevent/lib)
+LINK_DIRECTORIES(/usr/local/mysql/lib)
+LINK_DIRECTORIES(/usr/local/mongo/lib)
+LINK_DIRECTORIES(/usr/local/hiredis/lib)
+
 LINK_LIBRARIES(event)
-#LINK_LIBRARIES(event mysqlclient mongoc-1.0 bson-1.0)
 
 MESSAGE("\n")
 MESSAGE("---------------------------------")

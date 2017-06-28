@@ -19,6 +19,7 @@ public:
     SHost            host;
     SHost            http_host;
     SHost            mongo_host;
+    SHost            redis_host;
     uint             backlog;
     uint             client_limit;
     uint             monitor_tick;

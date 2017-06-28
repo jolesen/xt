@@ -25,6 +25,7 @@ public:
     SHost host;
     SHost http_host;
     SHost mongo_host;
+    SHost redis_host;
     uint  client_limit;
     uint  backlog;
     uint  broadcast_max;

@@ -17,6 +17,7 @@ const std::string kConfigResource     = "Resource";
 const std::string kConfigBroadcastMax = "BroadcastMax";
 const std::string kConfigMonitorTick  = "MonitorTick";
 const std::string kConfigMongoHost    = "MongoHost";
+const std::string kConfigRedisHost    = "RedisHost";
 
 // -----------------------------------------------
 std::string _ParseHost(SHost &host, const std::string &value)
@@ -54,6 +55,10 @@ std::string _ParseField(const std::string &strLine)
         else if(key == kConfigMongoHost)
         {
             flag = _ParseHost(theConfig.mongo_host, value);
+        }
+        else if(key == kConfigRedisHost)
+        {
+            flag = _ParseHost(theConfig.redis_host, value);
         }
         else if(key == kConfigCenter)
         {
@@ -213,6 +218,7 @@ void CConfig::Show()
     LOG_INFO("Host         : %s:%u", host.ip.c_str(), host.port);
     LOG_INFO("HttpHost     : %s:%u", http_host.ip.c_str(), http_host.port);
     LOG_INFO("MongoHost    : %s:%u", mongo_host.ip.c_str(), mongo_host.port);
+    LOG_INFO("RedisHost    : %s:%u", redis_host.ip.c_str(), redis_host.port);
     LOG_INFO("Resource     : %s", resource.c_str());
     LOG_INFO("ClientLimit  : %u", client_limit);
     LOG_INFO("Backlog      : %u", backlog);
