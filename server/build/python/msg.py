@@ -386,7 +386,7 @@ def WriteEncode(objMember, cpp):
     elif(objMember.type == TYPE_MAP):
         cpp.write("\t//" + objMember.name + "\n");
         cpp.write("\tcoder << (uint)" + objMember.name + ".size();\n");
-        cpp.write("\tfor(%s::const_iterator iter = %s.begin(); iter != %s.end(); ++iter)\n" % (GetMemberType(objMember), objMember.name, objMember.name));
+        cpp.write("\tFORMAP(" + objMember.name + ", iter)\n");
         cpp.write("\t{\n");
         cpp.write("\t\tcoder << iter->first;\n");
         if(IsCoderType(objMember.mvalue)):

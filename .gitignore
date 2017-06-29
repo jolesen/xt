@@ -9,7 +9,7 @@ server/build/make/*/Makefile
 server/build/make/*/cmake_install.cmake
 
 server/build/bin
-server/build/runtime/*_*
+server/build/runtime/*-*
 
 *.o
 *~

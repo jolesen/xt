@@ -94,7 +94,7 @@ void QSysSaveUser::EncodeBody(CCoder &coder) const
 	coder << uid;
 	//modules
 	coder << (uint)modules.size();
-	for(std::map<uint, SBytes>::const_iterator iter = modules.begin(); iter != modules.end(); ++iter)
+	FORMAP(modules, iter)
 	{
 		coder << iter->first;
 		coder << iter->second;

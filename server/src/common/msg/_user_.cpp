@@ -119,7 +119,7 @@ void QUserLogout::EncodeBody(CCoder &coder) const
 {
 	//testMapI
 	coder << (uint)testMapI.size();
-	for(std::map<uint, SDailyResets>::const_iterator iter = testMapI.begin(); iter != testMapI.end(); ++iter)
+	FORMAP(testMapI, iter)
 	{
 		coder << iter->first;
 		iter->second.Encode(coder);
@@ -129,7 +129,7 @@ void QUserLogout::EncodeBody(CCoder &coder) const
 	coder << vvalue;
 	//testMapS
 	coder << (uint)testMapS.size();
-	for(std::map<std::string, SDailyResets>::const_iterator iter = testMapS.begin(); iter != testMapS.end(); ++iter)
+	FORMAP(testMapS, iter)
 	{
 		coder << iter->first;
 		iter->second.Encode(coder);
