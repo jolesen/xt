@@ -18,14 +18,14 @@ public:
 public:
 	bool Load(std::string path);
 	const Type* Find(uint id);
-	const DataMap& GetData() { return m_data; }
+	const DataMap& GetData() { return mData; }
 
 private:
 	friend CItemData& CSingleton<CItemData>::Instance();
 	CItemData() { }
 	~CItemData(){ }
 
-	DataMap m_data;
+	DataMap mData;
 };
 #define theItemData CSingleton<CItemData>::Instance()
 

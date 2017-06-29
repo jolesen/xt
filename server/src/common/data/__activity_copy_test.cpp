@@ -21,7 +21,7 @@ bool CActivityCopyTestData::Load(std::string path)
 		data->name = pairs["name"];
 		data->cycle = CUtil::ToInt(pairs["cycle"]);
 
-		m_data[data->id][data->value] = data;
+		mData[data->id][data->value] = data;
 	}
 
 	return true;
@@ -29,9 +29,9 @@ bool CActivityCopyTestData::Load(std::string path)
 
 const CActivityCopyTestData::Type* CActivityCopyTestData::Find(uint id, uint value)
 {
-	IF_FIND(m_data, id, iter_map)
+	IF_FIND(mData, id, iterMap)
 	{
-		IF_FIND(iter_map->second, value, iter)
+		IF_FIND(iterMap->second, value, iter)
 		{
 			return iter->second;
 		}

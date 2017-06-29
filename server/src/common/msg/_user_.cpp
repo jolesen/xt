@@ -140,9 +140,9 @@ void QUserLogout::DecodeBody(CCoder &coder)
 {
 	//testMapI
 	testMapI.clear();
-	uint len_0 = 0;
-	coder >> len_0;
-	FOR(len_0, i)
+	uint len0 = 0;
+	coder >> len0;
+	FOR(len0, i)
 	{
 		uint key;
 		SDailyResets value;
@@ -155,9 +155,9 @@ void QUserLogout::DecodeBody(CCoder &coder)
 	coder >> vvalue;
 	//testMapS
 	testMapS.clear();
-	uint len_3 = 0;
-	coder >> len_3;
-	FOR(len_3, i)
+	uint len3 = 0;
+	coder >> len3;
+	FOR(len3, i)
 	{
 		std::string key;
 		SDailyResets value;

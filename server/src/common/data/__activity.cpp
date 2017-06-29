@@ -22,7 +22,7 @@ bool CActivityData::Load(std::string path)
 		data->name = pairs["name"];
 		data->cycle = CUtil::ToInt(pairs["cycle"]);
 
-		m_data[data->id] = data;
+		mData[data->id] = data;
 	}
 
 	return true;
@@ -30,7 +30,7 @@ bool CActivityData::Load(std::string path)
 
 const CActivityData::Type* CActivityData::Find(uint id)
 {
-	IF_FIND(m_data, id, iter)
+	IF_FIND(mData, id, iter)
 	{
 		return iter->second;
 	}

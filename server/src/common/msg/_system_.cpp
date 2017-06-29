@@ -106,9 +106,9 @@ void QSysSaveUser::DecodeBody(CCoder &coder)
 	coder >> uid;
 	//modules
 	modules.clear();
-	uint len_1 = 0;
-	coder >> len_1;
-	FOR(len_1, i)
+	uint len1 = 0;
+	coder >> len1;
+	FOR(len1, i)
 	{
 		uint key;
 		SBytes value;

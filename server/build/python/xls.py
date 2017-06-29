@@ -41,8 +41,8 @@ def GetRealType(xlsName, sheet, type):
         else:
             ERROR(xlsName, sheet, "unknow type: " + type);
     else:
-        list_type = type[index + len("list|") : len(type)];
-        ret = "std::vector<"+ GetRealType(xlsName, sheet, list_type) + ">";
+        listType = type[index + len("list|") : len(type)];
+        ret = "std::vector<"+ GetRealType(xlsName, sheet, listType) + ">";
         ret = ret.replace("std::vector<uint>", "UIntList");
         ret = ret.replace("std::vector<S2UInt>", "S2UIntList");
         ret = ret.replace("std::vector<S3UInt>", "S3UIntList");
@@ -67,11 +67,11 @@ def ParseConst(xlsName, sheet, col, type, arrConst):
         arrConst.append(objConst);
 
 def ParseConstSheet(xlsName, sheet):
-    h_file = "../../src/common/data/" + sheet.name + ".h";
-    h_gen  = h_file + ".gen";
-    if(os.path.isfile(h_gen)):
-        os.remove(h_gen);
-    h = codecs.open(h_gen, "w", "utf-8");
+    hFile = "../../src/common/data/" + sheet.name + ".h";
+    hGen  = hFile + ".gen";
+    if(os.path.isfile(hGen)):
+        os.remove(hGen);
+    h = codecs.open(hGen, "w", "utf-8");
     h.write("#ifndef _COMMON_DATA_" + sheet.name.upper() + "_H_\n");
     h.write("#define _COMMON_DATA_" + sheet.name.upper() + "_H_\n\n");
     h.write("#include \"../core/core.h\"\n\n");
@@ -116,7 +116,7 @@ def ParseConstSheet(xlsName, sheet):
         h.write(strConst + "\n");
     h.write("\n#endif");
     h.close();
-    common.CompareFile(h_file, h_gen);
+    common.CompareFile(hFile, hGen);
 
 def GenCodeAndJson(xlsName, sheet):
     # 判断是否为常量sheet
@@ -175,11 +175,11 @@ def GenCodeAndJson(xlsName, sheet):
     cls = "C" + clsName + "Data";
 
     # ---- 头文件 ----
-    h_file = "../../src/common/data/" + sheet.name + ".h";
-    h_gen  = h_file + ".gen";
-    if(os.path.isfile(h_gen)):
-        os.remove(h_gen);
-    h = codecs.open(h_gen, "w", "utf-8");
+    hFile = "../../src/common/data/" + sheet.name + ".h";
+    hGen  = hFile + ".gen";
+    if(os.path.isfile(hGen)):
+        os.remove(hGen);
+    h = codecs.open(hGen, "w", "utf-8");
     h.write("#ifndef _COMMON_DATA_" + sheet.name.upper() + "_H_\n");
     h.write("#define _COMMON_DATA_" + sheet.name.upper() + "_H_\n\n");
     h.write("#include \"../core/core.h\"\n\n");
@@ -216,31 +216,31 @@ def GenCodeAndJson(xlsName, sheet):
     h.write("\tbool Load(std::string path);\n");
     if(subType == ""):
         h.write("\tconst Type* Find(" + priType + " " + priName + ");\n");
-        h.write("\tconst DataMap& GetData() { return m_data; }\n\n");
+        h.write("\tconst DataMap& GetData() { return mData; }\n\n");
     else:
         h.write("\tconst Type* Find(" + priType + " " + priName + ", " + subType + " " + subName + ");\n");
-        h.write("\tconst DataMap& FindData(" + priType + " " + priName + ") { return m_data[" + priName + "]; }\n");
-        h.write("\tconst DataMapMap& GetData() { return m_data; }\n\n");
+        h.write("\tconst DataMap& FindData(" + priType + " " + priName + ") { return mData[" + priName + "]; }\n");
+        h.write("\tconst DataMapMap& GetData() { return mData; }\n\n");
     h.write("private:\n");
     h.write("\tfriend " + cls + "& CSingleton<" + cls + ">::Instance();\n");
     h.write("\t" + cls + "() { }\n");
     h.write("\t~" + cls + "(){ }\n\n");
     if(subType == ""):
-        h.write("\tDataMap m_data;\n");
+        h.write("\tDataMap mData;\n");
     else:
-        h.write("\tDataMapMap m_data;\n");
+        h.write("\tDataMapMap mData;\n");
     h.write("};\n");
     h.write("#define the" + clsName + "Data CSingleton<" + cls + ">::Instance()\n\n");
     h.write("#endif");
     h.close();
-    common.CompareFile(h_file, h_gen);
+    common.CompareFile(hFile, hGen);
     
     # ---- 实现文件 ----
-    cpp_file = "../../src/common/data/__" + sheet.name + ".cpp";
-    cpp_gen  = cpp_file + ".gen";
-    if(os.path.isfile(cpp_gen)):
-        os.remove(cpp_gen);
-    cpp = codecs.open(cpp_gen, "w", "utf-8");
+    cppFile = "../../src/common/data/__" + sheet.name + ".cpp";
+    cppGen  = cppFile + ".gen";
+    if(os.path.isfile(cppGen)):
+        os.remove(cppGen);
+    cpp = codecs.open(cppGen, "w", "utf-8");
     cpp.write("#include \"../core/json.h\"\n");
     cpp.write("#include \"../core/util.h\"\n");
     cpp.write("#include \"" + sheet.name + ".h\"\n\n");
@@ -257,7 +257,7 @@ def GenCodeAndJson(xlsName, sheet):
     cpp.write("\t{\n");
     cpp.write("\t\tStringStringMap &pairs = lines[i].pairs;\n\n");
     cpp.write("\t\tType *data = new Type;\n");
-    is_values_decled = 0;
+    isValuesDecled = 0;
     for i in range(0, len(arrMember)):
         objMember  = arrMember[i];
         memberName = objMember.name;
@@ -284,33 +284,33 @@ def GenCodeAndJson(xlsName, sheet):
                 cpp.write("\t\t\t}\n");
                 cpp.write("\t\t}\n");
         else:
-            list_type = memberType[memberType.find("list") + len("list|") : len(memberType)];
+            listType = memberType[memberType.find("list") + len("list|") : len(memberType)];
             cpp.write("\n");
-            if(is_values_decled == 0):
-                is_values_decled = 1;
+            if(isValuesDecled == 0):
+                isValuesDecled = 1;
                 cpp.write("\t\tStringList values;\n");
             cpp.write("\t\tvalues = CUtil::SplitString(pairs[\"" + memberName + "\"], \",\");\n");
             cpp.write("\t\tFORLIST(values, j)\n");
             cpp.write("\t\t{\n");
-            if((list_type == "uint") or (list_type == "bool")):
+            if((listType == "uint") or (listType == "bool")):
                 cpp.write("\t\t\tuint val = CUtil::ToInt(values[j]);\n");
                 cpp.write("\t\t\tif(val != 0)\n");
                 cpp.write("\t\t\t{\n");
                 cpp.write("\t\t\t\tdata->" + memberName +".push_back(val);\n");
                 cpp.write("\t\t\t}\n");
-            elif(list_type == "string"):
+            elif(listType == "string"):
                 cpp.write("\t\t\tstd::string val = values[j];\n");
                 cpp.write("\t\t\tif(val != \"\")\n");
                 cpp.write("\t\t\t{\n");
                 cpp.write("\t\t\t\tdata->" + memberName +".push_back(val);\n");
                 cpp.write("\t\t\t}\n");
-            elif(list_type == "S2UInt"):
+            elif(listType == "S2UInt"):
                 cpp.write("\t\t\tS2UInt val;\n");
                 cpp.write("\t\t\tif(sscanf(values[j].c_str(), \"%u%%%u\", &val.id, &val.value) == 2)\n");
                 cpp.write("\t\t\t{\n");
                 cpp.write("\t\t\t\tdata->" + memberName +".push_back(val);\n");
                 cpp.write("\t\t\t}\n");
-            elif(list_type == "S3UInt"):
+            elif(listType == "S3UInt"):
                 cpp.write("\t\t\tS3UInt val;\n");
                 cpp.write("\t\t\tif(sscanf(values[j].c_str(), \"%u%%%u%%%u\", &val.type, &val.id, &val.value) == 3)\n");
                 cpp.write("\t\t\t{\n");
@@ -318,9 +318,9 @@ def GenCodeAndJson(xlsName, sheet):
                 cpp.write("\t\t\t}\n");
             cpp.write("\t\t}\n");
     if(subType == ""):
-        cpp.write("\n\t\tm_data[data->" + priName + "] = data;\n");
+        cpp.write("\n\t\tmData[data->" + priName + "] = data;\n");
     else:
-        cpp.write("\n\t\tm_data[data->" + priName + "][data->" + subName + "] = data;\n");
+        cpp.write("\n\t\tmData[data->" + priName + "][data->" + subName + "] = data;\n");
     cpp.write("\t}\n\n");
     cpp.write("\treturn true;\n");
     cpp.write("}\n\n");
@@ -328,7 +328,7 @@ def GenCodeAndJson(xlsName, sheet):
     if(subType == ""):
         cpp.write(u"const " + cls + "::Type* " + cls + "::Find(" + priType + " " + priName + ")\n");
         cpp.write(u"{\n");
-        cpp.write(u"\tIF_FIND(m_data, " + priName + ", iter)\n");
+        cpp.write(u"\tIF_FIND(mData, " + priName + ", iter)\n");
         cpp.write(u"\t{\n");
         cpp.write(u"\t\treturn iter->second;\n");
         cpp.write(u"\t}\n\n");
@@ -337,9 +337,9 @@ def GenCodeAndJson(xlsName, sheet):
     else:
         cpp.write(u"const " + cls + "::Type* " + cls + "::Find(" + priType + " " + priName + ", " + subType + " " + subName + ")\n");
         cpp.write(u"{\n");
-        cpp.write(u"\tIF_FIND(m_data, " + priName + ", iter_map)\n");
+        cpp.write(u"\tIF_FIND(mData, " + priName + ", iterMap)\n");
         cpp.write(u"\t{\n");
-        cpp.write(u"\t\tIF_FIND(iter_map->second, " + subName + ", iter)\n");
+        cpp.write(u"\t\tIF_FIND(iterMap->second, " + subName + ", iter)\n");
         cpp.write(u"\t\t{\n");
         cpp.write(u"\t\t\treturn iter->second;\n");
         cpp.write(u"\t\t}\n");
@@ -347,14 +347,14 @@ def GenCodeAndJson(xlsName, sheet):
         cpp.write(u"\treturn NULL;\n");
         cpp.write(u"}");
     cpp.close();
-    common.CompareFile(cpp_file, cpp_gen);
+    common.CompareFile(cppFile, cppGen);
     
     # ---- 生成json ----
-    j_file = "../runtime/config/data/" + sheet.name + ".json";
-    j_gen  = j_file + ".gen";
-    if(os.path.isfile(j_gen)):
-        os.remove(j_gen);
-    j = codecs.open(j_gen, "w", "utf-8");
+    jsonFile = "../runtime/config/data/" + sheet.name + ".json";
+    jsonGen  = jsonFile + ".gen";
+    if(os.path.isfile(jsonGen)):
+        os.remove(jsonGen);
+    j = codecs.open(jsonGen, "w", "utf-8");
     j.write("{\n\"Array\":\n[\n");
     for r in range(LINE_DATA, sheet.nrows):
         j.write("\t{ ");
@@ -377,7 +377,7 @@ def GenCodeAndJson(xlsName, sheet):
         j.write("\n");
     j.write("]\n}\n");
     j.close();
-    common.CompareFile(j_file, j_gen);
+    common.CompareFile(jsonFile, jsonGen);
 
 # -------------------------------------
 if __name__ == "__main__":

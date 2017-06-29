@@ -27,9 +27,9 @@ void SItem::Decode(CCoder &coder)
 {
 	//list
 	list.clear();
-	uint len_0 = 0;
-	coder >> len_0;
-	FOR(len_0, i)
+	uint len0 = 0;
+	coder >> len0;
+	FOR(len0, i)
 	{
 		SItemCell value;
 		value.Decode(coder);

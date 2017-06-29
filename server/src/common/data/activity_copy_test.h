@@ -20,15 +20,15 @@ public:
 public:
 	bool Load(std::string path);
 	const Type* Find(uint id, uint value);
-	const DataMap& FindData(uint id) { return m_data[id]; }
-	const DataMapMap& GetData() { return m_data; }
+	const DataMap& FindData(uint id) { return mData[id]; }
+	const DataMapMap& GetData() { return mData; }
 
 private:
 	friend CActivityCopyTestData& CSingleton<CActivityCopyTestData>::Instance();
 	CActivityCopyTestData() { }
 	~CActivityCopyTestData(){ }
 
-	DataMapMap m_data;
+	DataMapMap mData;
 };
 #define theActivityCopyTestData CSingleton<CActivityCopyTestData>::Instance()
 

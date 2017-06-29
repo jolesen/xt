@@ -23,14 +23,14 @@ public:
 public:
 	bool Load(std::string path);
 	const Type* Find(uint id);
-	const DataMap& GetData() { return m_data; }
+	const DataMap& GetData() { return mData; }
 
 private:
 	friend CListTestData& CSingleton<CListTestData>::Instance();
 	CListTestData() { }
 	~CListTestData(){ }
 
-	DataMap m_data;
+	DataMap mData;
 };
 #define theListTestData CSingleton<CListTestData>::Instance()
 

@@ -258,20 +258,20 @@ def UpdateRelations():
                     #print("---:" + objClass.name + ", md5:" + strValue + ", id:" + str(objClass.id));
 
     # id对应名称
-    h_file = "../../src/common/msg/idname.h";
-    h_gen  = h_file + ".gen";
-    h = codecs.open(h_gen, "w", "utf-8");
+    hFile = "../../src/common/msg/idname.h";
+    hGen  = hFile + ".gen";
+    h = codecs.open(hGen, "w", "utf-8");
     h.write("#ifndef _COMMON_MSG_IDNAME_H_\n");
     h.write("#define _COMMON_MSG_IDNAME_H_\n\n");
     h.write("#include \"../core/core.h\"\n\n");
     h.write("class CMsgIdName\n");
     h.write("{\n");
     h.write("public:\n");
-    h.write("\tstd::string GetMsgName(uint id) { return m_idName[id]; }\n");
-    h.write("\tuint GetMsgId(const std::string &name) { return m_nameId[name]; }\n\n");
+    h.write("\tstd::string GetMsgName(uint id) { return mIdName[id]; }\n");
+    h.write("\tuint GetMsgId(const std::string &name) { return mNameId[name]; }\n\n");
     h.write("private:\n");
-    h.write("\tUIntStringMap m_idName;\n");
-    h.write("\tStringUIntMap m_nameId;\n\n");
+    h.write("\tUIntStringMap mIdName;\n");
+    h.write("\tStringUIntMap mNameId;\n\n");
     h.write("\tfriend CMsgIdName& CSingleton<CMsgIdName>::Instance();\n");
     h.write("\t~CMsgIdName(){ }\n");
     h.write("\tCMsgIdName()\n");
@@ -279,22 +279,22 @@ def UpdateRelations():
     for objFile in gArrFiles:
         for objClass in objFile.classes:
             if(objClass.id > 0):
-                strIdName = "m_idName[%d] = \"%s\";" % (objClass.id, objClass.name);
-                strNameId = "m_nameId[\"%s\"] = %d;" % (objClass.name, objClass.id);
+                strIdName = "mIdName[%d] = \"%s\";" % (objClass.id, objClass.name);
+                strNameId = "mNameId[\"%s\"] = %d;" % (objClass.name, objClass.id);
                 h.write("\t\t%-68s%s\n" % (strIdName, strNameId));
     h.write("\t}\n");
     h.write("};\n");
     h.write("#define theMsgIdName CSingleton<CMsgIdName>::Instance()\n");
     h.write("\n#endif");
     h.close();
-    common.CompareFile(h_file, h_gen);
+    common.CompareFile(hFile, hGen);
 
 
 def WriteCode(objFile):
     # ---- 头文件 ----
-    h_file = "../../src/common/msg/" + objFile.name + ".h";
-    h_gen  = h_file + ".gen";
-    h = codecs.open(h_gen, "w", "utf-8");
+    hFile = "../../src/common/msg/" + objFile.name + ".h";
+    hGen  = hFile + ".gen";
+    h = codecs.open(hGen, "w", "utf-8");
     h.write("#ifndef _COMMON_MSG_%s_H_\n" % objFile.name.upper());
     h.write("#define _COMMON_MSG_%s_H_\n\n" % objFile.name.upper());
     # 包含的头文件
@@ -337,15 +337,15 @@ def WriteCode(objFile):
         h.write("};\n");
     h.write("\n#endif");
     h.close();
-    common.CompareFile(h_file, h_gen);
+    common.CompareFile(hFile, hGen);
 
     # ---- 实现文件 ----
     strFile = objFile.name;
-    cpp_file = "../../src/common/msg/_" + strFile + "_.cpp";
-    cpp_gen  = cpp_file + ".gen";
-    if(os.path.isfile(cpp_gen)):
-        os.remove(cpp_gen);
-    cpp = codecs.open(cpp_gen, "w", "utf-8");
+    cppFile = "../../src/common/msg/_" + strFile + "_.cpp";
+    cppGen  = cppFile + ".gen";
+    if(os.path.isfile(cppGen)):
+        os.remove(cppGen);
+    cpp = codecs.open(cppGen, "w", "utf-8");
     cpp.write("#include \"" + strFile + ".h\"\n");
     for objClass in objFile.classes:
         if(len(objClass.members) == 0):
@@ -367,7 +367,7 @@ def WriteCode(objFile):
             WriteDecode(objClass.members[i], cpp, i);
         cpp.write("}\n");
     cpp.close();
-    common.CompareFile(cpp_file, cpp_gen);
+    common.CompareFile(cppFile, cppGen);
 
 def WriteEncode(objMember, cpp):
     if(IsCoderType(objMember.type)):
@@ -402,7 +402,7 @@ def WriteDecode(objMember, cpp, index):
     if(IsCoderType(objMember.type)):
         cpp.write("\tcoder >> " + objMember.name + ";\n");
     elif(objMember.type == TYPE_VECTOR):
-        strLen = "len_" + str(index);
+        strLen = "len" + str(index);
         cpp.write("\t//" + objMember.name + "\n");
         cpp.write("\t" + objMember.name + ".clear();\n");
         cpp.write("\tuint " + strLen + " = 0;\n");
@@ -418,7 +418,7 @@ def WriteDecode(objMember, cpp, index):
         cpp.write("\t\t" + objMember.name + ".push_back(value);\n");
         cpp.write("\t}\n");
     elif(objMember.type == TYPE_MAP):
-        strLen = "len_" + str(index);
+        strLen = "len" + str(index);
         cpp.write("\t//" + objMember.name + "\n");
         cpp.write("\t" + objMember.name + ".clear();\n");
         cpp.write("\tuint " + strLen + " = 0;\n");

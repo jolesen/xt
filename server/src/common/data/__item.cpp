@@ -20,7 +20,7 @@ bool CItemData::Load(std::string path)
 		data->name = pairs["name"];
 		data->type = CUtil::ToInt(pairs["type"]);
 
-		m_data[data->id] = data;
+		mData[data->id] = data;
 	}
 
 	return true;
@@ -28,7 +28,7 @@ bool CItemData::Load(std::string path)
 
 const CItemData::Type* CItemData::Find(uint id)
 {
-	IF_FIND(m_data, id, iter)
+	IF_FIND(mData, id, iter)
 	{
 		return iter->second;
 	}

@@ -62,7 +62,7 @@ bool CListTestData::Load(std::string path)
 		}
 		data->od = CUtil::ToInt(pairs["od"]);
 
-		m_data[data->id] = data;
+		mData[data->id] = data;
 	}
 
 	return true;
@@ -70,7 +70,7 @@ bool CListTestData::Load(std::string path)
 
 const CListTestData::Type* CListTestData::Find(uint id)
 {
-	IF_FIND(m_data, id, iter)
+	IF_FIND(mData, id, iter)
 	{
 		return iter->second;
 	}
