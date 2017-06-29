@@ -1,3 +1,4 @@
+// This file is auto generated.
 #include "test.h"
 
 //QTestTime

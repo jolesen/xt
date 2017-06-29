@@ -261,6 +261,7 @@ def UpdateRelations():
     hFile = "../../src/common/msg/idname.h";
     hGen  = hFile + ".gen";
     h = codecs.open(hGen, "w", "utf-8");
+    h.write("// This file is auto generated.\n");
     h.write("#ifndef _COMMON_MSG_IDNAME_H_\n");
     h.write("#define _COMMON_MSG_IDNAME_H_\n\n");
     h.write("#include \"../core/core.h\"\n\n");
@@ -295,6 +296,7 @@ def WriteCode(objFile):
     hFile = "../../src/common/msg/" + objFile.name + ".h";
     hGen  = hFile + ".gen";
     h = codecs.open(hGen, "w", "utf-8");
+    h.write("// This file is auto generated.\n");
     h.write("#ifndef _COMMON_MSG_%s_H_\n" % objFile.name.upper());
     h.write("#define _COMMON_MSG_%s_H_\n\n" % objFile.name.upper());
     # 包含的头文件
@@ -346,6 +348,7 @@ def WriteCode(objFile):
     if(os.path.isfile(cppGen)):
         os.remove(cppGen);
     cpp = codecs.open(cppGen, "w", "utf-8");
+    cpp.write("// This file is auto generated.\n");
     cpp.write("#include \"" + strFile + ".h\"\n");
     for objClass in objFile.classes:
         if(len(objClass.members) == 0):

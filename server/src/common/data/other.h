@@ -1,3 +1,4 @@
+// This file is auto generated.
 #ifndef _COMMON_DATA_OTHER_H_
 #define _COMMON_DATA_OTHER_H_
 

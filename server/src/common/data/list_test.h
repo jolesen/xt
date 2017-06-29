@@ -1,3 +1,4 @@
+// This file is auto generated.
 #ifndef _COMMON_DATA_LIST_TEST_H_
 #define _COMMON_DATA_LIST_TEST_H_
 

@@ -1,3 +1,4 @@
+// This file is auto generated.
 #ifndef _COMMON_MSG_USER_H_
 #define _COMMON_MSG_USER_H_
 

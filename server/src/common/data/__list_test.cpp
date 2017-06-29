@@ -1,3 +1,4 @@
+// This file is auto generated.
 #include "../core/json.h"
 #include "../core/util.h"
 #include "list_test.h"

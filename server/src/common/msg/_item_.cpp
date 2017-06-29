@@ -1,3 +1,4 @@
+// This file is auto generated.
 #include "item.h"
 
 //SItemCell

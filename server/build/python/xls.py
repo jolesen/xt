@@ -72,6 +72,7 @@ def ParseConstSheet(xlsName, sheet):
     if(os.path.isfile(hGen)):
         os.remove(hGen);
     h = codecs.open(hGen, "w", "utf-8");
+    h.write("// This file is auto generated.\n");
     h.write("#ifndef _COMMON_DATA_" + sheet.name.upper() + "_H_\n");
     h.write("#define _COMMON_DATA_" + sheet.name.upper() + "_H_\n\n");
     h.write("#include \"../core/core.h\"\n\n");
@@ -180,6 +181,7 @@ def GenCodeAndJson(xlsName, sheet):
     if(os.path.isfile(hGen)):
         os.remove(hGen);
     h = codecs.open(hGen, "w", "utf-8");
+    h.write("// This file is auto generated.\n");
     h.write("#ifndef _COMMON_DATA_" + sheet.name.upper() + "_H_\n");
     h.write("#define _COMMON_DATA_" + sheet.name.upper() + "_H_\n\n");
     h.write("#include \"../core/core.h\"\n\n");
@@ -241,6 +243,7 @@ def GenCodeAndJson(xlsName, sheet):
     if(os.path.isfile(cppGen)):
         os.remove(cppGen);
     cpp = codecs.open(cppGen, "w", "utf-8");
+    cpp.write("// This file is auto generated.\n");
     cpp.write("#include \"../core/json.h\"\n");
     cpp.write("#include \"../core/util.h\"\n");
     cpp.write("#include \"" + sheet.name + ".h\"\n\n");
@@ -355,6 +358,7 @@ def GenCodeAndJson(xlsName, sheet):
     if(os.path.isfile(jsonGen)):
         os.remove(jsonGen);
     j = codecs.open(jsonGen, "w", "utf-8");
+    j.write("// This file is auto generated.\n");
     j.write("{\n\"Array\":\n[\n");
     for r in range(LINE_DATA, sheet.nrows):
         j.write("\t{ ");
