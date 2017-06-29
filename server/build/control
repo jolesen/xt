@@ -179,8 +179,8 @@ function Clean()
     cd runtime
     for rundir in `ls`
     do
-        if [[ $rundir == *_[0-9]* ]]; then # svr_xx
-            ln=${rundir%_*}
+        if [[ $rundir == *-[0-9]* ]]; then # svr-xx
+            ln=${rundir%-*}
             rm -f $rundir/$ln
             rm -f $rundir/*.log
             rm -f $rundir/*.*
@@ -203,7 +203,7 @@ function GenerateCode()
 function _StartByName()
 {
     dir=$1
-    exe=${dir%_*}
+    exe=${dir%-*}
 
     # 运行文件是否存在
     bin="$gBinDir/$exe"
@@ -224,7 +224,7 @@ function _StartByName()
         ln -fs "$bin" "$link"
     fi
 
-    # 运行 id=${dir#*_}
+    # 运行 id=${dir#*-}
     cd $dir
     ./$exe -sid $dir -config $gConfig --$gProject
     cd ..
@@ -239,7 +239,7 @@ function Start()
     if [ $# -eq 0 ]; then
         for rundir in `ls`
         do
-            if [[ $rundir == *_[0-9]* ]]; then
+            if [[ $rundir == *-[0-9]* ]]; then
                 _StartByName $rundir
             fi
         done
@@ -267,8 +267,8 @@ function Stop()
         ps fx | grep "\-\-$gProject" | awk '{ print $1 }' | xargs kill -10
     else
         #para=$1
-        #exe=${para%_*}
-        #sid=${para#*_}
+        #exe=${para%-*}
+        #sid=${para#*-}
         ps fx | grep "\-\-$gProject" | grep "\-sid $1"| awk '{ print $1 }' | xargs kill -10
     fi
 
@@ -293,7 +293,7 @@ function Profile()
 {
     GotoWorkDir
     sid=$1
-    exe=${sid%_*}
+    exe=${sid%-*}
     bin="$gBinDir/$exe"
     if [ ! -f "$bin" ]; then
         echo "Error: bin file[$bin] not exist."
@@ -329,7 +329,7 @@ function ShowConfigPorts()
     cd runtime
     for rundir in `ls`
     do
-        if [[ $rundir == *_[0-9]* ]]; then
+        if [[ $rundir == *-[0-9]* ]]; then
             port=`cat $rundir/config.txt | grep Host`
             port=${port/Host/}
             port=${port/=/}
@@ -343,7 +343,7 @@ function GetCode()
 {
     GotoWorkDir
     rm -f $gLock
-    xt_file="$gProject"$(date +%Y%m%d%H%M%S)".zip"
+    xtFile="$gProject"$(date +%Y%m%d%H%M%S)".zip"
 
     Stop
     Clean
@@ -352,9 +352,9 @@ function GetCode()
     mv xt/.git ./xtgit
     zip -r $gProject $gProject/ > /dev/null
     mv ./xtgit xt/.git
-    mv $gProject.zip $xt_file
-    sz $xt_file
-    rm -f $xt_file
+    mv $gProject.zip $xtFile
+    sz $xtFile
+    rm -f $xtFile
     cd ~/$gProject/server/build
 }
 
@@ -409,7 +409,7 @@ function UpdateDatabase()
 
     # COMPARE
     if [ "$verDb" -ge "$verConfig" ]; then
-        echo "db_version[$verDb] >= config_version[$verConfig], don't need to update."
+        echo "dbVersion[$verDb] >= configVersion[$verConfig], don't need to update."
         exit
     fi
 
@@ -447,18 +447,18 @@ fi
 
 case $1 in
     install)     InstallLib;;
-    make)        Make $2 ;;
-    db_create)   CreateDatabase ;;
-    db_update)   UpdateDatabase ;;
-    start)       Start $2 ;;
-    start_robot) StartRobot $2 ;;
-    stop)        Stop $2 ;;
-    watch)       Watch $2 ;;
-    profile)     Profile $2 ;;
-    clean)       Clean ;;
-    code)        GenerateCode ;;
-    get_code)    GetCode ;;
-    show_port)   ShowConfigPorts ;;
-    attach)      Attach $2 ;;
-    *)           echo "Error: [$1] unknow command" ;;
+    make)        Make $2;;
+    dbCreate)   CreateDatabase;;
+    dbUpdate)   UpdateDatabase;;
+    start)       Start $2;;
+    startRobot) StartRobot $2;;
+    stop)        Stop $2;;
+    watch)       Watch $2;;
+    profile)     Profile $2;;
+    clean)       Clean;;
+    code)        GenerateCode;;
+    getCode)    GetCode;;
+    showPort)   ShowConfigPorts;;
+    attach)      Attach $2;;
+    *)           echo "Error: [$1] unknow command";;
 esac

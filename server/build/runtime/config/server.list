@@ -15,41 +15,41 @@ Resource = /root/xt/server/build/runtime/config/data/
 ClientLimit = 20000
 Backlog = 10
 BroadcastMax = 100
-Center = center_1, 127.0.0.1:3333
+Center = center-1, 127.0.0.1:3333
 
 // ------------------------------------------------------
-# center_1
+# center-1
 Host = 127.0.0.1:3333
 MonitorTick = 1
 HttpHost = 192.168.194.3:4567
 
-# auth_1
+# auth-1
 Host = 127.0.0.1:5000
 
-# data_1
+# data-1
 Host = 127.0.0.1:5001
 MongoHost = 127.0.0.1:27017
 RedisHost = 127.0.0.1:6397
 
-# data_2
+# data-2
 Host = 127.0.0.1:5002
 MongoHost = 127.0.0.1:27017
 RedisHost = 127.0.0.1:6397
 
-# gate_1
+# gate-1
 Host = 127.0.0.1:5003
 
-# gate_2
+# gate-2
 Host = 127.0.0.1:5004
 
-# logic_1
+# logic-1
 Host = 127.0.0.1:5005
 
-# logic_2
+# logic-2
 Host = 127.0.0.1:5006
 
-# logic_3
+# logic-3
 Host = 127.0.0.1:5007
 
-# logic_4
+# logic-4
 Host = 127.0.0.1:5008
