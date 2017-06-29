@@ -1,31 +1,26 @@
 // This file is auto generated.
-{
-"Array":
-[
-	{ "id":"1", "ti":"1", "ts":"ty", "name":"yangyuzhien", "cycle":"1" },
-	{ "id":"2", "ti":"1", "ts":"ty", "name":"festivepayreward", "cycle":"0" },
-	{ "id":"3", "ti":"1", "ts":"ty", "name":"childrenday", "cycle":"0" },
-	{ "id":"4", "ti":"1", "ts":"ty", "name":"timelimit_vip", "cycle":"0" },
-	{ "id":"5", "ti":"1", "ts":"ty", "name":"timelimit_fightval", "cycle":"0" },
-	{ "id":"6", "ti":"1", "ts":"ty", "name":"festive_task", "cycle":"1" },
-	{ "id":"7", "ti":"1", "ts":"ty", "name":"pay_gold_count_huodong1", "cycle":"0" },
-	{ "id":"8", "ti":"1", "ts":"ty", "name":"pay_gold_count_huodong2", "cycle":"0" },
-	{ "id":"9", "ti":"1", "ts":"ty", "name":"pay_gold_count_huodong3", "cycle":"0" },
-	{ "id":"10", "ti":"1", "ts":"ty", "name":"pay_gold_count_huodong4", "cycle":"0" },
-	{ "id":"11", "ti":"1", "ts":"ty", "name":"pay_gold_count_huodong5", "cycle":"0" },
-	{ "id":"12", "ti":"1", "ts":"ty", "name":"festive_task_exchange", "cycle":"1" },
-	{ "id":"13", "ti":"1", "ts":"ty", "name":"goldlottery", "cycle":"0" },
-	{ "id":"14", "ti":"1", "ts":"ty", "name":"consumeproc", "cycle":"0" },
-	{ "id":"15", "ti":"1", "ts":"ty", "name":"flower_ganen", "cycle":"1" },
-	{ "id":"16", "ti":"1", "ts":"ty", "name":"festive_online_reward", "cycle":"1" },
-	{ "id":"17", "ti":"1", "ts":"ty", "name":"fesryday", "cycle":"1" },
-	{ "id":"18", "ti":"1", "ts":"ty", "name":"festive_gold_tree", "cycle":"0" },
-	{ "id":"19", "ti":"1", "ts":"ty", "name":"festive_furnace", "cycle":"0" },
-	{ "id":"20", "ti":"1", "ts":"ty", "name":"pet_train", "cycle":"1" },
-	{ "id":"21", "ti":"1", "ts":"ty", "name":"double_medal", "cycle":"0" },
-	{ "id":"22", "ti":"1", "ts":"ty", "name":"discount_horse_firm", "cycle":"0" },
-	{ "id":"23", "ti":"1", "ts":"ty", "name":"discount_pet_firm", "cycle":"0" },
-	{ "id":"24", "ti":"1", "ts":"ty", "name":"discount_star_search", "cycle":"0" },
-	{ "id":"25", "ti":"1", "ts":"ty", "name":"discount_levy_city", "cycle":"0" }
-]
-}
+{ "id":"1", "ti":"1", "ts":"ty", "name":"yangyuzhien", "cycle":"1" }
+{ "id":"2", "ti":"1", "ts":"ty", "name":"festivepayreward", "cycle":"0" }
+{ "id":"3", "ti":"1", "ts":"ty", "name":"childrenday", "cycle":"0" }
+{ "id":"4", "ti":"1", "ts":"ty", "name":"timelimit_vip", "cycle":"0" }
+{ "id":"5", "ti":"1", "ts":"ty", "name":"timelimit_fightval", "cycle":"0" }
+{ "id":"6", "ti":"1", "ts":"ty", "name":"festive_task", "cycle":"1" }
+{ "id":"7", "ti":"1", "ts":"ty", "name":"pay_gold_count_huodong1", "cycle":"0" }
+{ "id":"8", "ti":"1", "ts":"ty", "name":"pay_gold_count_huodong2", "cycle":"0" }
+{ "id":"9", "ti":"1", "ts":"ty", "name":"pay_gold_count_huodong3", "cycle":"0" }
+{ "id":"10", "ti":"1", "ts":"ty", "name":"pay_gold_count_huodong4", "cycle":"0" }
+{ "id":"11", "ti":"1", "ts":"ty", "name":"pay_gold_count_huodong5", "cycle":"0" }
+{ "id":"12", "ti":"1", "ts":"ty", "name":"festive_task_exchange", "cycle":"1" }
+{ "id":"13", "ti":"1", "ts":"ty", "name":"goldlottery", "cycle":"0" }
+{ "id":"14", "ti":"1", "ts":"ty", "name":"consumeproc", "cycle":"0" }
+{ "id":"15", "ti":"1", "ts":"ty", "name":"flower_ganen", "cycle":"1" }
+{ "id":"16", "ti":"1", "ts":"ty", "name":"festive_online_reward", "cycle":"1" }
+{ "id":"17", "ti":"1", "ts":"ty", "name":"fesryday", "cycle":"1" }
+{ "id":"18", "ti":"1", "ts":"ty", "name":"festive_gold_tree", "cycle":"0" }
+{ "id":"19", "ti":"1", "ts":"ty", "name":"festive_furnace", "cycle":"0" }
+{ "id":"20", "ti":"1", "ts":"ty", "name":"pet_train", "cycle":"1" }
+{ "id":"21", "ti":"1", "ts":"ty", "name":"double_medal", "cycle":"0" }
+{ "id":"22", "ti":"1", "ts":"ty", "name":"discount_horse_firm", "cycle":"0" }
+{ "id":"23", "ti":"1", "ts":"ty", "name":"discount_pet_firm", "cycle":"0" }
+{ "id":"24", "ti":"1", "ts":"ty", "name":"discount_star_search", "cycle":"0" }
+{ "id":"25", "ti":"1", "ts":"ty", "name":"discount_levy_city", "cycle":"0" }

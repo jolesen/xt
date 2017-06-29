@@ -359,9 +359,8 @@ def GenCodeAndJson(xlsName, sheet):
         os.remove(jsonGen);
     j = codecs.open(jsonGen, "w", "utf-8");
     j.write("// This file is auto generated.\n");
-    j.write("{\n\"Array\":\n[\n");
     for r in range(LINE_DATA, sheet.nrows):
-        j.write("\t{ ");
+        j.write("{ ");
         for c in range(0, len(arrMember)):
             objMember = arrMember[c];
             value = sheet.cell_value(r, objMember.col);
@@ -375,11 +374,7 @@ def GenCodeAndJson(xlsName, sheet):
             if(c < len(arrMember) - 1):
                 strTmp += ", ";
             j.write(strTmp);
-        j.write(" }");
-        if(r < sheet.nrows - 1):
-            j.write(",");
-        j.write("\n");
-    j.write("]\n}\n");
+        j.write(" }\n");
     j.close();
     common.CompareFile(jsonFile, jsonGen);
 
