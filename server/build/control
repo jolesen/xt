@@ -446,19 +446,19 @@ then
 fi
 
 case $1 in
-    install)     InstallLib;;
-    make)        Make $2;;
+    install)    InstallLib;;
+    make)       Make $2;;
     dbCreate)   CreateDatabase;;
     dbUpdate)   UpdateDatabase;;
-    start)       Start $2;;
+    start)      Start $2;;
     startRobot) StartRobot $2;;
-    stop)        Stop $2;;
-    watch)       Watch $2;;
-    profile)     Profile $2;;
-    clean)       Clean;;
-    code)        GenerateCode;;
+    stop)       Stop $2;;
+    watch)      Watch $2;;
+    profile)    Profile $2;;
+    clean)      Clean;;
+    code)       GenerateCode;;
     getCode)    GetCode;;
     showPort)   ShowConfigPorts;;
-    attach)      Attach $2;;
+    attach)     Attach $2;;
     *)           echo "Error: [$1] unknow command";;
 esac

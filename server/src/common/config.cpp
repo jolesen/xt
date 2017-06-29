@@ -174,7 +174,7 @@ std::string _ReadConfig()
 }
 
 // -----------------------------------------------
-// ./auth -sid auth_1 --xt
+// ./auth -sid auth-1 --xt
 std::string CConfig::Parse(uint argc, const char **argv)
 {
     --argc; // 不处理"--xt"
