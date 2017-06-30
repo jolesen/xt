@@ -100,7 +100,7 @@ function InstallLib()
     tar -zxf $mysql.tar.gz
     cd $mysql
     ./BUILD/autorun.sh
-    ./configure --without-server --enable-thread-safe-client --prefix=/usr/local/mysql
+    ./configure --without-server --enable-thread-safe-client --prefix=/usr/local/mysql-devel
     make
     make install
     cd ..
@@ -112,7 +112,7 @@ function InstallLib()
     rm -rf $mongo
     tar -zxf $mongo.tar.gz
     cd $mongo
-    ./configure --prefix=/usr/local/mongo
+    ./configure --prefix=/usr/local/mongo-c-driver
     make
     make install
     cd ..
