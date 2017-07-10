@@ -13,7 +13,7 @@ public:
     void Link(const std::string &sid, const SHost &host);
     uint GetLinkCount() { return mLinks.size(); }
 
-public:
+private:
     static void OnLinkRead(bufferevent *bev, void *args);
     static void OnLinkConnected(bufferevent *bev, short events, void *args);
     static void OnLinkFdError(bufferevent *bev, short events, void *args);

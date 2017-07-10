@@ -16,7 +16,6 @@ private:
     ~CLog();
 
 private:
-    CMutex mMutex;
     std::string mFilename;
 };
 #define theLog CSingleton<CLog>::Instance()
