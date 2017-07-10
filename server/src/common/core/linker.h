@@ -8,9 +8,9 @@
 class CLinker
 {
 public:
-    CClient* GetLink(const std::string &sid);
+    CClient* GetLink(const string &sid);
     void CheckLink();
-    void Link(const std::string &sid, const SHost &host);
+    void Link(const string &sid, const SHost &host);
     uint GetLinkCount() { return mLinks.size(); }
 
 private:
@@ -25,7 +25,7 @@ private:
     CClient* GetLinkByFd(uint fd);
 
 private:
-    std::map<std::string, CClient*> mLinks;
+    std::map<string, CClient*> mLinks;
 };
 #define theLinker CSingleton<CLinker>::Instance()
 

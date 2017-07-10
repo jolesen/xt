@@ -1,2 +1,2 @@
-cmsg QTestTime(uint time, uint seq, std::string s, std::string tst, UIntStringMap imap, StringStringMap smap);
+cmsg QTestTime(uint time, uint seq, string s, string tst, UIntStringMap imap, StringStringMap smap);
 cmsg RTestTime(uint time, uint seq);

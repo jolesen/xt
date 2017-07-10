@@ -7,8 +7,8 @@
 class CMsgIdName
 {
 public:
-	std::string GetMsgName(uint id) { return mIdName[id]; }
-	uint GetMsgId(const std::string &name) { return mNameId[name]; }
+	string GetMsgName(uint id) { return mIdName[id]; }
+	uint GetMsgId(const string &name) { return mNameId[name]; }
 
 private:
 	UIntStringMap mIdName;

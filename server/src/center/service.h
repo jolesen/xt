@@ -12,7 +12,7 @@ private:
     ~CServiceManager();
 
 public:
-    typedef std::map<std::string, SService> StringServiceMap;
+    typedef std::map<string, SService> StringServiceMap;
 
     const StringServiceMap& GetServices() { return mService; }
     void AddService(const SService &service) { mService[service.sid] = service; }

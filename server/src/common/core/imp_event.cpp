@@ -9,14 +9,14 @@ CEvent::~CEvent()
 {
 }
 
-bool CEvent::Register(const std::string &strName, const std::string &strFile, SEventInfo::FunEvent handler)
+bool CEvent::Register(const string &strName, const string &strFile, SEventInfo::FunEvent handler)
 {
     SEventInfo info(strFile, handler);
     mHandlers[strName].push_back(info);
     return true;
 }
 
-void CEvent::Execute(const std::string &strName, SEventBase *event)
+void CEvent::Execute(const string &strName, SEventBase *event)
 {
     IF_NFIND(mHandlers, strName, iterMap)
     {

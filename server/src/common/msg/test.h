@@ -14,8 +14,8 @@ public:
 public:
 	uint time;
 	uint seq;
-	std::string s;
-	std::string tst;
+	string s;
+	string tst;
 	UIntStringMap imap;
 	StringStringMap smap;
 

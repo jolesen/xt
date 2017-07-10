@@ -3,25 +3,25 @@
 
 #include "core/core.h"
 
-const std::string kServiceCenter = "center";
-const std::string kServiceGate   = "gate";
-const std::string kServiceAuth   = "auth";
-const std::string kServiceData   = "data";
-const std::string kServiceLogic  = "logic";
+const string kServiceCenter = "center";
+const string kServiceGate   = "gate";
+const string kServiceAuth   = "auth";
+const string kServiceData   = "data";
+const string kServiceLogic  = "logic";
 
 // CConfig
 class CConfig
 {
 public:
-    std::string Parse(uint argc, const char **argv);
+    string Parse(uint argc, const char **argv);
     void Show();
 
 public:
-    std::string type;
-    std::string sid;
-    std::string resource;
-    std::string config;
-    std::map<std::string, SHost> centers;
+    string type;
+    string sid;
+    string resource;
+    string config;
+    std::map<string, SHost> centers;
     SHost host;
     SHost httpHost;
     SHost mongoHost;

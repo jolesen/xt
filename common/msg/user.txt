@@ -35,7 +35,7 @@ cmsg RUserErrorCode(uint code, UIntList flags);
 cmsg QUserLogin(uint uid, uint session);
 cmsg RUserLogin(uint flag, uint uid, uint session);
 
-cmsg QUserLogout(std::map<uint, SDailyResets> testMapI, uint ivalue, UIntList vvalue, std::map<std::string, SDailyResets> testMapS);
+cmsg QUserLogout(std::map<uint, SDailyResets> testMapI, uint ivalue, UIntList vvalue, std::map<string, SDailyResets> testMapS);
 cmsg RUserLogout(uint flag, StringList vtest);
 
 cmsg RMsgTest(UIntUIntMap test);

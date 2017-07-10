@@ -20,7 +20,7 @@ public:
     CODE(uchar);
     CODE(uint);
     CODE(ulong);
-    CODE(std::string);
+    CODE(string);
     CODE(SBytes);
     CODE(S2UInt);
     CODE(S2ULong);

@@ -3,7 +3,7 @@
 #include "../core/util.h"
 #include "item.h"
 
-bool CItemData::Load(std::string path)
+bool CItemData::Load(string path)
 {
 	CJson json;
 	if(!json.Read(path + "item.json"))

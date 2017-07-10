@@ -14,7 +14,7 @@ CLinker::~CLinker()
 {
 }
 
-void CLinker::Link(const std::string &sid, const SHost &host)
+void CLinker::Link(const string &sid, const SHost &host)
 {
     IF_NFINDx(mLinks, sid)
     {
@@ -130,7 +130,7 @@ void CLinker::CheckLink()
     }
 }
 
-CClient* CLinker::GetLink(const std::string &sid)
+CClient* CLinker::GetLink(const string &sid)
 {
     IF_FIND(mLinks, sid, iter)
     {

@@ -38,7 +38,7 @@ bool Init()
     return true;
 }
 
-bool LoadData(const std::string &path)
+bool LoadData(const string &path)
 {
     return theActivityData.Load(path);
 }

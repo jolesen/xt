@@ -15,6 +15,7 @@
 typedef unsigned char uchar;
 typedef unsigned int  uint;
 typedef uint64_t      ulong;
+typedef std::string   string;
 
 // ---------------------------------------------------------
 // _S2TYPE_
@@ -48,35 +49,35 @@ _S3TYPE_(S3ULong, ulong);
 
 // ---------------------------------------------------------
 // list
-typedef std::vector<bool>         BoolList;
-typedef std::vector<uchar>        UCharList;
-typedef std::vector<uint>         UIntList;
-typedef std::vector<ulong>        ULongList;
-typedef std::vector<std::string>  StringList;
-typedef std::vector<S2UInt>       S2UIntList;
-typedef std::vector<S2ULong>      S2ULongList;
-typedef std::vector<S3UInt>       S3UIntList;
-typedef std::vector<S3ULong>      S3ULongList;
+typedef std::vector<bool>     BoolList;
+typedef std::vector<uchar>    UCharList;
+typedef std::vector<uint>     UIntList;
+typedef std::vector<ulong>    ULongList;
+typedef std::vector<string>   StringList;
+typedef std::vector<S2UInt>   S2UIntList;
+typedef std::vector<S2ULong>  S2ULongList;
+typedef std::vector<S3UInt>   S3UIntList;
+typedef std::vector<S3ULong>  S3ULongList;
 
 // map
-typedef std::map<uint, bool>                UIntBoolMap;
-typedef std::map<uint, uchar>               UIntUCharMap;
-typedef std::map<uint, uint>                UIntUIntMap;
-typedef std::map<uint, ulong>               UIntULongMap;
-typedef std::map<uint, std::string>         UIntStringMap;
-typedef std::map<uint, S2UInt>              UIntS2UIntMap;
-typedef std::map<uint, S2ULong>             UIntS2ULongMap;
-typedef std::map<uint, S3UInt>              UIntS3UIntMap;
-typedef std::map<uint, S3ULong>             UIntS3ULongMap;
-typedef std::map<std::string, bool>         StringBoolMap;
-typedef std::map<std::string, uchar>        StringUCharMap;
-typedef std::map<std::string, uint>         StringUIntMap;
-typedef std::map<std::string, ulong>        StringULongMap;
-typedef std::map<std::string, std::string>  StringStringMap;
-typedef std::map<std::string, S2UInt>       StringS2UIntMap;
-typedef std::map<std::string, S2ULong>      StringS2ULongMap;
-typedef std::map<std::string, S3UInt>       StringS3UIntMap;
-typedef std::map<std::string, S3ULong>      StringS3ULongMap;
+typedef std::map<uint, bool>      UIntBoolMap;
+typedef std::map<uint, uchar>     UIntUCharMap;
+typedef std::map<uint, uint>      UIntUIntMap;
+typedef std::map<uint, ulong>     UIntULongMap;
+typedef std::map<uint, string>    UIntStringMap;
+typedef std::map<uint, S2UInt>    UIntS2UIntMap;
+typedef std::map<uint, S2ULong>   UIntS2ULongMap;
+typedef std::map<uint, S3UInt>    UIntS3UIntMap;
+typedef std::map<uint, S3ULong>   UIntS3ULongMap;
+typedef std::map<string, bool>    StringBoolMap;
+typedef std::map<string, uchar>   StringUCharMap;
+typedef std::map<string, uint>    StringUIntMap;
+typedef std::map<string, ulong>   StringULongMap;
+typedef std::map<string, string>  StringStringMap;
+typedef std::map<string, S2UInt>  StringS2UIntMap;
+typedef std::map<string, S2ULong> StringS2ULongMap;
+typedef std::map<string, S3UInt>  StringS3UIntMap;
+typedef std::map<string, S3ULong> StringS3ULongMap;
 
 // ---------------------------------------------------------
 // temp var
@@ -131,11 +132,11 @@ struct SBytes
 // SHost
 struct SHost
 {
-    std::string ip;
-    uint port;
+    string ip;
+    uint   port;
 
     SHost() : ip(""), port(0) {}
-    SHost(const std::string &strIp, uint p) : ip(strIp), port(p) {}
+    SHost(const string &strIp, uint p) : ip(strIp), port(p) {}
 };
 
 

@@ -7,8 +7,8 @@
 // SService
 struct SService
 {
-	std::string sid;
-	std::string ip;
+	string sid;
+	string ip;
 	uint port;
 
 	void Encode(CCoder &coder) const;

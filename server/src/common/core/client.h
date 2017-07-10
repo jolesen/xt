@@ -23,7 +23,7 @@ public:
     typedef void (*FunConnected)(bufferevent *bev, short events, void *args);
 
     void SetPassive(const SHost &host, bufferevent *bev); // accepted
-    void SetActive(const SHost &host, const std::string &sid); // connect to
+    void SetActive(const SHost &host, const string &sid); // connect to
     uint Connect(event_base *base, FunConnected funConnected);
     uint Read(char *buff, uint buffSize, uint &readSize);
     uint Write(const char *buff, uint size);
@@ -35,7 +35,7 @@ public:
     uint GetType() const { return mType; }
     uint GetFd() const { return mBev ? bufferevent_getfd(mBev) : 0; }
     const SHost& GetHost() const { return mHost; }
-    const std::string& GetServerId() const { return mSid; }
+    const string& GetServerId() const { return mSid; }
     void SetId(uint value) { mId = value; }
     void SetState(uint state) { mState = state; }
 
@@ -45,11 +45,11 @@ private:
     ~CClient();
 
 private:
-    void Init(const SHost &host, bufferevent *bev, const std::string &sid);
+    void Init(const SHost &host, bufferevent *bev, const string &sid);
 
 private:
     bufferevent* mBev;
-    std::string  mSid;
+    string       mSid;
     SHost        mHost;
     uint         mId;
     uint         mState;

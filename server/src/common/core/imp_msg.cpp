@@ -51,7 +51,7 @@ CMsgs::~CMsgs()
 {
 }
 
-bool CMsgs::Register(CMsgBase* msg, FunMsg executor, const std::string &name)
+bool CMsgs::Register(CMsgBase* msg, FunMsg executor, const string &name)
 {
     if(msg)
     {

@@ -3,7 +3,7 @@
 #include "../core/util.h"
 #include "activity.h"
 
-bool CActivityData::Load(std::string path)
+bool CActivityData::Load(string path)
 {
 	CJson json;
 	if(!json.Read(path + "activity.json"))

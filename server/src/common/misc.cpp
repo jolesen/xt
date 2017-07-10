@@ -75,12 +75,12 @@ bool CMisc::CheckSystemMessage(const CMsgBase *msg)
     return true;
 }
 
-uint _GetMsgId(const std::string &msg_name)
+uint _GetMsgId(const string &msg_name)
 {
     return theMsgIdName.GetMsgId(msg_name);
 }
 
-std::string _GetMsgName(uint msg_id)
+string _GetMsgName(uint msg_id)
 {
     return theMsgIdName.GetMsgName(msg_id);
 }
@@ -94,7 +94,7 @@ uint CMisc::Main(uint argc, const char **argv, FunServerLoadData fun_load, FunSe
     do
     {
         // 启动参数
-        std::string load = theConfig.Parse(argc, argv);
+        string load = theConfig.Parse(argc, argv);
         if(load.size())
         {
             printf("ParseConfig error, %s\n", load.c_str());

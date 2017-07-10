@@ -3,7 +3,7 @@
 #include "../core/util.h"
 #include "activity_copy_test.h"
 
-bool CActivityCopyTestData::Load(std::string path)
+bool CActivityCopyTestData::Load(string path)
 {
 	CJson json;
 	if(!json.Read(path + "activity_copy_test.json"))

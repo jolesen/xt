@@ -11,7 +11,7 @@ public:
 	struct Type
 	{
 		uint id;
-		std::string name;
+		string name;
 		uint cycle;
 		UIntList ints;
 		S3UIntList s2s;
@@ -22,7 +22,7 @@ public:
 	typedef std::map<uint, Type*> DataMap;
 
 public:
-	bool Load(std::string path);
+	bool Load(string path);
 	const Type* Find(uint id);
 	const DataMap& GetData() { return mData; }
 

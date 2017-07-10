@@ -23,7 +23,7 @@ CMonitor::~CMonitor()
     mThread.Stop();
 }
 
-void CMonitor::AddLinkState(const std::string &sid, uint state, uint reason)
+void CMonitor::AddLinkState(const string &sid, uint state, uint reason)
 {
     CHECK_OPEN();
 
@@ -103,7 +103,7 @@ void CMonitor::OnOpenFd(uint fd)
     }
 }
 
-void CMonitor::OnHttpRequest(const std::string &uri)
+void CMonitor::OnHttpRequest(const string &uri)
 {
     CHECK_OPEN();
 
@@ -151,7 +151,7 @@ void _WriteMsgInfo(FILE *file, bool isRead)
             countMax.value = iter->second;
         }
     }
-    std::string countMaxName = theServerConfig.funGetMsgName(countMax.id);
+    string countMaxName = theServerConfig.funGetMsgName(countMax.id);
 
     // msg size
     uint sizeMax   = 0;
@@ -164,7 +164,7 @@ void _WriteMsgInfo(FILE *file, bool isRead)
             sizeMsgId = iter->first;
         }
     }
-    std::string sizeMaxName = theServerConfig.funGetMsgName(sizeMsgId);
+    string sizeMaxName = theServerConfig.funGetMsgName(sizeMsgId);
 
     // msg total bytes
     ulong total = 0;
@@ -179,9 +179,9 @@ void _WriteMsgInfo(FILE *file, bool isRead)
             totalMsgId  = iter->first;
         }
     }
-    std::string totalMaxName = theServerConfig.funGetMsgName(totalMsgId);
+    string totalMaxName = theServerConfig.funGetMsgName(totalMsgId);
 
-    std::string strFlag = isRead ? "READ" : "WRITE";
+    string strFlag = isRead ? "READ" : "WRITE";
     fprintf(file, "MSG %-5s COUNT[%u, %s: %u], MAXSIZE[%s: %uB], TOTAL[%juB, %s: %juB]\n", strFlag.c_str(),
             countTotal, countMaxName.c_str(), countMax.value, sizeMaxName.c_str(), sizeMax, total, totalMaxName.c_str(), totalMsgMax);
 }

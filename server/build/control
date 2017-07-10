@@ -460,5 +460,5 @@ case $1 in
     getCode)    GetCode;;
     showPort)   ShowConfigPorts;;
     attach)     Attach $2;;
-    *)           echo "Error: [$1] unknow command";;
+    *)          echo "Error: [$1] unknow command";;
 esac

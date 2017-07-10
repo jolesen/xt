@@ -21,7 +21,7 @@
 
 void _test_marco()
 {
-    std::map<std::string, std::string> mpIdName;
+    StringStringMap mpIdName;
 
     if_notfind(mpIdName, "notfind")
     {

@@ -40,7 +40,7 @@ STime CTime::Parse(uint time)
     return result;
 }
 
-uint CTime::ParseDateTime(const std::string &strTime)
+uint CTime::ParseDateTime(const string &strTime)
 {
     struct tm t = { 0 };
     if(sscanf(strTime.c_str(), "%u-%u-%u %u:%u:%u", &t.tm_year, &t.tm_mon, &t.tm_mday, &t.tm_hour, &t.tm_min, &t.tm_sec) == 6)
@@ -53,7 +53,7 @@ uint CTime::ParseDateTime(const std::string &strTime)
     return 0;
 }
 
-uint CTime::ParseDate(const std::string &strDate)
+uint CTime::ParseDate(const string &strDate)
 {
     struct tm t = { 0 };
     if(sscanf(strDate.c_str(), "%u-%u-%u", &t.tm_year, &t.tm_mon, &t.tm_mday) == 3)
@@ -66,7 +66,7 @@ uint CTime::ParseDate(const std::string &strDate)
     return 0;
 }
 
-std::string CTime::FormatTime(uint time)
+string CTime::FormatTime(uint time)
 {
     STime st = Parse(time);
     char result[32] = { 0 };
@@ -75,7 +75,7 @@ std::string CTime::FormatTime(uint time)
     return result;
 }
 
-std::string CTime::FormatDate(uint time)
+string CTime::FormatDate(uint time)
 {
     STime st = Parse(time);
     char result[32] = { 0 };
@@ -84,7 +84,7 @@ std::string CTime::FormatDate(uint time)
     return result;
 }
 
-std::string CTime::FormatDateTime(uint time)
+string CTime::FormatDateTime(uint time)
 {
     STime st = Parse(time);
     char result[64] = { 0 };

@@ -46,7 +46,7 @@ bool CUtil::StartupAsDaemon()
     return true;
 }
 
-uint CUtil::ToInt(const std::string &value)
+uint CUtil::ToInt(const string &value)
 {
     if(value != "")
     {
@@ -56,26 +56,26 @@ uint CUtil::ToInt(const std::string &value)
     return 0;
 }
 
-std::string CUtil::ToString(uint value)
+string CUtil::ToString(uint value)
 {
     char strTemp[64] = { 0 };
     snprintf(strTemp, sizeof(strTemp), "%u", value);
-    return std::string(strTemp);
+    return string(strTemp);
 }
 
-std::string CUtil::GetIpString(uint ip)
+string CUtil::GetIpString(uint ip)
 {
     in_addr addr;
     addr.s_addr = ip;
-    return std::string(inet_ntoa(addr));
+    return string(inet_ntoa(addr));
 }
 
-uint CUtil::GetIpInt(const std::string &ip)
+uint CUtil::GetIpInt(const string &ip)
 {
     return (uint)inet_addr(ip.c_str());
 }
 
-StringList CUtil::SplitString(const std::string &strBase, const std::string &strSpliter)
+StringList CUtil::SplitString(const string &strBase, const string &strSpliter)
 {
     StringList result;
     if(strBase == "")
@@ -83,7 +83,7 @@ StringList CUtil::SplitString(const std::string &strBase, const std::string &str
         return result;
     }
 
-    if(strBase.find(strSpliter) == std::string::npos)
+    if(strBase.find(strSpliter) == string::npos)
     {
         result.push_back(strBase);
         return result;
@@ -91,7 +91,7 @@ StringList CUtil::SplitString(const std::string &strBase, const std::string &str
 
     uint fromIndex      = 0;
     size_t spliterIndex = 0;
-    while((spliterIndex = strBase.find(strSpliter, fromIndex)) != std::string::npos)
+    while((spliterIndex = strBase.find(strSpliter, fromIndex)) != string::npos)
     {
         result.push_back(strBase.substr(fromIndex, spliterIndex));
 
@@ -107,7 +107,7 @@ StringList CUtil::SplitString(const std::string &strBase, const std::string &str
     return result;
 }
 
-UIntList CUtil::SplitInt(const std::string &strBase, const std::string &strSpliter)
+UIntList CUtil::SplitInt(const string &strBase, const string &strSpliter)
 {
     UIntList result;
     StringList list = SplitString(strBase, strSpliter);
@@ -164,19 +164,19 @@ void CUtil::MergeList(S3UIntList &list, const S3UIntList &added)
     }
 }
 
-void CUtil::Trim(std::string &strBase)
+void CUtil::Trim(string &strBase)
 {
     strBase.erase(0, strBase.find_first_not_of(" \t\n\r"));
     strBase.erase(strBase.find_last_not_of(" \t\n\r") + 1);
 }
 
-void CUtil::Replace(std::string &strBase, const std::string &strOld, const std::string &strNew)
+void CUtil::Replace(string &strBase, const string &strOld, const string &strNew)
 {
-    std::string::size_type pos = 0;
-    std::string::size_type oldLen = strOld.size();
-    std::string::size_type newLen = strNew.size();
+    string::size_type pos = 0;
+    string::size_type oldLen = strOld.size();
+    string::size_type newLen = strNew.size();
     pos = strBase.find(strOld, pos);
-    while((pos != std::string::npos))
+    while((pos != string::npos))
     {
         strBase.replace(pos, oldLen, strNew);
         pos = strBase.find(strOld, (pos + newLen));

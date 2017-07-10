@@ -31,7 +31,7 @@ bool CheckModuleDirty(const STimerInfo &info)
 
     uint now = CTime::Now();
     user::UserMap &users = user::GetUsers();
-    std::string strMd5;
+    string strMd5;
     FORMAP(users, iter)
     {
         SUser &user = iter->second;

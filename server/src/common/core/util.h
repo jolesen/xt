@@ -9,17 +9,17 @@ public:
     static bool StartupAsDaemon();
     static bool SleepMillisecond(uint ms);
     static bool SleepSecond(uint s) { return SleepMillisecond(s * 1000); }
-    static uint GetIpInt(const std::string &ip);
-    static uint ToInt(const std::string &value);
-    static std::string GetIpString(uint ip);
-    static std::string ToString(uint value);
-    static StringList SplitString(const std::string &strBase, const std::string &strSpliter);
-    static UIntList SplitInt(const std::string &strBase, const std::string &strSpliter);
+    static uint GetIpInt(const string &ip);
+    static uint ToInt(const string &value);
+    static string GetIpString(uint ip);
+    static string ToString(uint value);
+    static StringList SplitString(const string &strBase, const string &strSpliter);
+    static UIntList SplitInt(const string &strBase, const string &strSpliter);
     static void MergeList(S2UIntList &list, const S2UIntList &added);
     static void MergeList(S3UIntList &list, const S3UIntList &added);
-    static void Trim(std::string &strBase);
-    static void Replace(std::string &strBase, const std::string &strOld, const std::string &strNew);
-    static void ReplaceAllSpace(std::string &strBase) { Replace(strBase, " ", ""); }
+    static void Trim(string &strBase);
+    static void Replace(string &strBase, const string &strOld, const string &strNew);
+    static void ReplaceAllSpace(string &strBase) { Replace(strBase, " ", ""); }
 
     // random
     static uint Rand(uint min, uint max);

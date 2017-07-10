@@ -8,11 +8,11 @@ class CServerConfig
 {
 public:
     typedef void (*FunMsgHandler)(CClient &client, char* buff, uint size);
-    typedef uint (*FunMsgIdGetter)(const std::string &msgName);
-    typedef std::string (*FunMsgNameGetter)(uint msgId);
+    typedef uint (*FunMsgIdGetter)(const string &msgName);
+    typedef string (*FunMsgNameGetter)(uint msgId);
 
-    std::string      type;
-    std::string      sid;
+    string           type;
+    string           sid;
     FunMsgHandler    funHandleMsg;
     FunMsgIdGetter   funGetMsgId;
     FunMsgNameGetter funGetMsgName;

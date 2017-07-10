@@ -3,7 +3,7 @@
 #include "../core/util.h"
 #include "list_test.h"
 
-bool CListTestData::Load(std::string path)
+bool CListTestData::Load(string path)
 {
 	CJson json;
 	if(!json.Read(path + "list_test.json"))
@@ -55,7 +55,7 @@ bool CListTestData::Load(std::string path)
 		values = CUtil::SplitString(pairs["strs"], ",");
 		FORLIST(values, j)
 		{
-			std::string val = values[j];
+			string val = values[j];
 			if(val != "")
 			{
 				data->strs.push_back(val);

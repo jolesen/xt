@@ -31,31 +31,31 @@ const uint ACTIVITY_TYPE_22 = 1;
 const uint ACTIVITY_TYPE_23 = 1;
 const uint ACTIVITY_TYPE_24 = 1;
 const uint ACTIVITY_TYPE_25 = 1;
-const std::string ACT_STR_TYPE_1 = "ty";
-const std::string ACT_STR_TYPE_2 = "ty";
-const std::string ACT_STR_TYPE_3 = "ty";
-const std::string ACT_STR_TYPE_4 = "ty";
-const std::string ACT_STR_TYPE_5 = "ty";
-const std::string ACT_STR_TYPE_6 = "ty";
-const std::string ACT_STR_TYPE_7 = "ty";
-const std::string ACT_STR_TYPE_8 = "ty";
-const std::string ACT_STR_TYPE_9 = "ty";
-const std::string ACT_STR_TYPE_10 = "ty";
-const std::string ACT_STR_TYPE_11 = "ty";
-const std::string ACT_STR_TYPE_12 = "ty";
-const std::string ACT_STR_TYPE_13 = "ty";
-const std::string ACT_STR_TYPE_14 = "ty";
-const std::string ACT_STR_TYPE_15 = "ty";
-const std::string ACT_STR_TYPE_16 = "ty";
-const std::string ACT_STR_TYPE_17 = "ty";
-const std::string ACT_STR_TYPE_18 = "ty";
-const std::string ACT_STR_TYPE_19 = "ty";
-const std::string ACT_STR_TYPE_20 = "ty";
-const std::string ACT_STR_TYPE_21 = "ty";
-const std::string ACT_STR_TYPE_22 = "ty";
-const std::string ACT_STR_TYPE_23 = "ty";
-const std::string ACT_STR_TYPE_24 = "ty";
-const std::string ACT_STR_TYPE_25 = "ty";
+const string ACT_STR_TYPE_1 = "ty";
+const string ACT_STR_TYPE_2 = "ty";
+const string ACT_STR_TYPE_3 = "ty";
+const string ACT_STR_TYPE_4 = "ty";
+const string ACT_STR_TYPE_5 = "ty";
+const string ACT_STR_TYPE_6 = "ty";
+const string ACT_STR_TYPE_7 = "ty";
+const string ACT_STR_TYPE_8 = "ty";
+const string ACT_STR_TYPE_9 = "ty";
+const string ACT_STR_TYPE_10 = "ty";
+const string ACT_STR_TYPE_11 = "ty";
+const string ACT_STR_TYPE_12 = "ty";
+const string ACT_STR_TYPE_13 = "ty";
+const string ACT_STR_TYPE_14 = "ty";
+const string ACT_STR_TYPE_15 = "ty";
+const string ACT_STR_TYPE_16 = "ty";
+const string ACT_STR_TYPE_17 = "ty";
+const string ACT_STR_TYPE_18 = "ty";
+const string ACT_STR_TYPE_19 = "ty";
+const string ACT_STR_TYPE_20 = "ty";
+const string ACT_STR_TYPE_21 = "ty";
+const string ACT_STR_TYPE_22 = "ty";
+const string ACT_STR_TYPE_23 = "ty";
+const string ACT_STR_TYPE_24 = "ty";
+const string ACT_STR_TYPE_25 = "ty";
 
 class CActivityData
 {
@@ -64,14 +64,14 @@ public:
 	{
 		uint id;
 		uint ti;
-		std::string ts;
-		std::string name;
+		string ts;
+		string name;
 		uint cycle;
 	};
 	typedef std::map<uint, Type*> DataMap;
 
 public:
-	bool Load(std::string path);
+	bool Load(string path);
 	const Type* Find(uint id);
 	const DataMap& GetData() { return mData; }
 

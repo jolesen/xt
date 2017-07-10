@@ -17,14 +17,14 @@ private:
     {
         typedef void (*FunEvent)(SEventBase *event);
 
-        std::string path;
-        FunEvent    handler;
-        SEventInfo(const std::string &p, FunEvent h) : path(p), handler(h) { }
+        string   path;
+        FunEvent handler;
+        SEventInfo(const string &p, FunEvent h) : path(p), handler(h) { }
     };
 
 public:
-    bool Register(const std::string &strName, const std::string &strFile, SEventInfo::FunEvent handler);
-    void Execute (const std::string &strName, SEventBase *event);
+    bool Register(const string &strName, const string &strFile, SEventInfo::FunEvent handler);
+    void Execute (const string &strName, SEventBase *event);
 
 private:
     friend CEvent& CSingleton<CEvent>::Instance();
@@ -32,7 +32,7 @@ private:
     ~CEvent();
 
 private:
-    std::map<std::string, std::vector<SEventInfo> > mHandlers;
+    std::map<string, std::vector<SEventInfo> > mHandlers;
 };
 #define theEvent CSingleton<CEvent>::Instance()
 

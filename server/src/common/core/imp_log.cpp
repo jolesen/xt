@@ -29,9 +29,9 @@ void CLog::Log(const char* src, const char* func, uint line, const char* fmt, ..
 
     // FILE
     char strFfl[64]     = { 0 };
-    std::string strFile = src;
+    string strFile = src;
     std::size_t pos     = strFile.find_last_of("/");
-    const char* sfile   = (pos != std::string::npos) ? strFile.substr(pos + 1).c_str() : strFile.c_str();
+    const char* sfile   = (pos != string::npos) ? strFile.substr(pos + 1).c_str() : strFile.c_str();
     snprintf(strFfl, sizeof(strFfl), "[%s][%s:%u]", sfile, func, line);
 
     // CONTENT

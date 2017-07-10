@@ -9,7 +9,7 @@ CJson::~CJson()
 {
 }
 
-bool CJson::Read(const std::string &file)
+bool CJson::Read(const string &file)
 {
     FILE *fp = fopen(file.c_str(), "r");
     if(!fp)
@@ -34,8 +34,8 @@ bool CJson::ReadString(const StringList &list)
     mLines.clear();
     FORLIST(list, i)
     {
-        const std::string line = list[i];
-        if((line.find("{") == std::string::npos) || (line.find("}") == std::string::npos))
+        const string line = list[i];
+        if((line.find("{") == string::npos) || (line.find("}") == string::npos))
         {
             continue;
         }
@@ -45,17 +45,17 @@ bool CJson::ReadString(const StringList &list)
         while(true)
         {
             first = line.find("\"", first);
-            if(first == std::string::npos)
+            if(first == string::npos)
             {
                 break;
             }
             std::size_t second = line.find("\"", first + 1);
-            if(second == std::string::npos)
+            if(second == string::npos)
             {
                 break;
             }
 
-            std::string strValue = line.substr(first + 1, second - (first + 1));
+            string strValue = line.substr(first + 1, second - (first + 1));
             list_value.push_back(strValue);
 
             first = second + 1;
@@ -70,8 +70,8 @@ bool CJson::ReadString(const StringList &list)
         CJsonLine jl;
         FORLIST(list_value, j)
         {
-            std::string key   = list_value[j];
-            std::string value = list_value[++j];
+            string key   = list_value[j];
+            string value = list_value[++j];
             jl.pairs[key] = value;
         }
         mLines.push_back(jl);

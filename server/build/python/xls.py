@@ -34,9 +34,7 @@ def ERROR(xlsName, sheet, msg):
 def GetRealType(xlsName, sheet, type):
     index = type.find("list");
     if(index == -1):
-        if(type == "string"):
-            return "std::string";
-        elif(IsSupportType(type)):
+        if(IsSupportType(type)):
             return type;
         else:
             ERROR(xlsName, sheet, "unknow type: " + type);
@@ -46,7 +44,7 @@ def GetRealType(xlsName, sheet, type):
         ret = ret.replace("std::vector<uint>", "UIntList");
         ret = ret.replace("std::vector<S2UInt>", "S2UIntList");
         ret = ret.replace("std::vector<S3UInt>", "S3UIntList");
-        ret = ret.replace("std::vector<std::string>", "StringList");
+        ret = ret.replace("std::vector<string>", "StringList");
         return ret;
     ERROR(xlsName, sheet, "unknow type:" + type);
 
@@ -215,7 +213,7 @@ def GenCodeAndJson(xlsName, sheet):
         h.write("\ttypedef std::map<" + subType + ", Type*>   DataMap;\n");
         h.write("\ttypedef std::map<" + priType + ", DataMap> DataMapMap;\n\n");
     h.write("public:\n");
-    h.write("\tbool Load(std::string path);\n");
+    h.write("\tbool Load(string path);\n");
     if(subType == ""):
         h.write("\tconst Type* Find(" + priType + " " + priName + ");\n");
         h.write("\tconst DataMap& GetData() { return mData; }\n\n");
@@ -248,7 +246,7 @@ def GenCodeAndJson(xlsName, sheet):
     cpp.write("#include \"../core/util.h\"\n");
     cpp.write("#include \"" + sheet.name + ".h\"\n\n");
     # Load方法
-    cpp.write("bool " + cls + "::Load(std::string path)\n");
+    cpp.write("bool " + cls + "::Load(string path)\n");
     cpp.write("{\n");
     cpp.write("\tCJson json;\n");
     cpp.write("\tif(!json.Read(path + \"" + sheet.name + ".json\"))\n");
@@ -302,7 +300,7 @@ def GenCodeAndJson(xlsName, sheet):
                 cpp.write("\t\t\t\tdata->" + memberName +".push_back(val);\n");
                 cpp.write("\t\t\t}\n");
             elif(listType == "string"):
-                cpp.write("\t\t\tstd::string val = values[j];\n");
+                cpp.write("\t\t\tstring val = values[j];\n");
                 cpp.write("\t\t\tif(val != \"\")\n");
                 cpp.write("\t\t\t{\n");
                 cpp.write("\t\t\t\tdata->" + memberName +".push_back(val);\n");

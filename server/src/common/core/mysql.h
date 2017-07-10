@@ -7,11 +7,11 @@
 // SMysqlConfig
 struct SMysqlConfig
 {
-    std::string host;
-    std::string db;
-    std::string usr;
-    std::string pwd;
-    uint        port;
+    string host;
+    string db;
+    string usr;
+    string pwd;
+    uint   port;
 };
 
 // CMysql
@@ -30,15 +30,15 @@ public:
     void Next();
     bool Empty();
 
-    uint        GetUInt32(uint index);
-    ulong       GetULong(uint index);
-    std::string GetString(uint index);
-    ulong       GetInsertId();
-    uint        GetErrorCode();
+    uint   GetUInt32(uint index);
+    ulong  GetULong(uint index);
+    string GetString(uint index);
+    ulong  GetInsertId();
+    uint   GetErrorCode();
+    string Escape(const char *str);
+    string Escape(const void *ptr, uint size);
+    string Escape(string str);
     const char* GetErrorMsg();
-    std::string Escape(const char *str);
-    std::string Escape(const void *ptr, uint size);
-    std::string Escape(std::string str);
 
 private:
     void FreeResult();

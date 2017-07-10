@@ -29,7 +29,7 @@ public:
 
 public:
     void Start();
-    void AddLinkState(const std::string &sid, uint state, uint reason);
+    void AddLinkState(const string &sid, uint state, uint reason);
     bool IsDirty() { return mDirty; }
     void SetTidyUp() { mDirty = false; }
 
@@ -38,12 +38,12 @@ public:
     void OnTimerTicked();
     void OnTimerAddOrDelete(bool isAdd);
     void OnOpenFd(uint fd);
-    void OnHttpRequest(const std::string &uri);
+    void OnHttpRequest(const string &uri);
     void OnClientCreated();
     void OnClientPoolChanged(uint size);
 
 public:
-    typedef std::map<std::string, S3UIntList> LinkStateMap; // type - 时间，id - 状态，value - 原因
+    typedef std::map<string, S3UIntList> LinkStateMap; // type - 时间，id - 状态，value - 原因
 
     LinkStateMap GetLinkState() { return mState; }
     SMsgInfo GetMsgRead() { return mMsgRead; }

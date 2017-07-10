@@ -56,7 +56,7 @@ ulong totalCount = 0;
 MSG_USER(QTestTime)
 {
     uint key;
-    std::string value;
+    string value;
     FORMAP(msg.imap, iter)
     {
         key   = iter->first;

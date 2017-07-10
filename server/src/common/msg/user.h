@@ -135,7 +135,7 @@ public:
 	std::map<uint, SDailyResets> testMapI;
 	uint ivalue;
 	UIntList vvalue;
-	std::map<std::string, SDailyResets> testMapS;
+	std::map<string, SDailyResets> testMapS;
 
 protected:
 	void EncodeBody(CCoder &coder) const;

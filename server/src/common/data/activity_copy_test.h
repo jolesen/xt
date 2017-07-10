@@ -12,14 +12,14 @@ public:
 	{
 		uint id;
 		uint value;
-		std::string name;
+		string name;
 		uint cycle;
 	};
 	typedef std::map<uint, Type*>   DataMap;
 	typedef std::map<uint, DataMap> DataMapMap;
 
 public:
-	bool Load(std::string path);
+	bool Load(string path);
 	const Type* Find(uint id, uint value);
 	const DataMap& FindData(uint id) { return mData[id]; }
 	const DataMapMap& GetData() { return mData; }

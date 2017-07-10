@@ -6,7 +6,7 @@
 
 // -------------------------------------------
 typedef bool (*FunServerInit)();
-typedef bool (*FunServerLoadData)(const std::string &path);
+typedef bool (*FunServerLoadData)(const string &path);
 
 
 // CMisc

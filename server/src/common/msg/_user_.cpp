@@ -160,7 +160,7 @@ void QUserLogout::DecodeBody(CCoder &coder)
 	coder >> len3;
 	FOR(len3, i)
 	{
-		std::string key;
+		string key;
 		SDailyResets value;
 		coder >> key;
 		value.Decode(coder);

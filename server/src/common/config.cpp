@@ -4,23 +4,23 @@
 
 // -----------------------------------------------
 // 脚本启动参数字段
-const std::string kArgsSid    = "-sid";
-const std::string kArgsConfig = "-config";
+const string kArgsSid    = "-sid";
+const string kArgsConfig = "-config";
 
 // 启动配置文件参数字段
-const std::string kConfigHost         = "Host";
-const std::string kConfigHttpHost     = "HttpHost";
-const std::string kConfigCenter       = "Center";
-const std::string kConfigClientLimit  = "ClientLimit";
-const std::string kConfigBacklog      = "Backlog";
-const std::string kConfigResource     = "Resource";
-const std::string kConfigBroadcastMax = "BroadcastMax";
-const std::string kConfigMonitorTick  = "MonitorTick";
-const std::string kConfigMongoHost    = "MongoHost";
-const std::string kConfigRedisHost    = "RedisHost";
+const string kConfigHost         = "Host";
+const string kConfigHttpHost     = "HttpHost";
+const string kConfigCenter       = "Center";
+const string kConfigClientLimit  = "ClientLimit";
+const string kConfigBacklog      = "Backlog";
+const string kConfigResource     = "Resource";
+const string kConfigBroadcastMax = "BroadcastMax";
+const string kConfigMonitorTick  = "MonitorTick";
+const string kConfigMongoHost    = "MongoHost";
+const string kConfigRedisHost    = "RedisHost";
 
 // -----------------------------------------------
-std::string _ParseHost(SHost &host, const std::string &value)
+string _ParseHost(SHost &host, const string &value)
 {
     StringList list = CUtil::SplitString(value, ":");
     if(list.size() == 2)
@@ -32,17 +32,17 @@ std::string _ParseHost(SHost &host, const std::string &value)
 
     char buff[KB] = { 0 };
     snprintf(buff, sizeof(buff), "[%s], error host", value.c_str());
-    return std::string(buff);
+    return string(buff);
 }
 
-std::string _ParseField(const std::string &strLine)
+string _ParseField(const string &strLine)
 {
-    std::string flag = "";
+    string flag = "";
     StringList list = CUtil::SplitString(strLine, "=");
     if(list.size() == 2)
     {
-        std::string key   = list[0];
-        std::string value = list[1];
+        string key   = list[0];
+        string value = list[1];
 
         if(key == kConfigHost)
         {
@@ -67,7 +67,7 @@ std::string _ParseField(const std::string &strLine)
             {
                 char buff[KB] = { 0 };
                 snprintf(buff, sizeof(buff), "[%s], error center config", value.c_str());
-                return std::string(buff);
+                return string(buff);
             }
 
             SHost host;
@@ -101,29 +101,29 @@ std::string _ParseField(const std::string &strLine)
         {
             char buff[KB] = { 0 };
             snprintf(buff, sizeof(buff), "unknow key:%s", key.c_str());
-            flag = std::string(buff);
+            flag = string(buff);
         }
     }
 
     return flag;
 }
 
-std::string _ReadConfig()
+string _ReadConfig()
 {
     FILE *fp = fopen(theConfig.config.c_str(), "r");
     if(!fp)
     {
         char buff[KB] = { 0 };
         snprintf(buff, sizeof(buff), "[%s], can't open file:%s", theConfig.sid.c_str(), theConfig.config.c_str());
-        return std::string(buff);
+        return string(buff);
     }
 
-    std::string strType = "";
-    std::map<std::string, StringList> mpServer;
+    string strType = "";
+    std::map<string, StringList> mpServer;
     char line[KB] = { 0 };
     while(fgets(line, KB - 1, fp))
     {
-        std::string strLine = line;
+        string strLine = line;
         CUtil::Trim(strLine);
         CUtil::ReplaceAllSpace(strLine);
 
@@ -139,7 +139,7 @@ std::string _ReadConfig()
             {
                 char buff[KB] = { 0 };
                 snprintf(buff, sizeof(buff), "[%s], config error, duplicate define:[%s]", theConfig.sid.c_str(), strType.c_str());
-                return std::string(buff);
+                return string(buff);
             }
         }
         else
@@ -158,13 +158,13 @@ std::string _ReadConfig()
         {
             FORLIST(iter->second, j)
             {
-                std::string strLine = (iter->second)[j];
-                std::string ret = _ParseField(strLine);
+                string strLine = (iter->second)[j];
+                string ret = _ParseField(strLine);
                 if(ret.size())
                 {
                     char buff[KB] = { 0 };
                     snprintf(buff, sizeof(buff), "line:[%s], [%s]", strLine.c_str(), ret.c_str());
-                    return std::string(buff);
+                    return string(buff);
                 }
             }
         }
@@ -175,27 +175,27 @@ std::string _ReadConfig()
 
 // -----------------------------------------------
 // ./auth -sid auth-1 --xt
-std::string CConfig::Parse(uint argc, const char **argv)
+string CConfig::Parse(uint argc, const char **argv)
 {
     --argc; // 不处理"--xt"
     FOR(argc, i)
     {
         if(i == 0)
         {
-            std::string str = argv[i];
+            string str = argv[i];
             theConfig.type = str.substr(2, str.length());
             continue;
         }
 
-        std::string key = argv[i];
+        string key = argv[i];
         if(i >= argc - 1)
         {
             char buff[KB] = { 0 };
             snprintf(buff, sizeof(buff), "[%s] no enough args", key.c_str());
-            return std::string(buff);
+            return string(buff);
         }
 
-        std::string value = argv[++i];
+        string value = argv[++i];
         if(key == kArgsSid)
         {
             theConfig.sid = value;

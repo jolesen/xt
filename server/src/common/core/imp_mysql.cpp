@@ -210,24 +210,24 @@ ulong CMysql::GetULong(uint index)
     return atoll(buff);
 }
 
-std::string CMysql::GetString(uint index)
+string CMysql::GetString(uint index)
 {
     if(!mResult)
     {
-        return std::string();
+        return string();
     }
 
     if(index >= (uint)mResult->field_count)
     {
-        return std::string();
+        return string();
     }
 
     if(mFields[index] <= 0)
     {
-        return std::string();
+        return string();
     }
 
-    return std::string((char*)mRow[index], mFields[index]);
+    return string((char*)mRow[index], mFields[index]);
 }
 
 ulong CMysql::GetInsertId()
@@ -262,26 +262,26 @@ const char* CMysql::GetErrorMsg()
     return "";
 }
 
-std::string CMysql::Escape(const char *strValue)
+string CMysql::Escape(const char *strValue)
 {
     return Escape(strValue, (uint)strlen(strValue));
 }
 
-std::string CMysql::Escape(const void *ptr, uint size)
+string CMysql::Escape(const void *ptr, uint size)
 {
     if(!mMysql || !ptr || size <= 0)
     {
-        return std::string();
+        return string();
     }
 
-    std::string buff(size * 4 + 1, '\0');
+    string buff(size * 4 + 1, '\0');
 
     mysql_real_escape_string(mMysql, (char*)buff.c_str(), (char*)ptr, size);
 
     return buff;
 }
 
-std::string CMysql::Escape(std::string strValue)
+string CMysql::Escape(string strValue)
 {
     return Escape(strValue.c_str(), strValue.size());
 }

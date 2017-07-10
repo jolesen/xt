@@ -50,7 +50,7 @@ bool CMongo::Ping()
     return true;
 }
 
-uint CMongo::Query(StringList &listRet, const std::string &db, const std::string &coll)
+uint CMongo::Query(StringList &listRet, const string &db, const string &coll)
 {
     listRet.clear();
 

@@ -22,8 +22,8 @@ CCoder::~CCoder()
     if(mError){ return; } \
     if(mOffset + (SIZE) > mBegin + mSize){ mError = true; return; }
 
-// std::string
-void CCoder::operator<<(const std::string &str)
+// string
+void CCoder::operator<<(const string &str)
 {
     CHECK_ERROR(sizeof(uint));
     uint size = str.size();
@@ -36,7 +36,7 @@ void CCoder::operator<<(const std::string &str)
         mOffset += size;
     }
 }
-void CCoder::operator>>(std::string &str)
+void CCoder::operator>>(string &str)
 {
     CHECK_ERROR(sizeof(uint));
     uint size = 0;
@@ -225,30 +225,30 @@ CODE_SIMPLE_LIST(BoolList,  bool)
 CODE_SIMPLE_LIST(UCharList, uchar)
 CODE_SIMPLE_LIST(UIntList,  uint)
 CODE_SIMPLE_LIST(ULongList, ulong)
-CODE_LIST(StringList,       std::string)
+CODE_LIST(StringList,       string)
 CODE_LIST(S2UIntList,       S2UInt)
 CODE_LIST(S2ULongList,      S2ULong)
 CODE_LIST(S3UIntList,       S3UInt)
 CODE_LIST(S3ULongList,      S3ULong)
 
-CODE_MAP(UIntBoolMap,      uint,        bool)
-CODE_MAP(UIntUCharMap,     uint,        uchar)
-CODE_MAP(UIntUIntMap,      uint,        uint)
-CODE_MAP(UIntULongMap,     uint,        ulong)
-CODE_MAP(UIntStringMap,    uint,        std::string)
-CODE_MAP(UIntS2UIntMap,    uint,        S2UInt)
-CODE_MAP(UIntS2ULongMap,   uint,        S2ULong)
-CODE_MAP(UIntS3UIntMap,    uint,        S3UInt)
-CODE_MAP(UIntS3ULongMap,   uint,        S3ULong)
-CODE_MAP(StringBoolMap,    std::string, bool)
-CODE_MAP(StringUCharMap,   std::string, uchar)
-CODE_MAP(StringUIntMap,    std::string, uint)
-CODE_MAP(StringULongMap,   std::string, ulong)
-CODE_MAP(StringStringMap,  std::string, std::string)
-CODE_MAP(StringS2UIntMap,  std::string, S2UInt)
-CODE_MAP(StringS2ULongMap, std::string, S2ULong)
-CODE_MAP(StringS3UIntMap,  std::string, S3UInt)
-CODE_MAP(StringS3ULongMap, std::string, S3ULong)
+CODE_MAP(UIntBoolMap,      uint,   bool)
+CODE_MAP(UIntUCharMap,     uint,   uchar)
+CODE_MAP(UIntUIntMap,      uint,   uint)
+CODE_MAP(UIntULongMap,     uint,   ulong)
+CODE_MAP(UIntStringMap,    uint,   string)
+CODE_MAP(UIntS2UIntMap,    uint,   S2UInt)
+CODE_MAP(UIntS2ULongMap,   uint,   S2ULong)
+CODE_MAP(UIntS3UIntMap,    uint,   S3UInt)
+CODE_MAP(UIntS3ULongMap,   uint,   S3ULong)
+CODE_MAP(StringBoolMap,    string, bool)
+CODE_MAP(StringUCharMap,   string, uchar)
+CODE_MAP(StringUIntMap,    string, uint)
+CODE_MAP(StringULongMap,   string, ulong)
+CODE_MAP(StringStringMap,  string, string)
+CODE_MAP(StringS2UIntMap,  string, S2UInt)
+CODE_MAP(StringS2ULongMap, string, S2ULong)
+CODE_MAP(StringS3UIntMap,  string, S3UInt)
+CODE_MAP(StringS3ULongMap, string, S3ULong)
 
 
 #undef CHECK_ERROR

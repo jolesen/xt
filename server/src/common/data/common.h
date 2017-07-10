@@ -14,10 +14,10 @@ const uint kQualityBlue = 2; // 蓝
 const uint kQualityVoilet = 3; // 紫
 const uint kQualityOrange = 4; // 橙
 
-const std::string kConstStringA = "a"; // A
-const std::string kConstStringB = "b"; // B
-const std::string kConstStringC = "c"; // C
-const std::string kConstStringD = "d"; // D
+const string kConstStringA = "a"; // A
+const string kConstStringB = "b"; // B
+const string kConstStringC = "c"; // C
+const string kConstStringD = "d"; // D
 
 const uint kErrorTestA = 1070202; // 错误码A
 const uint kErrorTestB = 1070522; // 错误码B

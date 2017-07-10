@@ -24,17 +24,17 @@ public:
     static STime Parse(uint time);
 
     // string to uint
-    static uint ParseDateTime(const std::string &strTime);
-    static uint ParseDate(const std::string &strDate);
-    static uint ConcatDateTime(const std::string &strDate, const std::string &strTime) { return ParseDateTime(strDate + " " + strTime); }
+    static uint ParseDateTime(const string &strTime);
+    static uint ParseDate(const string &strDate);
+    static uint ConcatDateTime(const string &strDate, const string &strTime) { return ParseDateTime(strDate + " " + strTime); }
 
     // uint to string
-    static std::string FormatDateTime(uint time);
-    static std::string FormatTime(uint time);
-    static std::string FormatDate(uint time);
-    static std::string FormatCurrentDateTime() { return FormatDateTime(Now()); }
-    static std::string FormatCurrentTime() { return FormatTime(Now()); }
-    static std::string FormatCurrentDate() { return FormatDate(Now()); }
+    static string FormatDateTime(uint time);
+    static string FormatTime(uint time);
+    static string FormatDate(uint time);
+    static string FormatCurrentDateTime() { return FormatDateTime(Now()); }
+    static string FormatCurrentTime() { return FormatTime(Now()); }
+    static string FormatCurrentDate() { return FormatDate(Now()); }
 
     // compare
     static bool IsSameMonth(uint a, uint b);

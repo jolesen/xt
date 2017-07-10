@@ -9,7 +9,7 @@ class CMongo
 {
 public:
     bool Ping();
-    uint Query(StringList &listRet, const std::string &db, const std::string &coll);
+    uint Query(StringList &listRet, const string &db, const string &coll);
 
 private:
     friend CMongo& CSingleton<CMongo>::Instance();

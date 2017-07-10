@@ -17,7 +17,7 @@ public:
     };
 
 public:
-    bool Read(const std::string &file);
+    bool Read(const string &file);
     bool ReadString(const StringList &list);
     std::vector<CJsonLine>& GetLines() { return mLines; }
 

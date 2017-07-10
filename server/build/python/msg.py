@@ -55,7 +55,7 @@ def IsBaseType(type):
     return (IsCoderType(type) or (type in [TYPE_VECTOR, TYPE_MAP]));
 
 def IsCoderType(type):
-    arrTypes = ["bool", "uchar", "uint", "ulong", "SBytes", "S2UInt", "S2ULong", "S3UInt", "S3ULong", "std::string",
+    arrTypes = ["bool", "uchar", "uint", "ulong", "SBytes", "S2UInt", "S2ULong", "S3UInt", "S3ULong", "string",
                 "BoolList", "UCharList", "UIntList", "ULongList", "S2UIntList", "S2ULongList", "S3UIntList", "S3ULongList", "StringList",
                 "UIntBoolMap", "UIntUCharMap", "UIntUIntMap", "UIntULongMap", "UIntStringMap", "UIntS2UIntMap", "UIntS2ULongMap", "UIntS3UIntMap", "UIntS3ULongMap",
                 "StringBoolMap", "StringUCharMap", "StringUIntMap", "StringULongMap", "StringStringMap", "StringS2UIntMap", "StringS2ULongMap", "StringS3UIntMap", "StringS3ULongMap"];
@@ -268,8 +268,8 @@ def UpdateRelations():
     h.write("class CMsgIdName\n");
     h.write("{\n");
     h.write("public:\n");
-    h.write("\tstd::string GetMsgName(uint id) { return mIdName[id]; }\n");
-    h.write("\tuint GetMsgId(const std::string &name) { return mNameId[name]; }\n\n");
+    h.write("\tstring GetMsgName(uint id) { return mIdName[id]; }\n");
+    h.write("\tuint GetMsgId(const string &name) { return mNameId[name]; }\n\n");
     h.write("private:\n");
     h.write("\tUIntStringMap mIdName;\n");
     h.write("\tStringUIntMap mNameId;\n\n");

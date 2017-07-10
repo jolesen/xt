@@ -20,12 +20,12 @@ void CClient::SetPassive(const SHost &host, bufferevent *bev)
     Init(host, bev, "");
 }
 
-void CClient::SetActive(const SHost &host, const std::string &sid)
+void CClient::SetActive(const SHost &host, const string &sid)
 {
     Init(host, NULL, sid);
 }
 
-void CClient::Init(const SHost &host, bufferevent *bev, const std::string &sid)
+void CClient::Init(const SHost &host, bufferevent *bev, const string &sid)
 {
     mHost  = host;
     mId    = 0;

@@ -13,8 +13,8 @@ struct SMsgHeader
     uint id;
 
     // 内部消息
-    std::string srcSid;
-    std::string dstSid;
+    string srcSid;
+    string dstSid;
 
     // 辅助参数，不参与编码
     uint type; // 消息类型
@@ -52,7 +52,7 @@ public:
 
     CMsgBase* Create(uint id);
     void Execute(const CMsgBase *msg);
-    bool Register(CMsgBase* msg, FunMsg executor, const std::string &name);
+    bool Register(CMsgBase* msg, FunMsg executor, const string &name);
 
 private:
     friend CMsgs& CSingleton<CMsgs>::Instance();
