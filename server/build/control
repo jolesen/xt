@@ -180,10 +180,7 @@ function Clean()
     for rundir in `ls`
     do
         if [[ $rundir == *-[0-9]* ]]; then # svr-xx
-            ln=${rundir%-*}
-            rm -f $rundir/$ln
-            rm -f $rundir/*.log
-            rm -f $rundir/*.*
+            rm -f $rundir/*
         fi
     done
 }
@@ -202,31 +199,31 @@ function GenerateCode()
 
 function _StartByName()
 {
-    dir=$1
-    exe=${dir%-*}
+    sid=$1
+    exe=${sid%-*}
 
     # 运行文件是否存在
     bin="$gBinDir/$exe"
     if [ ! -f "$bin" ]; then
-        echo "Error: starting[$dir], [$bin] not exist."
+        echo "Error: starting[$sid], [$bin] not exist."
         exit
     fi
 
     # 是否有执行权限
     if [ ! -x "$bin" ]; then
-        echo "Error: starting[$dir], [$bin] no executive authority."
+        echo "Error: starting[$sid], [$bin] no executive authority."
         exit
     fi
 
     # 创建软连接
-    link="$dir/$exe"
+    link="$sid/$sid"
     if [ ! -f "$link" ]; then
         ln -fs "$bin" "$link"
     fi
 
-    # 运行 id=${dir#*-}
-    cd $dir
-    ./$exe -sid $dir -config $gConfig --$gProject
+    # 运行 id=${sid#*-}
+    cd $sid
+    ./$sid -config $gConfig --$gProject
     cd ..
 }
 
@@ -269,7 +266,7 @@ function Stop()
         #para=$1
         #exe=${para%-*}
         #sid=${para#*-}
-        ps fx | grep "\-\-$gProject" | grep "\-sid $1"| awk '{ print $1 }' | xargs kill -10
+        ps fx | grep "./$1" | grep "\-\-$gProject" | awk '{ print $1 }' | xargs kill -10
     fi
 
     ps fx | grep "\-\-$gProject"

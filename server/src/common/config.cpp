@@ -4,7 +4,6 @@
 
 // -----------------------------------------------
 // 脚本启动参数字段
-const string kArgsSid    = "-sid";
 const string kArgsConfig = "-config";
 
 // 启动配置文件参数字段
@@ -183,7 +182,10 @@ string CConfig::Parse(uint argc, const char **argv)
         if(i == 0)
         {
             string str = argv[i];
-            theConfig.type = str.substr(2, str.length());
+            theConfig.sid = str.substr(2, str.length());
+
+            size_t index = theConfig.sid.find("-");
+            theConfig.type = (index != string::npos) ? theConfig.sid.substr(0, index) : theConfig.sid;
             continue;
         }
 
@@ -196,11 +198,7 @@ string CConfig::Parse(uint argc, const char **argv)
         }
 
         string value = argv[++i];
-        if(key == kArgsSid)
-        {
-            theConfig.sid = value;
-        }
-        else if(key == kArgsConfig)
+        if(key == kArgsConfig)
         {
             theConfig.config = value;
         }
