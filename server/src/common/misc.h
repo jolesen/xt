@@ -13,7 +13,7 @@ typedef bool (*FunServerLoadData)(const string &path);
 class CMisc
 {
 public:
-    static uint Main(uint argc, const char **argv, FunServerLoadData fun_load, FunServerInit fun_init);
+    static uint Main(uint argc, const char **argv, FunServerLoadData funLoad, FunServerInit funInit);
     static void BroadcastUsers(CMsgBase *msg, uint type, const UIntList *users);
     static void SendUser(CMsgBase *msg, uint uid);
     static bool CheckSystemMessage(const CMsgBase *msg);

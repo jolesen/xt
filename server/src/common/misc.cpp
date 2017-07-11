@@ -85,7 +85,7 @@ string _GetMsgName(uint msg_id)
     return theMsgIdName.GetMsgName(msg_id);
 }
 
-uint CMisc::Main(uint argc, const char **argv, FunServerLoadData fun_load, FunServerInit fun_init)
+uint CMisc::Main(uint argc, const char **argv, FunServerLoadData funLoad, FunServerInit funInit)
 {
     printf(">>>>> Starting... ");
     fflush(stdout);
@@ -106,9 +106,9 @@ uint CMisc::Main(uint argc, const char **argv, FunServerLoadData fun_load, FunSe
         theConfig.Show();
 
         // 加载静态数据
-        if(fun_load)
+        if(funLoad)
         {
-            if(!fun_load(theConfig.resource + "/"))
+            if(!funLoad(theConfig.resource + "/"))
             {
                 printf("%s, LoadConfig error.\n", theConfig.sid.c_str());
                 break;
@@ -139,7 +139,7 @@ uint CMisc::Main(uint argc, const char **argv, FunServerLoadData fun_load, FunSe
         theTimer.Init(theServer.GetEventBase());
 
         // 执行初始化逻辑
-        if(fun_init && !fun_init())
+        if(funInit && !funInit())
         {
             printf("%s, InitServer error.\n", theConfig.sid.c_str());
             break;
