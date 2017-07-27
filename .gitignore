@@ -12,6 +12,7 @@ server/build/bin
 server/build/runtime/*-*
 
 *.o
+*.out
 *~
 *.pyc
 *.swp
