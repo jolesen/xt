@@ -32,8 +32,8 @@ uint64_t fibonacci_no_recursive(unsigned int n)
     for(unsigned int i = 2; i <= n; i++)
     {
         fn  = fn1 + fn2;
-        fn1 = fn;
         fn2 = fn1;
+        fn1 = fn;
     }
     return fn;
 }
@@ -54,7 +54,7 @@ int main(int argc, char* argv[])
     uint64_t value = fibonacci(n);
     printf("Fibonacci(%d) is %lld\n", n, value);
 
-    //n = 30;
+    n = 100;
     value = fibonacci_no_recursive(n);
     printf("Fibonacci(%d) is %lld\n", n, value);
 
