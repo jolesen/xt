@@ -21,7 +21,7 @@ int main(int argc, char* argv[])
     int array[] = {1, 2, 34, 56, 3, 9, 81, 78, 45, 2, 4, 5, 10, 6};
     int len = sizeof(array) / sizeof(int);
 
-    printf("before quick sort: ");
+    printf("before sort: ");
     for(int i = 0; i < len; i++)
     {
         printf("%d", array[i]);
@@ -30,7 +30,7 @@ int main(int argc, char* argv[])
 
     BubbleSort(array, len);
 
-    printf("after  quick sort: ");
+    printf("after  sort: ");
     for(int i = 0; i < len; i++)
     {
         printf("%d", array[i]);
