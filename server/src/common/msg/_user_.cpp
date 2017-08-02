@@ -124,7 +124,10 @@ void QUserLogout::EncodeBody(CCoder &coder) const
 	{
 		coder << iter->first;
 		iter->second.Encode(coder);
-		if(coder.HasError()) { break; }
+		if(coder.HasError())
+		{
+			break;
+		}
 	}
 	coder << ivalue;
 	coder << vvalue;
@@ -134,7 +137,10 @@ void QUserLogout::EncodeBody(CCoder &coder) const
 	{
 		coder << iter->first;
 		iter->second.Encode(coder);
-		if(coder.HasError()) { break; }
+		if(coder.HasError())
+		{
+			break;
+		}
 	}
 }
 void QUserLogout::DecodeBody(CCoder &coder)
@@ -149,7 +155,10 @@ void QUserLogout::DecodeBody(CCoder &coder)
 		SDailyResets value;
 		coder >> key;
 		value.Decode(coder);
-		if(coder.HasError()) { break; }
+		if(coder.HasError())
+		{
+			break;
+		}
 		testMapI[key] = value;
 	}
 	coder >> ivalue;
@@ -164,7 +173,10 @@ void QUserLogout::DecodeBody(CCoder &coder)
 		SDailyResets value;
 		coder >> key;
 		value.Decode(coder);
-		if(coder.HasError()) { break; }
+		if(coder.HasError())
+		{
+			break;
+		}
 		testMapS[key] = value;
 	}
 }

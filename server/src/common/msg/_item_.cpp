@@ -21,7 +21,10 @@ void SItem::Encode(CCoder &coder) const
 	FORLIST(list, i)
 	{
 		list[i].Encode(coder);
-		if(coder.HasError()) { break; }
+		if(coder.HasError())
+		{
+			break;
+		}
 	}
 }
 void SItem::Decode(CCoder &coder)
@@ -34,7 +37,10 @@ void SItem::Decode(CCoder &coder)
 	{
 		SItemCell value;
 		value.Decode(coder);
-		if(coder.HasError()) { break; }
+		if(coder.HasError())
+		{
+			break;
+		}
 		list.push_back(value);
 	}
 }

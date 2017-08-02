@@ -99,7 +99,10 @@ void QSysSaveUser::EncodeBody(CCoder &coder) const
 	{
 		coder << iter->first;
 		coder << iter->second;
-		if(coder.HasError()) { break; }
+		if(coder.HasError())
+		{
+			break;
+		}
 	}
 }
 void QSysSaveUser::DecodeBody(CCoder &coder)
@@ -115,7 +118,10 @@ void QSysSaveUser::DecodeBody(CCoder &coder)
 		SBytes value;
 		coder >> key;
 		coder >> value;
-		if(coder.HasError()) { break; }
+		if(coder.HasError())
+		{
+			break;
+		}
 		modules[key] = value;
 	}
 }

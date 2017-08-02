@@ -384,7 +384,7 @@ def WriteEncode(objMember, cpp):
             cpp.write("\t\tcoder << " + objMember.name + "[i];\n");
         else:
             cpp.write("\t\t" + objMember.name + "[i].Encode(coder);\n");
-        cpp.write("\t\tif(coder.HasError()) { break; }\n");
+        cpp.write("\t\tif(coder.HasError())\n\t\t{\n\t\t\tbreak;\n\t\t}\n");
         cpp.write("\t}\n");
     elif(objMember.type == TYPE_MAP):
         cpp.write("\t//" + objMember.name + "\n");
@@ -396,7 +396,7 @@ def WriteEncode(objMember, cpp):
             cpp.write("\t\tcoder << iter->second;\n");
         else:
             cpp.write("\t\titer->second.Encode(coder);\n");
-        cpp.write("\t\tif(coder.HasError()) { break; }\n");
+        cpp.write("\t\tif(coder.HasError())\n\t\t{\n\t\t\tbreak;\n\t\t}\n");
         cpp.write("\t}\n");
     else:
         cpp.write("\t" + objMember.name + ".Encode(coder);\n");
@@ -417,7 +417,7 @@ def WriteDecode(objMember, cpp, index):
             cpp.write("\t\tcoder >> value;\n");
         else:
             cpp.write("\t\tvalue.Decode(coder);\n");
-        cpp.write("\t\tif(coder.HasError()) { break; }\n");
+        cpp.write("\t\tif(coder.HasError())\n\t\t{\n\t\t\tbreak;\n\t\t}\n");
         cpp.write("\t\t" + objMember.name + ".push_back(value);\n");
         cpp.write("\t}\n");
     elif(objMember.type == TYPE_MAP):
@@ -435,7 +435,7 @@ def WriteDecode(objMember, cpp, index):
             cpp.write("\t\tcoder >> value;\n");
         else:
             cpp.write("\t\tvalue.Decode(coder);\n");
-        cpp.write("\t\tif(coder.HasError()) { break; }\n");
+        cpp.write("\t\tif(coder.HasError())\n\t\t{\n\t\t\tbreak;\n\t\t}\n");
         cpp.write("\t\t" + objMember.name + "[key] = value;\n");
         cpp.write("\t}\n");
     else:
